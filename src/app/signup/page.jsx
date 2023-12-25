@@ -51,7 +51,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Атыныз"
                   autoFocus
                 />
               </Grid>
@@ -60,7 +60,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Фамилияныз"
                   name="lastName"
                   autoComplete="family-name"
                 />
@@ -70,7 +70,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="faculty"
-                  label="Faculty"
+                  label="Факультет"
                   name="faculty"
                   autoComplete="faculty-name"
                 />
@@ -80,7 +80,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="department"
-                  label="Department"
+                  label="Болум"
                   name="department"
                   autoComplete="department-name"
                 />
@@ -90,27 +90,18 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="telefon"
-                  label="Telefon"
+                  label="Телефон"
                   name="telefon"
                   autoComplete="telefon-name"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Манас почта"
                   name="email"
                   autoComplete="email"
                 />
@@ -120,7 +111,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Пароль"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -131,14 +122,12 @@ const SignUp = () => {
                   required
                   fullWidth
                   name="repeatPassword"
-                  label="Repeat Password"
+                  label="Парольду кайталаныз"
                   type="repeatPassword"
                   id="repeatPassword"
                   autoComplete="repeatPassword"
                 />
               </Grid>
-              
-            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -156,7 +145,6 @@ const SignUp = () => {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   )

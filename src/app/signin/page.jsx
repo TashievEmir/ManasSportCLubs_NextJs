@@ -16,6 +16,8 @@ import {manasLogo} from '../../../public/manas_logo.png'
 const defaultTheme = createTheme();
 
 const SignIn = () => {
+  const router = useRouter()
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -48,7 +50,7 @@ const SignIn = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Манас почта"
               name="email"
               autoComplete="email"
               autoFocus
@@ -58,7 +60,7 @@ const SignIn = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -89,7 +91,6 @@ const SignIn = () => {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   )
