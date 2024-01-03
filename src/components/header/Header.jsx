@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -38,10 +39,9 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" sx={{mb: 2}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-            <Image src={manasLogo} alt='manasLogo' height={90} width={90} />
+        <Toolbar disableGutters >
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -61,7 +61,7 @@ function Header() {
             
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent:'center', alignItems:'center' }}>
             <IconButton
               size="large"
               aria-label="account of current user"
