@@ -15,12 +15,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 const SignUp = () => {
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+
+        const response = await axios.get();
+
         console.log({
-          email: data.get('email'),
-          password: data.get('password'),
+          firstName: data.get('firstName'),
+          lastName: data.get('lastName'),
         });
       };
 
@@ -80,7 +83,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   id="department"
-                  label="Болум"
+                  label="Бөлүм"
                   name="department"
                   autoComplete="department-name"
                 />
