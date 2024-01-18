@@ -1,8 +1,11 @@
 import React from 'react'
+import AppShell from '../../components/app-shell'
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <AppShell>
+          <div>Admin</div>
+    </AppShell>
   )
 }
 

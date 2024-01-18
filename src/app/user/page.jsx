@@ -1,18 +1,15 @@
+"use client"
 import React from 'react'
-import Header from '../../components/header/Header'
-import SideBar from '../../components/sidebar/SideBar'
-import Footer from '../../components/footer/Footer'
 import Card from '../../components/card/Card'
 import { Grid } from '@mui/material'
+import AppShell from '../../components/app-shell'
+
+
+
 const Users = () => {
   return (
-    <div>
-      <Header/>
-      <main style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
-        <div style={{marginRight: '20px'}}>
-          <SideBar/>
-        </div>
-        <Grid container justifyContent="start" alignItems="start" gap={2}>
+    <AppShell>
+      <Grid container justifyContent="start" alignItems="start" gap={2}>
           <Grid item>
             <Card/>
           </Grid>
@@ -34,10 +31,8 @@ const Users = () => {
           <Grid item>
             <Card/>
           </Grid>
-        </Grid>
-      </main>
-      <Footer/>
-    </div>
+      </Grid>
+    </AppShell>
   )
 }
 

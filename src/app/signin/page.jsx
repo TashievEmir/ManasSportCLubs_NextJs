@@ -13,19 +13,35 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {manasLogo} from '../../../public/manas_logo.png'
+import $api from '../../utils/api'
+import authentification from '../../store/Authentification'
+import { useRouter } from 'next/navigation';
+
 const defaultTheme = createTheme();
 
 const SignIn = () => {
-  //const router = useRouter()
+  const router = useRouter()
 
    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const response = await axios.get();
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
+        const response = await $api.post('/Account/LogIn',{
+          Login: data.get('email'),
+          Password: data.get('password')
         });
+        
+        if(response.status == 200){
+          authentification.setToken(response.data.accessToken);
+          authentification.setRole(response.data.role);
+          authentification.setUser(response.data.user);
+          if(response.data.role == 'admin' || response.data.role == 'teacher'){
+            router.push('/admin');  
+          }
+          else{
+            router.push('/user');
+          }
+        }       
+        
       };
 
   return (

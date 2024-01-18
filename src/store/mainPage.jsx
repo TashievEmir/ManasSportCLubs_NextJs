@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx"
-import mainPage from '../store/mainPage';
+
 class MainPage{
     login = false;
     constructor(){

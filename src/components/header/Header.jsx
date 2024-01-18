@@ -19,7 +19,10 @@ import Image from 'next/image'
 const pages = ['Спорт түрлөрү', 'Агайлар'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Header() {
+
+
+
+function Header({toggleDrawer, state}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -39,10 +42,12 @@ function Header() {
   };
 
   return (
-    <AppBar position="sticky" sx={{mb: 2}}>
+    <AppBar open={state} position="sticky" sx={{mb: 2}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters >
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Button onClick={toggleDrawer} sx={{color: 'white'}}>
+              <AdbIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          </Button>
           <Typography
             variant="h6"
             noWrap
@@ -131,7 +136,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
               </IconButton>
             </Tooltip>
             <Menu
