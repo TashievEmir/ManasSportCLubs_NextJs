@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,14 +10,21 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Select from '@mui/material';
+import MenuItem from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
+import faculties from '../../store/Faculties'
 
 const defaultTheme = createTheme();
 
-const SignUp = () => {
+const SignUp = ({data}) => {
   const router = useRouter()
+
+  useEffect(()=>{
+    
+  },[]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -81,14 +88,20 @@ const SignUp = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <Select
                     required
                     fullWidth
                     id="faculty"
                     label="Факультет"
                     name="faculty"
                     autoComplete="faculty-name"
-                  />
+                  >
+                    {data.map(option => (
+                      <MenuItem key={option.id} value={option.value}>
+                      {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </Grid>
                 <Grid item xs={12} >
                   <TextField
@@ -164,5 +177,6 @@ const SignUp = () => {
     </ThemeProvider>
   )
 }
-
 export default SignUp
+
+
