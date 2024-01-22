@@ -6,6 +6,7 @@ import { relative } from 'path'
 import SideBar from '../components/sidebar/SideBar'
 import { useRouter } from 'next/navigation';
 import mainPage from '../store/mainPage'; 
+import { Providers } from './provider'
 // const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({ children }) {
           <div >
           </div>
           <div>
-            {children}
+              <Providers>{children}</Providers>
           </div>
         </main>
       </body>

@@ -10,26 +10,28 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Select from '@mui/material';
-import MenuItem from '@mui/material';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
-import faculties from '../../store/Faculties'
-
+import { observer } from 'mobx-react-lite';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDepartament } from '../../store/actions/fetchDepartament';
+import { fetchFaculties } from '../../store/actions/fetchFaculties';
 const defaultTheme = createTheme();
 
-const SignUp = ({data}) => {
+const SignUp = observer(() => {
   const router = useRouter()
+  const dispatch = useDispatch()
+  const {faculties, departaments} = useSelector(s => s.facDeps)
 
-  useEffect(()=>{
-    
-  },[]);
 
-    const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-
+        console.log(data.get('faculty'))
+        console.log(data.get('department'))
         const response = await $api.post('/Account/Register',{
           LastName: data.get('lastName'),
           FirstName: data.get('firstName'),
@@ -46,6 +48,10 @@ const SignUp = ({data}) => {
 
       };
 
+  useEffect(() => {
+    dispatch(fetchDepartament())
+    dispatch(fetchFaculties())
+  }, [])
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -89,29 +95,39 @@ const SignUp = ({data}) => {
                 </Grid>
                 <Grid item xs={12}>
                   <Select
+                    placeholder='Факультет тандаңыз'
                     required
                     fullWidth
+                    value={""}
+                    onChange={() => {}}
                     id="faculty"
-                    label="Факультет"
                     name="faculty"
                     autoComplete="faculty-name"
                   >
-                    {data.map(option => (
-                      <MenuItem key={option.id} value={option.value}>
-                      {option.label}
+                    {faculties.map(option => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </Grid>
                 <Grid item xs={12} >
-                  <TextField
+                <Select
+                    placeholder='Бөлүм тандаңыз'
                     required
                     fullWidth
+                    value={""}
+                    onChange={() => {}}
                     id="department"
-                    label="Бөлүм"
                     name="department"
                     autoComplete="department-name"
-                  />
+                  >
+                    {departaments.map(option => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -176,7 +192,7 @@ const SignUp = ({data}) => {
       </Container>
     </ThemeProvider>
   )
-}
+})
 export default SignUp
 
 

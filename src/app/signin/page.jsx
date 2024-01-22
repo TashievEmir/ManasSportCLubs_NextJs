@@ -12,10 +12,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {manasLogo} from '../../../public/manas_logo.png'
+import manasLogo from '../../../public/manas_logo.png'
 import $api from '../../utils/api'
 import authentification from '../../store/Authentification'
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const defaultTheme = createTheme();
 
@@ -56,7 +57,11 @@ const SignIn = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar src={manasLogo} alt='manas logo' sx={{ m: 1, bgcolor: 'secondary.main', height: 100, width: 100 }} />
+          <Image
+            width={80}
+            src={manasLogo} 
+            alt='manas logo' 
+            style={{ m: 1, bgcolor: 'secondary.main' }} />
 
           <Typography component="h1" variant="h5">
             Кирүү
