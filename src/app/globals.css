@@ -9,4 +9,19 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #8855ED;
+  border-radius: 10px !important;
+
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #370E8A;
+  border-radius: 10px !important;
 }

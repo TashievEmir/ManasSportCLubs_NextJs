@@ -1,32 +1,47 @@
 "use client"
 import React, {useState} from 'react'
 import Header from '../header/Header';
-import Sidebar from '../sidebar/SideBar';
-import Footer from '../footer/Footer'
+import Sidebar from '../izatSideBar/sidebar';
 import { Box } from '@mui/material';
 
 
 export default function AppShell ({children}) {
-    const [state, setState] = useState({
-        left: false,
-      });
-      const toggleDrawer = (open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-        setState({ left: open });
-      };
+    const [opened, setOpened] = useState(true)
 
+      const changeSidebar = () => {
+        setOpened(prev => !prev)
+      }
   return (
-    <>
-        <Header state={state} toggleDrawer={toggleDrawer(true)}/>
-        <main style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
-        <Sidebar toggleDrawer={toggleDrawer} state={state}/>
-            <Box sx={{p: "50px"}}>
-                {children}
-            </Box>
+    <Box sx={{height: "100vh", overflow: "hidden"}}>
+        <Header state={opened} toggleDrawer={changeSidebar}/>
+        <main style={{ 
+          display: 'flex',
+           justifyContent: 'flex-start',
+            alignItems: 'start'}}>
+          <Box
+            sx={{
+              width: opened ? "700px" : "80px",
+              transition: "300ms",
+              height: "90vh",
+              maxWidth: "20%"
+            }}>
+            <Sidebar open={opened} setOpened={changeSidebar}/>
+          </Box>
+          <Box sx={{
+                  padding: "15px",
+                  height: "90vh",
+                  overflow: "hidden",
+                  marginX: "10px",
+                  bgcolor: "rgba(217, 217, 217, 0.3)",
+                  borderRadius: "20px",
+                  overflowY: "scroll"
+                }}>
+                    
+                  <Box sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)'}}>
+                  {children}
+                </Box>
+          </Box>
         </main>
-        <Footer/> 
-    </>
+    </Box>
   )
 }

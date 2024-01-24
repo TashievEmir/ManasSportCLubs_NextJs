@@ -1,0 +1,8 @@
+.link_item{
+    transition: 300ms;
+    padding: 0 10px;
+    border-radius: 7px;
+}
+.link_item:hover{
+    background: #370e8ac1 !important;
+}

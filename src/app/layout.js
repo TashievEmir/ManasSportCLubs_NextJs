@@ -5,7 +5,7 @@ import Header from '../components/header/Header'
 import { relative } from 'path'
 import SideBar from '../components/sidebar/SideBar'
 import { useRouter } from 'next/navigation';
-import mainPage from '../store/mainPage'; 
+import mainPage from '../store/mobx/mainPage'; 
 import { Providers } from './provider'
 // const inter = Inter({ subsets: ['latin'] })
 

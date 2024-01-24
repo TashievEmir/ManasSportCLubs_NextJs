@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx"
-import $api from '../utils/api'
+import $api from '../../utils/api'
 
 class Departments{
     departmentName = [];

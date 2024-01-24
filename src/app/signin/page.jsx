@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import manasLogo from '../../../public/manas_logo.png'
 import $api from '../../utils/api'
-import authentification from '../../store/Authentification'
+import authentification from '../../store/mobx/Authentification'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 

@@ -17,13 +17,13 @@ export default function Sidebar({state, toggleDrawer}) {
             onClose={toggleDrawer(false)}
           >
              <Box
-              sx={250}
+              sx={{width: 250}}
               role="presentation"
               onClick={toggleDrawer(false)}
               onKeyDown={toggleDrawer(false)}
             >
               <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                {['Клубга катталуу', 'Клубтан баш тартуу', 'Расписание көрүү', 'Клубтун тизмеси'].map((text, index) => (
                   <ListItem key={text} disablePadding>
                     <ListItemButton>
                       <ListItemIcon>

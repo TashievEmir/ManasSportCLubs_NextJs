@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
+import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import $api from '../../utils/api'
@@ -19,19 +20,31 @@ import { observer } from 'mobx-react-lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDepartament } from '../../store/actions/fetchDepartament';
 import { fetchFaculties } from '../../store/actions/fetchFaculties';
+import { FormControl } from '@mui/material';
+import manasLogo from '../../../public/manas_logo.png'
+
 const defaultTheme = createTheme();
 
 const SignUp = observer(() => {
   const router = useRouter()
+
+  const [state, setState] = useState({
+    faculty: 777,
+    departament: 777
+  })
+
+  useEffect(() => {
+    dispatch(fetchDepartament())
+    dispatch(fetchFaculties())
+  }, [])
+  
   const dispatch = useDispatch()
   const {faculties, departaments} = useSelector(s => s.facDeps)
-
 
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data.get('faculty'))
-        console.log(data.get('department'))
+        console.log(data)
         const response = await $api.post('/Account/Register',{
           LastName: data.get('lastName'),
           FirstName: data.get('firstName'),
@@ -43,15 +56,11 @@ const SignUp = observer(() => {
           Department: data.get('department')
         });
         if(response.status==200){
-          router.push('/sigin');
+          router.push('/signin');
         }
 
       };
 
-  useEffect(() => {
-    dispatch(fetchDepartament())
-    dispatch(fetchFaculties())
-  }, [])
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -64,13 +73,16 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            
-          </Avatar>
+          <Image
+            width={80}
+            src={manasLogo} 
+            alt='manas logo' 
+            style={{ m: 1, bgcolor: 'secondary.main' }} />
+
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -95,16 +107,15 @@ const SignUp = observer(() => {
                 </Grid>
                 <Grid item xs={12}>
                   <Select
-                    placeholder='Факультет тандаңыз'
+                    value={state.faculty}
+                    onChange={(value) => setState({...state, faculty: value.target.value})}
                     required
                     fullWidth
-                    value={""}
-                    onChange={() => {}}
                     id="faculty"
                     name="faculty"
                     autoComplete="faculty-name"
                   >
-                    {faculties.map(option => (
+                    {[{id: 777, name: "Факультет тандаңыз"}, ...faculties].map(option => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.name}
                       </MenuItem>
@@ -113,16 +124,15 @@ const SignUp = observer(() => {
                 </Grid>
                 <Grid item xs={12} >
                 <Select
-                    placeholder='Бөлүм тандаңыз'
+                    value={state.departament}
+                    onChange={(value) => setState({...state, departament: value.target.value})}
                     required
                     fullWidth
-                    value={""}
-                    onChange={() => {}}
                     id="department"
                     name="department"
                     autoComplete="department-name"
                   >
-                    {departaments.map(option => (
+                    {[{id: 777, name: "Бөлүм тандаңыз"}, ...departaments].map(option => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.name}
                       </MenuItem>
@@ -180,14 +190,10 @@ const SignUp = observer(() => {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/signin" >
-                  Аккаунт бар
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+          </form>
+          <Link href="/signin" >
+            Аккаунт бар
+          </Link>
         </Box>
       </Container>
     </ThemeProvider>

@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {manasLogo} from '../../../public/manas_logo.png'
-import Image from 'next/image'
+import WidgetsIcon from '@mui/icons-material/Widgets';
 
 const pages = ['Спорт түрлөрү', 'Агайлар'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -42,11 +42,11 @@ function Header({toggleDrawer, state}) {
   };
 
   return (
-    <AppBar open={state} position="sticky" sx={{mb: 2}}>
+    <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters >
           <Button onClick={toggleDrawer} sx={{color: 'white'}}>
-              <AdbIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              <WidgetsIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           </Button>
           <Typography
             variant="h6"
@@ -121,7 +121,7 @@ function Header({toggleDrawer, state}) {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center" }}>
             {pages.map((page) => (
               <Button
                 key={page}
