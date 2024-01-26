@@ -34,7 +34,8 @@ export default function AppShell ({children}) {
                   marginX: "10px",
                   bgcolor: "rgba(217, 217, 217, 0.3)",
                   borderRadius: "20px",
-                  overflowY: "scroll"
+                  overflowY: "scroll",
+                  width: "100%"
                 }}>
                     
                   <Box sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)'}}>

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
-import facDepSlice from './slices/facdep'
+import facDeps from './slices/facdep'
+import announcement from './slices/announcement'
 
 const store = configureStore({
     reducer: {
-        facDeps: facDepSlice
+        facDeps ,
+        announcement 
     }
 })
 

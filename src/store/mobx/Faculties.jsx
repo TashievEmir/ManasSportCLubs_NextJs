@@ -15,7 +15,6 @@ class Faculties{
     async getFaculties(){
         const facultiesResponse = await $api.get('Faculty/GetAll');
         this.facultyName = [...this.facultyName, ...facultiesResponse.data]
-        //console.log(this.facultyName)
     }
 }
 export default new Faculties()

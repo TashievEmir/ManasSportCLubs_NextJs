@@ -27,6 +27,7 @@ const defaultTheme = createTheme();
 
 const SignUp = observer(() => {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const [state, setState] = useState({
     faculty: 777,
@@ -38,7 +39,6 @@ const SignUp = observer(() => {
     dispatch(fetchFaculties())
   }, [])
   
-  const dispatch = useDispatch()
   const {faculties, departaments} = useSelector(s => s.facDeps)
 
   const handleSubmit = async (event) => {
