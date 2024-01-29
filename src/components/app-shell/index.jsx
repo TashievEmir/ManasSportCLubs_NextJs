@@ -2,7 +2,7 @@
 import React, {useState} from 'react'
 import Header from '../header/Header';
 import Sidebar from '../izatSideBar/sidebar';
-import { Box } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 
 
 export default function AppShell ({children}) {
@@ -14,6 +14,7 @@ export default function AppShell ({children}) {
   return (
     <Box sx={{height: "100vh", overflow: "hidden"}}>
         <Header state={opened} toggleDrawer={changeSidebar}/>
+        
         <main style={{ 
           display: 'flex',
            justifyContent: 'flex-start',

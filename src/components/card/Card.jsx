@@ -10,7 +10,7 @@ import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 
 export default function MediaCard( {element} ) {
-console.log(element)
+
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent>
@@ -25,8 +25,7 @@ console.log(element)
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {element.description}
-          {/* Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica */}
+          
         </Typography>
       </CardContent>
     </Card>

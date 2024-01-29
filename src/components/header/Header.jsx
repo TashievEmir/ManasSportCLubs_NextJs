@@ -1,5 +1,5 @@
 'use client'
-import * as React from 'react';
+import React, { useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,17 +12,26 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import {manasLogo} from '../../../public/manas_logo.png'
+import manasLogo from '../../../public/manas_logo.png'
 import WidgetsIcon from '@mui/icons-material/Widgets';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchClubs } from '../../store/actions/fetchClubs'
+import { Select } from '@mui/material';
+import Link from 'next/link';
+import Image from 'next/image'
 
-const pages = ['Спорт түрлөрү', 'Агайлар'];
+const pages = ['Клубтар', 'фывджаоыф'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-
-
-
 function Header({toggleDrawer, state}) {
+  const dispatch = useDispatch()
+  const {data} = useSelector((state)=> state.club)
+  const [selected, setSelected] = useState("")
+  console.log(data)
+  useEffect( () =>{
+    dispatch(fetchClubs())
+  }, [])
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,127 +50,39 @@ function Header({toggleDrawer, state}) {
     setAnchorElUser(null);
   };
 
+  useEffect(() => {
+    if(data[0]){
+      setSelected(data[0].id)
+    }
+
+  }, [data])
   return (
     <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters >
           <Button onClick={toggleDrawer} sx={{color: 'white'}}>
               <WidgetsIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          </Button>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent:'center', alignItems:'center' }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          </Button>         
+          
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center", alignItems: "center", gap: "20px" }}>
+            <Link  href="/user">
+              <Image width={60} src={manasLogo} alt="manas logo" sx={{my:5}}/>
+            </Link>
+            <Select sx={{color: "white"}} value={selected} onChange={(value) => setSelected(value)}>
+              
+              {
+                [...data].map((el) => (
+                  <MenuItem sx={{}} key={el.id} value={el.id}>
+                    <Typography sx={{color:"white"}}>{el.name}</Typography>
+                  </MenuItem>
+                ))
+              }
+            </Select>
+            <Link  href="/teacher">
+              <Typography sx={{color: "white"}}>Агайлар</Typography>
+            </Link>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center" }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          
         </Toolbar>
       </Container>
     </AppBar>

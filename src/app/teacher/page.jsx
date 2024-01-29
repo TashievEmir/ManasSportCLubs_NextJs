@@ -5,16 +5,16 @@ import { Grid } from '@mui/material'
 import AppShell from '../../components/app-shell'
 import { observer } from 'mobx-react-lite';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAnnouncements } from '../../store/actions/fetchAnnouncements'
+import { fetchTeachers } from '../../store/actions/fetchTeacher'
 
-const Users = () => {
-  const dispatch = useDispatch()
-  const {data} = useSelector((state)=> state.announcement)
+const Teachers = () =>{
+const dispatch = useDispatch()
+  const {data} = useSelector((state)=> state.teacher)
   useEffect( () =>{
-    dispatch(fetchAnnouncements())
+    dispatch(fetchTeachers())
   }, [])
 
-  return (
+  return(
     <AppShell>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
         {
@@ -30,4 +30,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Teachers

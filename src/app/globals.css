@@ -25,3 +25,6 @@ body {
   background: #370E8A;
   border-radius: 10px !important;
 }
+*{
+  text-decoration: none !important;
+}
