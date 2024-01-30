@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import Card from '../../components/card/Card'
+import Card from '../../components/card/CardAnnouncement'
 import { Grid } from '@mui/material'
 import AppShell from '../../components/app-shell'
 import { observer } from 'mobx-react-lite';

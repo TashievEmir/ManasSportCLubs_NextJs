@@ -1,12 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import $api from "../../utils/api";
 
-export const fetchTeachers = createAsyncThunk(
-    "teacher/get",
+export const fetchMembers = createAsyncThunk(
+    "club/getMembers",
     async () =>{
         try{
-            const response = await $api.get("/Teacher/GetAll")
-            console.log(response.data)
+            const response = await $api.get("/club/GetMembers?id=3")
             return response.data
         }
         catch(error){

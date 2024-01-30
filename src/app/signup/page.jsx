@@ -1,7 +1,6 @@
 'use client'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -11,7 +10,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
-import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import $api from '../../utils/api'
@@ -20,7 +18,6 @@ import { observer } from 'mobx-react-lite';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDepartament } from '../../store/actions/fetchDepartament';
 import { fetchFaculties } from '../../store/actions/fetchFaculties';
-import { FormControl } from '@mui/material';
 import manasLogo from '../../../public/manas_logo.png'
 
 const defaultTheme = createTheme();

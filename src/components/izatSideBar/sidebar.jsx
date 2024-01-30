@@ -6,7 +6,7 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 const sidebar = [
     {
         id: 1,
-        path: "/",
+        path: "/clubRegistration",
         icon: <PersonAdd/>,
         title: 'Клубга катталуу'
     },
@@ -32,8 +32,6 @@ const sidebar = [
 
 
 const Sidebar = ({ open, setOpened }) => {
-    // profile > sidebar: [{title: string, id: number, path: string, icon: string}]
-    // const {sidebar} = useSelector(s => s.profile)
 
     const links = sidebar?.map((item) => (
         <Links 

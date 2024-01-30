@@ -1,9 +1,8 @@
 "use client"
 import React, { useEffect } from 'react'
-import Card from '../../components/card/Card'
+import Card from '../../components/card/CardTeacher'
 import { Grid } from '@mui/material'
 import AppShell from '../../components/app-shell'
-import { observer } from 'mobx-react-lite';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTeachers } from '../../store/actions/fetchTeacher'
 

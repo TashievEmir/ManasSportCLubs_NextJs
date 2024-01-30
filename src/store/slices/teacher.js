@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchTeacher} from '../actions/fetchTeacher'
+import {fetchTeachers} from '../actions/fetchTeacher'
 const teacherSlice = createSlice({
     name: "teacher",
     initialState: {
@@ -7,7 +7,7 @@ const teacherSlice = createSlice({
     },
     reducers: {},
     extraReducers: (builder) =>{
-        builder.addCase( fetchTeacher.fulfilled, (state, { payload })=>{
+        builder.addCase( fetchTeachers.fulfilled, (state, { payload })=>{
             state.data = payload
         })
     }
