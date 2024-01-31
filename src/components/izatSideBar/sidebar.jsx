@@ -12,7 +12,7 @@ const sidebar = [
     },
     {
         id: 2,
-        path: "/",
+        path: "/schedule",
         icon: <CalendarMonth/>,
         title: 'Расписание көрүү'
     },
@@ -24,7 +24,7 @@ const sidebar = [
     },
     {
         id: 4,
-        path: "/",
+        path: "/memberList",
         icon: <FormatListNumberedIcon/>,
         title: 'Клубтун тизмеси'
     },

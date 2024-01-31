@@ -24,10 +24,10 @@ const pages = ['Клубтар', 'фывджаоыф'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header({toggleDrawer, state}) {
+  
   const dispatch = useDispatch()
   const {data} = useSelector((state)=> state.club)
   const [selected, setSelected] = useState("")
-  console.log(data)
   useEffect( () =>{
     dispatch(fetchClubs())
   }, [])

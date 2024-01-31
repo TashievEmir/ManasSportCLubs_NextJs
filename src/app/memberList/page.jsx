@@ -9,13 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const defaultTheme = createTheme();
 
-const memberList = () => {
+const MemberList = () => {
+
     const dispatch = useDispatch()
     const {data} = useSelector((state)=> state.member)
     useEffect( () => {
     dispatch(fetchMembers())
     }, [])
-    console.log(data,"ertyhj")
+
   return (
     <AppShell>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
@@ -32,4 +33,4 @@ const memberList = () => {
   )
 }
 
-export default memberList
+export default MemberList
