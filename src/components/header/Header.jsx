@@ -66,7 +66,7 @@ function Header({toggleDrawer, state}) {
           
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center", alignItems: "center", gap: "20px" }}>
             <Link  href="/user">
-              <Image width={60} src={manasLogo} alt="manas logo" sx={{my:5}}/>
+              <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
             <Select sx={{color: "white"}} value={selected} onChange={(value) => setSelected(value)}>
               

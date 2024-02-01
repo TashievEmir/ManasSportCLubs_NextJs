@@ -22,12 +22,13 @@
       }
     ]
   },
+  "baseUrl": ".",
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/app-table/index.jsx"  ],
   "exclude": [
     "node_modules"
   ]

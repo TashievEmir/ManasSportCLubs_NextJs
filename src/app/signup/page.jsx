@@ -41,7 +41,6 @@ const SignUp = observer(() => {
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data)
         const response = await $api.post('/Account/Register',{
           LastName: data.get('lastName'),
           FirstName: data.get('firstName'),

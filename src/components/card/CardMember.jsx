@@ -10,7 +10,6 @@ import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 
 export default function CardMember( {element} ) {
-  console.log(element, "asdf")
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent>
