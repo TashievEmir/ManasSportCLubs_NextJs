@@ -3,9 +3,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { createTheme } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
-const defaultTheme = createTheme();
 
 export default function ResetPassword(){
     const router = useRouter();

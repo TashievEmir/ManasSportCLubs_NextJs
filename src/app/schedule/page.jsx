@@ -2,8 +2,6 @@
 import React, { use, useEffect, useState } from 'react'
 import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, Table, TableBody, TableCell, TextField, ThemeProvider, Typography, createTheme } from '@mui/material'
 import AppShell from '../../components/app-shell'
-import { DataGrid } from '@mui/x-data-grid';
-import { fetchMembers } from '../../store/actions/fetchMembers'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSchedule } from '../../store/actions/fetchSchedule';
 import AppTable from '../../components/app-table';
@@ -40,12 +38,5 @@ const Schedule = () => {
     </AppShell>
   )
 }
-// function renderEventContent(eventInfo) {
-//   return (
-//     <>
-//       <b>{eventInfo.timeText}</b>
-//       <i>{eventInfo.event.title}</i>
-//     </>
-//   )
-// }
+
 export default Schedule

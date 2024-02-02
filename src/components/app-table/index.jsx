@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -27,14 +27,15 @@ export default function AppTable({
     disabled
 }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{borderRadius: "15px"}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            
+        <TableHead sx={{backgroundColor: "#8855ED" }}>
+          <TableRow >           
             {
                 cols.map((item, idx) => (
-                    <TableCell align="center" key={item.headerName + idx}>{item?.headerName}</TableCell>
+                    <TableCell  align="center" key={item.headerName + idx}>
+                      <Typography sx={{color: "white", fontWeight:"bold"}} >{item?.headerName} </Typography>
+                    </TableCell>
                 ))
             }
             {!disabled &&  <TableCell></TableCell>}
