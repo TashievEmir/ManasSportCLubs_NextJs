@@ -9,23 +9,24 @@ import Paper from '@mui/material/Paper';
 import { Box, Button, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+// function createData(name, calories, fat, carbs, protein) {
+//   return { name, calories, fat, carbs, protein };
+// }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+// const rows = [
+//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+//   createData('Eclair', 262, 16.0, 24, 6.0),
+//   createData('Cupcake', 305, 3.7, 67, 4.3),
+//   createData('Gingerbread', 356, 16.0, 49, 3.9),
+// ];
 
 export default function AppTable({
     cols,
     rows,
     disabled
 }) {
+  console.log(rows)
   return (
     <TableContainer component={Paper} sx={{borderRadius: "15px"}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -81,13 +82,13 @@ export default function AppTable({
                     <Box  sx={{bgcolor: row?.friday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
             }
                 </TableCell>
-              <TableCell sx={{textAlign: "center"}} width={90}>{row?.place}</TableCell>
-              <TableCell sx={{textAlign: "center"}} width={90}>{row?.auditourium}</TableCell>
-              <TableCell sx={{textAlign: "center"}} width={90}>{row?.startTime}</TableCell>
-              <TableCell sx={{textAlign: "center"}} width={90}>{row?.endTime}</TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.place}</TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.auditorium}</TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.startTime}</TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.endTime}</TableCell>
               {!disabled && 
               <TableCell sx={{margin: "0 auto"}} width={90}>
-                    <Button >Жаңыртуу</Button>
+                    <Button sx={{backgroundColor: "red"}} >Жаңыртуу</Button>
                 </TableCell>}
             </TableRow>
           ))}

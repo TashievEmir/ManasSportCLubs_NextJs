@@ -48,7 +48,7 @@ const Sidebar = ({ open, setOpened }) => {
             sx={{
                 width: '100%',
                 display: "flex",
-                justifyContent: "start",
+                justifyContent: "center",
                 alignItems: "start",
                 px: "10px",
                 height: "100%",

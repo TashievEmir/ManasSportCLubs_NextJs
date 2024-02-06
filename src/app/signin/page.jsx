@@ -1,6 +1,5 @@
 "use client"
-import React from 'react'
-import Avatar from '@mui/material/Avatar';
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,14 +13,17 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import manasLogo from '../../../public/manas_logo.png'
 import $api from '../../utils/api'
-import authentification from '../../store/mobx/Authentification'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 
 const defaultTheme = createTheme();
 
 const SignIn = () => {
+
   const router = useRouter()
+  const [account, setAccount] = useState();
+  const {getItem, setItem} = useLocalStorage('account');
 
    const handleSubmit = async (event) => {
         event.preventDefault();
@@ -32,9 +34,11 @@ const SignIn = () => {
         });
         
         if(response.status == 200){
-          authentification.setToken(response.data.accessToken);
-          authentification.setRole(response.data.role);
-          authentification.setUser(response.data.user);
+          // authentification.setToken(response.data.accessToken);
+          // authentification.setRole(response.data.role);
+          // authentification.setUser(response.data.user);
+          setItem(response.data)
+
           if(response.data.role == 'admin' || response.data.role == 'teacher'){
             router.push('/admin');  
           }

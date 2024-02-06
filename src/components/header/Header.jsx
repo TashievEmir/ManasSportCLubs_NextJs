@@ -3,31 +3,27 @@ import React, { useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import manasLogo from '../../../public/manas_logo.png'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchClubs } from '../../store/actions/fetchClubs'
-import { Select } from '@mui/material';
+import { FormControl, InputLabel, Select } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image'
 
-const pages = ['Клубтар', 'фывджаоыф'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header({toggleDrawer, state}) {
-  
+
   const dispatch = useDispatch()
   const {data} = useSelector((state)=> state.club)
-  const [selected, setSelected] = useState("")
+
+  const [club, setClub] = React.useState('');
+  const [selectedOption, setSelectedOption] = React.useState({ id: '', name: '' });
+
   useEffect( () =>{
     dispatch(fetchClubs())
   }, [])
@@ -50,36 +46,49 @@ function Header({toggleDrawer, state}) {
     setAnchorElUser(null);
   };
 
-  useEffect(() => {
-    if(data[0]){
-      setSelected(data[0].id)
-    }
+  const handleChange = (event) => {
+    const selectedId = event.target.value;
+    const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
+    setClub(selectedId)
+    setSelectedOption({
+      id: selectedId,
+      name: selectedName
+    })
+    
+  };
 
-  }, [data])
   return (
     <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters >
+        <Toolbar disableGutters sx={{}} >
           <Button onClick={toggleDrawer} sx={{color: 'white'}}>
               <WidgetsIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           </Button>         
-          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center", alignItems: "center", gap: "20px" }}>
             <Link  href="/user">
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
-            <Select sx={{color: "white"}} value={selected} onChange={(value) => setSelected(value)}>
-              
-              {
+            <FormControl sx={{width: "15%" }}>
+            <InputLabel sx={{color:"white"}} id="demo-simple-select-label">Клуб</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={club}
+                label="Клуб"
+                onChange={handleChange}
+                sx={{borderColor: "white", color:"white"}}
+              >
+                {
                 [...data].map((el) => (
-                  <MenuItem sx={{}} key={el.id} value={el.id}>
-                    <Typography sx={{color:"white"}}>{el.name}</Typography>
+                  <MenuItem sx={{ backgroundColor: "#8855ED"}} key={el.id} value={el.id}>
+                    {el.name}
                   </MenuItem>
                 ))
-              }
-            </Select>
+                }
+              </Select>
+              </FormControl>
             <Link  href="/teacher">
-              <Typography sx={{color: "white"}}>Агайлар</Typography>
+              <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
             </Link>
           </Box>
           
