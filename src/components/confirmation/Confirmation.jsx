@@ -1,18 +1,27 @@
 import { Button, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-
-function Confirmation(props) {
+import Box from '@mui/material/Box';
+function Confirmation() {
   return (
-    <div style={{display:"flex", justifyContent: "center", alignItmes:"center"}}>
-        <Typography>
-             {props.clubName} клубуна каталууга макулсузбу?
+    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"red", borderRadius:"10px", padding:'50px' }}>
+        <Typography sx={{ textAlign: "center", fontSize:"100px" }}>
+              клубуна каталууга макулсузбу?
         </Typography>
-        <Button>
-            Ооба
-        </Button>
-        <Button>
-            Жок
-        </Button>
+        <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'30px'}}>
+          <Button
+            type='submit'           
+            variant='contained'
+            sx={{color:'white', backgroundColor:"#370E8A"}}>
+              Ооба
+          </Button>
+          <Button
+            type='submit'           
+            variant='contained'
+            sx={{color:'white', backgroundColor:"#370E8A"}}>
+              Жок
+          </Button>
+        </div>
+        
     </div>
   )
 }
