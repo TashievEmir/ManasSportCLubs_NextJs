@@ -1,13 +1,13 @@
-import { Button, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
-import Box from '@mui/material/Box';
-function Confirmation() {
+import { Button, Typography } from "@mui/material";
+
+
+export default function Confirmation () {
   return (
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"red", borderRadius:"10px", padding:'50px' }}>
+    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"white", borderRadius:"10px", padding:'50px' }}>
         <Typography sx={{ textAlign: "center", fontSize:"100px" }}>
               клубуна каталууга макулсузбу?
         </Typography>
-        <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'30px'}}>
+        <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'20px'}}>
           <Button
             type='submit'           
             variant='contained'
@@ -21,9 +21,6 @@ function Confirmation() {
               Жок
           </Button>
         </div>
-        
     </div>
   )
 }
-
-export default Confirmation
