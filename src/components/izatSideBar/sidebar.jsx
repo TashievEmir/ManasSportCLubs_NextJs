@@ -18,7 +18,7 @@ const sidebar = [
     },
     {
         id: 3,
-        path: "/",
+        path: "/clubCanceling",
         icon: <PersonRemove/>,
         title: 'Клубтан баш тартуу'
     },

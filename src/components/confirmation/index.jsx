@@ -11,15 +11,36 @@ export default function Confirmation (props) {
 
   async function Confirm(){
     const account = getItem()
+    let response = undefined;
 
-    const response = await $api.post('/Club/Apply', {
-      User: account.user,
-      Club: selectedClub
-    });
+    if(props.action == true) {
 
-    if(response.status==200){
+      response = await $api.post('/Club/Apply', {
+        User: account.user,
+        Club: selectedClub
+      });
+
+    }
+    else {
+
+      const requestData = {
+        User: account.user,
+        Club: selectedClub
+      };
+
+      response = await $api.delete('/Club/Abandon', { data: requestData });
+
+    }
+  
+    if(response.status==200) {
+
       router.push('/user');
     }
+    else {
+
+      alert("something went wrong")
+    }
+
   }
 
   function Reject(){
