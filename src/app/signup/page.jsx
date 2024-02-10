@@ -41,6 +41,7 @@ const SignUp = observer(() => {
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        
         const response = await $api.post('/Account/Register',{
           LastName: data.get('lastName'),
           FirstName: data.get('firstName'),
@@ -51,6 +52,7 @@ const SignUp = observer(() => {
           Faculty: data.get('faculty'),
           Department: data.get('department')
         });
+
         if(response.status==200){
           router.push('/signin');
         }

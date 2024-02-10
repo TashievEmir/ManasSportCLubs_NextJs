@@ -13,13 +13,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchClubs } from '../../store/actions/fetchClubs'
 import { FormControl, InputLabel, Select } from '@mui/material';
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from 'next/image';
+import {setSelectedClub} from '../../store/slices/selectedClub'
 
 
 function Header({toggleDrawer, state}) {
 
   const dispatch = useDispatch()
-  const {data} = useSelector((state)=> state.club)
+  const {data} = useSelector((state) => state.club)
+  const selectedClub = useSelector((state) => state.selectedClub.value)
 
   const [club, setClub] = React.useState('');
   const [selectedOption, setSelectedOption] = React.useState({ id: '', name: '' });
@@ -50,6 +52,7 @@ function Header({toggleDrawer, state}) {
     const selectedId = event.target.value;
     const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
     setClub(selectedId)
+    dispatch(setSelectedClub(selectedName))
     setSelectedOption({
       id: selectedId,
       name: selectedName
