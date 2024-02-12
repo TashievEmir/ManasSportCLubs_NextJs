@@ -5,7 +5,7 @@ import Confirmation from "../../components/confirmation"
 import { useSelector } from 'react-redux'
 
 const ClubRegistration = (props) => {
-  const selectedClub = useSelector((state) => state.selectedClub.value)
+  const selectedClub = useSelector((state) => state.selectedClub.value.name)
   
   return (
     <AppShell >

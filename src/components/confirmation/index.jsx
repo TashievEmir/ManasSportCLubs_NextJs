@@ -7,7 +7,7 @@ import $api from '../../utils/api'
 export default function Confirmation (props) {
   const router = useRouter()
   const {getItem, setItem} = useLocalStorage('account');
-  const selectedClub = useSelector((state) => state.selectedClub.value)
+  const selectedClub = useSelector((state) => state.selectedClub.value.name)
 
   async function Confirm(){
     const account = getItem()

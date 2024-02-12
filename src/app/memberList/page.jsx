@@ -1,13 +1,11 @@
 "use client"
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import CardMember from '../../components/card/CardMember'
 import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, TextField, ThemeProvider, Typography, createTheme } from '@mui/material'
 import AppShell from '../../components/app-shell'
-
 import { fetchMembers } from '../../store/actions/fetchMembers'
 import { useDispatch, useSelector } from 'react-redux'
 
-const defaultTheme = createTheme();
 
 const MemberList = () => {
 

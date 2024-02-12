@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: 0,
+    value: {id: 0, name: ''}
   }
 
 const selectedClubSlice = createSlice({
@@ -12,11 +12,6 @@ const selectedClubSlice = createSlice({
             state.value = action.payload
         }
     }
-    // extraReducers: (builder) =>{
-    //     builder.addCase( fetchClubs.fulfilled, (state, { payload })=>{
-    //         state.data = payload
-    //     })
-    // }
 })
 
 export const { setSelectedClub } = selectedClubSlice.actions

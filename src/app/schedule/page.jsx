@@ -22,9 +22,10 @@ const columns = [
 const Schedule = () => {
     const dispatch = useDispatch()
     const {data} = useSelector((state)=> state.schedule)
-    
+    const selectedClub = useSelector((state) => state.selectedClub.value.id)
+
     useEffect( () => {
-      dispatch(fetchSchedule())
+      dispatch(fetchSchedule(selectedClub))
     }, [])
   return (
     <AppShell>

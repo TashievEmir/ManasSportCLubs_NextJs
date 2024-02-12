@@ -14,7 +14,7 @@ import { fetchClubs } from '../../store/actions/fetchClubs'
 import { FormControl, InputLabel, Select } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
-import {setSelectedClub} from '../../store/slices/selectedClub'
+import {setSelectedClub} from '../../store/slices/selectedClub';
 
 
 function Header({toggleDrawer, state}) {
@@ -30,33 +30,14 @@ function Header({toggleDrawer, state}) {
     dispatch(fetchClubs())
   }, [])
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const handleChange = (event) => {
     const selectedId = event.target.value;
     const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
     setClub(selectedId)
-    dispatch(setSelectedClub(selectedName))
-    setSelectedOption({
+    dispatch(setSelectedClub({
       id: selectedId,
       name: selectedName
-    })
+    }))
     
   };
 

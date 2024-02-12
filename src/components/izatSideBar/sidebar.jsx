@@ -2,8 +2,11 @@ import { CalendarMonth, PersonAdd, PersonRemove } from '@mui/icons-material';
 import  Links from './links';
 import { Box } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import AddIcon from '@mui/icons-material/Add';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 
-const sidebar = [
+const userSidebar = [
     {
         id: 1,
         path: "/clubRegistration",
@@ -14,7 +17,7 @@ const sidebar = [
         id: 2,
         path: "/schedule",
         icon: <CalendarMonth/>,
-        title: 'Расписание көрүү'
+        title: 'Расписание'
     },
     {
         id: 3,
@@ -30,10 +33,51 @@ const sidebar = [
     },
 ]
 
+const adminSidebar = [
+    {
+        id: 1,
+        path: "admin/clubApprove",
+        icon: <PersonAdd/>,
+        title: 'Клубга катталуу'
+    },
+    {
+        id: 2,
+        path: "admin/schedule",
+        icon: <CalendarMonth/>,
+        title: 'Расписание'
+    },
+    {
+        id: 3,
+        path: "/clubCanceling",
+        icon: <PersonRemove/>,
+        title: 'Клубтан баш тартуу'
+    },
+    {
+        id: 4,
+        path: "/memberList",
+        icon: <FormatListNumberedIcon/>,
+        title: 'Клубтун тизмеси'
+    },
+    {
+        id: 5,
+        path: "admin/clubCreate",
+        icon: <AddIcon/>,
+        title: 'Клуб жаратуу'
+    },
+    {
+        id: 6,
+        path: "admin/Announcement",
+        icon: <NoteAddIcon/>,
+        title: 'Жаңылык жаратуу'
+    },
+]
+
 
 const Sidebar = ({ open, setOpened }) => {
+    const { getItem } = useLocalStorage('account');
+    const account = getItem()
 
-    const links = sidebar?.map((item) => (
+    const links = account.role == "student" ? userSidebar?.map((item) => (
         <Links 
             onClick={setOpened} 
             key={item.id} 
@@ -41,7 +85,16 @@ const Sidebar = ({ open, setOpened }) => {
             icon={item.icon} 
             title={item.title} 
             open={open} />
-    ));
+    ))
+    : adminSidebar?.map((item)=>(
+        <Links 
+            onClick={setOpened} 
+            key={item.id} 
+            path={item.path} 
+            icon={item.icon} 
+            title={item.title} 
+            open={open} />
+    ))
 
     return (
         <Box

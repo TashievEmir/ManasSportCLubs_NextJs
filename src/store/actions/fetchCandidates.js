@@ -1,13 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import $api from "../../utils/api";
-import { useSelector } from 'react-redux'
 
-
-export const fetchSchedule = createAsyncThunk(   
-    "club/getSchedule",   
+export const fetchCandidates = createAsyncThunk(
+    "club/getCandidates",
     async (selectedClub) =>{
         try{
-            const response = await $api.get(`/club/GetSchedule?id=${selectedClub}`)
+            const response = await $api.get(`/club/GetCandidates?id=${selectedClub}`)
+            console.log(response.data)
             return response.data
         }
         catch(error){
