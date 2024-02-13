@@ -1,10 +1,13 @@
 import React from 'react'
 import AppShell from '../../components/app-shell'
+import Image from 'next/image';
 
 const Admin = () => {
   return (
     <AppShell>
-          <div>Admin</div>
+          <div>
+            <Image />
+          </div>
     </AppShell>
   )
 }

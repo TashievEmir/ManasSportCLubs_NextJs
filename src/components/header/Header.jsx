@@ -15,20 +15,23 @@ import { FormControl, InputLabel, Select } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import {setSelectedClub} from '../../store/slices/selectedClub';
-
+import { useRouter } from 'next/navigation';
 
 function Header({toggleDrawer, state}) {
-
+  const router = useRouter()
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
   const selectedClub = useSelector((state) => state.selectedClub.value)
-
+  
   const [club, setClub] = React.useState('');
-  const [selectedOption, setSelectedOption] = React.useState({ id: '', name: '' });
 
   useEffect( () =>{
     dispatch(fetchClubs())
+    setClub(selectedClub.id)
   }, [])
+
+  useEffect(() => {
+  }, [club])
 
   const handleChange = (event) => {
     const selectedId = event.target.value;
@@ -38,7 +41,7 @@ function Header({toggleDrawer, state}) {
       id: selectedId,
       name: selectedName
     }))
-    
+    router.push('/admin')
   };
 
   return (
@@ -60,11 +63,27 @@ function Header({toggleDrawer, state}) {
                 value={club}
                 label="Клуб"
                 onChange={handleChange}
-                sx={{borderColor: "white", color:"white"}}
+                sx={{ border: "1px solid white", color:"white",
+                      boxShadow: "none",
+                      "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                        {
+                          border: 0,
+                        },
+                      "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                      {
+                        border: 0,
+                      }
+                   }}
               >
                 {
                 [...data].map((el) => (
-                  <MenuItem sx={{ backgroundColor: "#8855ED"}} key={el.id} value={el.id}>
+                  <MenuItem sx={{ backgroundColor: "white", "&:focus": {
+                    backgroundColor: "white"
+                  }, "&:hover": {
+                    backgroundColor: "#8855ED",
+                    color:"white"
+                  }
+                                }} key={el.id} value={el.id}>
                     {el.name}
                   </MenuItem>
                 ))

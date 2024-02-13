@@ -11,6 +11,7 @@ const MemberList = () => {
 
     const dispatch = useDispatch()
     const {data} = useSelector((state)=> state.member)
+    const selectedClub = useSelector((state) => state.selectedClub.value.name)
     useEffect( () => {
     dispatch(fetchMembers())
     }, [])

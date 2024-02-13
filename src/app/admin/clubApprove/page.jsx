@@ -15,7 +15,7 @@ const ClubApprove = () => {
     dispatch(fetchCandidates(selectedClub))
     }, [])
 
-    console.log(data, "sdf")
+    //console.log(data, "sdf")
   return (
     <AppShell >
         <Grid container justifyContent="start" alignItems="start" gap={2}>

@@ -36,13 +36,13 @@ const userSidebar = [
 const adminSidebar = [
     {
         id: 1,
-        path: "admin/clubApprove",
+        path: "/admin/clubApprove",
         icon: <PersonAdd/>,
         title: 'Клубга катталуу'
     },
     {
         id: 2,
-        path: "admin/schedule",
+        path: "/admin/schedule",
         icon: <CalendarMonth/>,
         title: 'Расписание'
     },

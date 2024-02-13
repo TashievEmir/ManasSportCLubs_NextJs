@@ -24,7 +24,7 @@ export default function AppShell ({children}) {
               width: opened ? "700px" : "80px",
               transition: "300ms",
               height: "90vh",
-              maxWidth: "16%"
+              maxWidth: "15%"
             }}>
             <Sidebar open={opened} setOpened={changeSidebar}/>
           </Box>

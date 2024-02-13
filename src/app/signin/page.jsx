@@ -34,9 +34,6 @@ const SignIn = () => {
         });
         
         if(response.status == 200){
-          // authentification.setToken(response.data.accessToken);
-          // authentification.setRole(response.data.role);
-          // authentification.setUser(response.data.user);
           setItem(response.data)
 
           if(response.data.role == 'admin' || response.data.role == 'teacher'){

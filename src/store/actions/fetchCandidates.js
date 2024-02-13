@@ -6,7 +6,6 @@ export const fetchCandidates = createAsyncThunk(
     async (selectedClub) =>{
         try{
             const response = await $api.get(`/club/GetCandidates?id=${selectedClub}`)
-            console.log(response.data)
             return response.data
         }
         catch(error){
