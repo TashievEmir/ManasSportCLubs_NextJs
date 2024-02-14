@@ -5,7 +5,7 @@ export const fetchMembers = createAsyncThunk(
     "club/getMembers",
     async () =>{
         try{
-            const response = await $api.get("/club/GetMembers?id=3")
+            const response = await $api.get("/club/GetMembers?clubId=3")
             return response.data
         }
         catch(error){

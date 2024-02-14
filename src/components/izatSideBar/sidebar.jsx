@@ -48,25 +48,19 @@ const adminSidebar = [
     },
     {
         id: 3,
-        path: "/clubCanceling",
-        icon: <PersonRemove/>,
-        title: 'Клубтан баш тартуу'
-    },
-    {
-        id: 4,
-        path: "/memberList",
+        path: "/admin/clubMembers",
         icon: <FormatListNumberedIcon/>,
         title: 'Клубтун тизмеси'
     },
     {
-        id: 5,
-        path: "admin/clubCreate",
+        id: 4,
+        path: "/admin/clubCreate",
         icon: <AddIcon/>,
         title: 'Клуб жаратуу'
     },
     {
-        id: 6,
-        path: "admin/Announcement",
+        id: 5,
+        path: "/admin/announcement",
         icon: <NoteAddIcon/>,
         title: 'Жаңылык жаратуу'
     },

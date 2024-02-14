@@ -8,14 +8,13 @@ import { Grid } from '@mui/material'
 
 const ClubApprove = () => {
     const selectedClub = useSelector((state) => state.selectedClub.value.id)
-    const {data} = useSelector((state)=> state.member)
+    const {data} = useSelector((state)=> state.candidate)
 
     const dispatch = useDispatch()
     useEffect( () => {
     dispatch(fetchCandidates(selectedClub))
     }, [])
 
-    //console.log(data, "sdf")
   return (
     <AppShell >
         <Grid container justifyContent="start" alignItems="start" gap={2}>
