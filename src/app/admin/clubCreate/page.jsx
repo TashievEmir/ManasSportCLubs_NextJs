@@ -28,13 +28,13 @@ function ClubCreate() {
         const data = new FormData(event.currentTarget);
         
         const response = await $api.post('/club/Create',{
-          ClubName: data.get('clubName'),
+          Name: data.get('clubName'),
           Teacher: data.get('teacher'),
           Description: data.get('description')
         });
-
+        debugger
         if(response.status==200){
-          router.push('/signin');
+          alert("saved succesfully")
         }
 
       };
@@ -88,7 +88,7 @@ function ClubCreate() {
                     autoComplete="teacher-name"
                   >
                     {[{id: 777, name: "Агай тандаңыз"}, ...data].map(option => (
-                      <MenuItem key={option.id} value={option.id}>
+                      <MenuItem key={option.id} value={`${option.lastName} ${option.firstName}`}>
                         {option.name || `${option.lastName} ${option.firstName}` || 'Агай тандаңыз'}
                       </MenuItem>
                     ))}

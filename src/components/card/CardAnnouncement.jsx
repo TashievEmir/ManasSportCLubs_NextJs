@@ -8,18 +8,29 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
+import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 
 export default function MediaCard( {element} ) {
 
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent>
-      <Image
-        width={100}
-        height={100}
-        src={`data:image/png;base64,${element.photo}`} 
-        alt='manasLogo'
-      />
+        {element.photo ? (
+          <Image
+            width={300}
+            height={200}
+            src={`data:image/png;base64,${element.photo}`} 
+            alt='manasLogo'
+          />
+        ) : (
+          <Image
+            width={300}
+            height={200}
+            src={NoPhotographyIcon} 
+            alt='manasLogo'
+          />
+        )}
+      
         <Typography gutterBottom variant="h5" component="div">
           {element.title}
         </Typography>

@@ -1,31 +1,25 @@
 "use client"
-import React, { useEffect } from 'react'
-import Card from '../../components/card/CardAnnouncement'
-import { Grid } from '@mui/material'
+import React  from 'react'
 import AppShell from '../../components/app-shell'
-import { observer } from 'mobx-react-lite';
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchAnnouncements } from '../../store/actions/fetchAnnouncements'
+import { useSelector } from 'react-redux'
+import Image from 'next/image';
+import football from '../../../public/fotball.webp'
+import basketball from '../../../public/basketball.jpg'
+import volleyball from '../../../public/volleyball.jpg'
 
 const Users = () => {
-  const dispatch = useDispatch()
-  const {data} = useSelector((state)=> state.announcement)
-  useEffect( () =>{
-    dispatch(fetchAnnouncements())
-  }, [])
+  const selectedClub = useSelector((state) => state.selectedClub.value.id)
 
   return (
     <AppShell>
-      <Grid container justifyContent="start" alignItems="start" gap={2}>
-        {
-          data.map((element) =>
-            <Grid key={element.id} item>
-              <Card element={element} />
-            </Grid>
-          )
-          
-        }
-      </Grid>
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            {
+              selectedClub == 1 ? <Image src={football} alt='footbal picture' width={500} height={400} />
+                                : selectedClub == 2 ? <Image src={basketball} alt='footbal picture' width={500} height={400} />
+                                                    : <Image src={volleyball} alt='footbal picture' width={500} height={400} />
+            }
+            
+          </div>
     </AppShell>
   )
 }

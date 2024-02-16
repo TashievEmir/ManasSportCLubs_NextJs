@@ -16,34 +16,36 @@ import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
+import {setLoginStatus} from '../../store/slices/loginStatus';
+import { useDispatch, useSelector } from 'react-redux'
 
 const defaultTheme = createTheme();
 
 const SignIn = () => {
-
   const router = useRouter()
+  const dispatch = useDispatch()
+
   const [account, setAccount] = useState();
   const {getItem, setItem} = useLocalStorage('account');
 
    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        
         const response = await $api.post('/Account/LogIn',{
           Login: data.get('email'),
           Password: data.get('password')
         });
         
-        if(response.status == 200){
+        if(response.status == 200)
+        {
           setItem(response.data)
-
-          if(response.data.role == 'admin' || response.data.role == 'teacher'){
-            router.push('/admin');  
-          }
-          else{
-            router.push('/user');
-          }
-        }       
-        
+          dispatch(setLoginStatus(true))
+          router.push("/")
+        }
+        else{
+          alert("Something went wrong")
+        }               
       };
 
   return (

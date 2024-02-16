@@ -1,16 +1,56 @@
 "use client"
-import * as React from 'react';
+import React, { useEffect, useState } from 'react'
 import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Header from '../components/header/Header'
 import SideBar from '../components/sidebar/SideBar'
+import AppShell from '../components/app-shell';
+import { Box, Grid } from '@mui/material';
+import CardAnnouncement from '../components/card/CardAnnouncement';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAnnouncements } from '../store/actions/fetchAnnouncements';
+
+const defaultTheme = createTheme();
 
 export default function Home() {
-  
+  const [opened, setOpened] = useState(false)
+  const changeSidebar = () => {
+    setOpened(prev => prev)
+  }
+
+  const dispatch = useDispatch()
+  const {data} = useSelector((state)=> state.announcement)
+  useEffect( () =>{
+    dispatch(fetchAnnouncements())
+  }, [])
 
   return (
     <div>
-      MAIN PAGE
+      <Header state={false} toggleDrawer={changeSidebar} />
+      <Box sx={{
+                  padding: "15px",
+                  height: "90vh",
+                  overflow: "hidden",
+                  marginX: "10px",
+                  bgcolor: "rgba(217, 217, 217, 0.3)",
+                  borderRadius: "20px",
+                  overflowY: "scroll",
+                  width: "100%"
+                }} >
+                    
+                  <Box  display="flex" justifyContent="start" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
+                  {
+                    data.map((element) =>
+                      <Grid key={element.id} item>
+                        <CardAnnouncement element={element} />
+                      </Grid>
+                    )
+                    
+                  }
+                </Box>
+          </Box>
     </div>
+    
   )
 }

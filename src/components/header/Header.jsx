@@ -16,12 +16,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {setSelectedClub} from '../../store/slices/selectedClub';
 import { useRouter } from 'next/navigation';
+import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
+import {setLoginStatus} from '../../store/slices/loginStatus';
 
 function Header({toggleDrawer, state}) {
   const router = useRouter()
+
+  const {getItem} = useLocalStorage('account');
+  const account = getItem();
+
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
   const selectedClub = useSelector((state) => state.selectedClub.value)
+  const loginStatus = useSelector((state) => state.loginStatus.value);
   
   const [club, setClub] = React.useState('');
 
@@ -33,17 +40,36 @@ function Header({toggleDrawer, state}) {
   useEffect(() => {
   }, [club])
 
-  const handleChange = (event) => {
-    const selectedId = event.target.value;
-    const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
-    setClub(selectedId)
-    dispatch(setSelectedClub({
-      id: selectedId,
-      name: selectedName
-    }))
-    router.push('/admin')
+  const handleChange = (event) => 
+  {
+    if(loginStatus){
+      const selectedId = event.target.value;
+      const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
+
+      setClub(selectedId)
+
+      dispatch(setSelectedClub({
+        id: selectedId,
+        name: selectedName
+      }))
+
+      account.role == "teacher" ? router.push('/admin') : router.push('/user')
+    }
+    else{
+      alert("At first you need to login") 
+    }
   };
 
+  function Login()
+  {
+    if(loginStatus)
+    {
+      setLoginStatus(false)
+      router.push("/signin")
+    }
+
+    router.push("/signin")
+  }
   return (
     <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
       <Container maxWidth="xl">
@@ -94,6 +120,13 @@ function Header({toggleDrawer, state}) {
               <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
             </Link>
           </Box>
+          {
+            loginStatus ? (
+              <Button color="inherit" onClick={Login}>LogOut</Button>
+            ) : (
+              <Button color="inherit" onClick={Login}>Login</Button>
+            )
+          }
           
         </Toolbar>
       </Container>

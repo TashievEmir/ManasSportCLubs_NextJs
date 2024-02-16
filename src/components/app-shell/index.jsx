@@ -11,6 +11,7 @@ export default function AppShell ({children}) {
       const changeSidebar = () => {
         setOpened(prev => !prev)
       }
+      
   return (
     <Box sx={{height: "100vh", overflow: "hidden"}}>
         <Header state={opened} toggleDrawer={changeSidebar}/>
