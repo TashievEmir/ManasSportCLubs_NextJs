@@ -38,6 +38,13 @@ const SignUp = observer(() => {
   
   const {faculties, departaments} = useSelector(s => s.facDeps)
 
+  const filterDepartments = (facultyId) => {
+    if (facultyId === 777) {
+      return [{ id: 777, name: "Бөлүм тандаңыз" }];
+    }
+    return departaments.filter((dep) => dep.facultyId === facultyId);
+  };
+
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -106,7 +113,15 @@ const SignUp = observer(() => {
                 <Grid item xs={12}>
                   <Select
                     value={state.faculty}
-                    onChange={(value) => setState({...state, faculty: value.target.value})}
+                    onChange={(value) => {
+                      const facultyId = value.target.value;
+                      const filteredDepartments = filterDepartments(facultyId);
+                      setState({
+                        ...state,
+                        faculty: facultyId,
+                        department: filteredDepartments[0]?.id || 777,
+                      });
+                    }}
                     required
                     fullWidth
                     id="faculty"
@@ -130,7 +145,7 @@ const SignUp = observer(() => {
                     name="department"
                     autoComplete="department-name"
                   >
-                    {[{id: 777, name: "Бөлүм тандаңыз"}, ...departaments].map(option => (
+                    {filterDepartments(state.faculty).map(option => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.name}
                       </MenuItem>
