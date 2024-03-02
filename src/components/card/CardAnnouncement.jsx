@@ -9,13 +9,15 @@ import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
+import { Box } from '@mui/material';
 
 export default function MediaCard( {element} ) {
 
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent>
-        {element.photo ? (
+        <Box src={manasLogo} sx={{ width:'300px', height:'200px'}}>
+           {element.photo.length > 1000 ? (
           <Image
             width={300}
             height={200}
@@ -23,13 +25,17 @@ export default function MediaCard( {element} ) {
             alt='manasLogo'
           />
         ) : (
-          <Image
-            width={300}
+          <Box sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+            <Image
+            width={200}
             height={200}
-            src={NoPhotographyIcon} 
+            src={manasLogo} 
             alt='manasLogo'
           />
+          </Box>
         )}
+        </Box>
+       
       
         <Typography gutterBottom variant="h5" component="div">
           {element.title}

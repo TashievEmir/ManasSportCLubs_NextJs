@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 import './style.css'
 const Links = ({icon, path, title, open, onClick }) => {
@@ -18,11 +18,13 @@ const Links = ({icon, path, title, open, onClick }) => {
                 gap: "10px"
             }}
         >
-            {icon}
+            <Tooltip title={title}>
+                {icon}
+            </Tooltip>
             {open && (
-                <h3 style={{color: "white", fontWeight: "normal",  }}>
+                <Typography sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} style={{color: "white", fontWeight: "normal",  }}>
                     {title.toLowerCase()}
-                </h3>
+                </Typography>
             )}
         </Link>
     );

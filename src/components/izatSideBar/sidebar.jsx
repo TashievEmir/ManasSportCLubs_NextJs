@@ -1,6 +1,6 @@
 import { CalendarMonth, PersonAdd, PersonRemove } from '@mui/icons-material';
 import  Links from './links';
-import { Box } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import AddIcon from '@mui/icons-material/Add';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -72,22 +72,22 @@ const Sidebar = ({ open, setOpened }) => {
     const account = getItem()
 
     const links = account.role == "student" ? userSidebar?.map((item) => (
-        <Links 
-            onClick={setOpened} 
-            key={item.id} 
-            path={item.path} 
-            icon={item.icon} 
-            title={item.title} 
-            open={open} />
+            <Links 
+                onClick={setOpened} 
+                key={item.id}
+                path={item.path} 
+                icon={item.icon} 
+                title={item.title} 
+                open={open} />
     ))
     : adminSidebar?.map((item)=>(
-        <Links 
-            onClick={setOpened} 
-            key={item.id} 
-            path={item.path} 
-            icon={item.icon} 
-            title={item.title} 
-            open={open} />
+            <Links 
+            key={item.id}
+                onClick={setOpened} 
+                path={item.path} 
+                icon={item.icon} 
+                title={item.title} 
+                open={open} />
     ))
 
     return (

@@ -72,61 +72,49 @@ function Header({toggleDrawer, state}) {
   }
   return (
     <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{}} >
-          <Button onClick={toggleDrawer} sx={{color: 'white'}}>
-              <WidgetsIcon  sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+      <Container maxWidth="100%">
+        <Toolbar sx={{display: "flex", justifyContent: "space-between"}} disableGutters >
+          <Button sx={{ display: { xs: 'none', md: 'flex' } }} onClick={toggleDrawer}>
+              <WidgetsIcon   sx={{color: 'white'}} />
           </Button>         
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "center", alignItems: "center", gap: "20px" }}>
+          <Box sx={{display: "flex", alignItems: "center", gap: {xs: 2, md: 10}}}>
+            <Box>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label" sx={{color: "white"}}>Клуб</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={club}
+                  label="Клуб"
+                  onChange={handleChange}
+                  sx={{ width: '140px', border: "1px outset white", color:"white"}}>
+                  {
+                  [...data].map((el) => (
+                    <MenuItem  key={el.id} value={el.id}>
+                      {el.name}
+                    </MenuItem>
+                  ))
+                  }
+                </Select>
+              </FormControl>
+            </Box>
             <Link  href="/user">
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
-            <FormControl sx={{width: "15%" }}>
-            <InputLabel sx={{color:"white"}} id="demo-simple-select-label">Клуб</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={club}
-                label="Клуб"
-                onChange={handleChange}
-                sx={{ border: "1px solid white", color:"white",
-                      boxShadow: "none",
-                      "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                        {
-                          border: 0,
-                        },
-                      "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                      {
-                        border: 0,
-                      }
-                   }}
-              >
-                {
-                [...data].map((el) => (
-                  <MenuItem sx={{ backgroundColor: "white", "&:focus": {
-                    backgroundColor: "white"
-                  }, "&:hover": {
-                    backgroundColor: "#8855ED",
-                    color:"white"
-                  }
-                                }} key={el.id} value={el.id}>
-                    {el.name}
-                  </MenuItem>
-                ))
-                }
-              </Select>
-              </FormControl>
             <Link  href="/teacher">
               <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
             </Link>
+            
           </Box>
+          <Box sx={{display: "flex", gap: 1}}>
           {
             loginStatus ? (
-              <Button color="inherit" onClick={Login}>LogOut</Button>
+              <Button sx={{fontSize: {xs: "12px", md: "14px"}}} color="inherit" onClick={Login}>LogOut</Button>
             ) : (
-              <Button color="inherit" onClick={Login}>Login</Button>
+              <Button  sx={{fontSize: {xs: "12px", md: "14px"}}} color="inherit" onClick={Login}>Login</Button>
             )
           }
+          </Box>
           
         </Toolbar>
       </Container>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {Avatar, CssBaseline, Box, } from '@mui/material';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {manasLogo} from '../../../public/manas_logo.png'
+import {manasLogo} from '/public/manas_logo.png'
 import EmailRequest from '../../components/resetPassword/EmailRequest';
 import EmailCodeRequest from '../../components/resetPassword/EmailCodeRequest';
 import ResetPassword from '../../components/resetPassword/ResetPassword';

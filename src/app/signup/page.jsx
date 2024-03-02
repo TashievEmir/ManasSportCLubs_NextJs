@@ -49,20 +49,37 @@ const SignUp = observer(() => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        const response = await $api.post('/Account/Register',{
-          LastName: data.get('lastName'),
-          FirstName: data.get('firstName'),
-          Email: data.get('email'),
-          Password: data.get('password'),
-          RepeatedPassword: data.get('repeatPassword'),
-          Phone: data.get('telefon'),
-          Faculty: data.get('faculty'),
-          Department: data.get('department')
+        const emailResponse = await $api.post('/Account/SendEmail',{
+          Email: data.get('email')
         });
 
-        if(response.status==200){
-          router.push('/signin');
+        if( emailResponse.status == 200 ){
+          let code =  prompt('Input code from email: ' );
+
+          const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
+            Email: data.get('email'),
+            Code: code
+          });
+
+          if( verifyEmailResponse.status == 200 ){
+            
+            const response = await $api.post('/Account/Register',{
+              LastName: data.get('lastName'),
+              FirstName: data.get('firstName'),
+              Email: data.get('email'),
+              Password: data.get('password'),
+              RepeatedPassword: data.get('repeatPassword'),
+              Phone: data.get('telefon'),
+              Faculty: data.get('faculty'),
+              Department: data.get('department')
+            });
+    
+            if(response.status==200){
+              router.push('/signin');
+            }
+          }
         }
+        
 
       };
 

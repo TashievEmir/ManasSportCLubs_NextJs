@@ -32,14 +32,14 @@ export default function Home() {
                   padding: "15px",
                   height: "90vh",
                   overflow: "hidden",
-                  marginX: "10px",
+                  marginX: "auto",
                   bgcolor: "rgba(217, 217, 217, 0.3)",
                   borderRadius: "20px",
                   overflowY: "scroll",
-                  width: "100%"
+                  width: "98%"
                 }} >
                     
-                  <Box  display="flex" justifyContent="start" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
+                  <Box  display="flex" justifyContent="space-around" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
                   {
                     data.map((element) =>
                       <Grid key={element.id} item>
