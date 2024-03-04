@@ -8,28 +8,43 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
+import { Box, Grid } from '@mui/material';
 
 function CardApprove({element}) {
 
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent>
-      <Image
-        width={100}
-        height={100}
-        src={`data:image/png;base64,${manasLogo}`} 
-        alt='manasLogo'
-      />
-        <Typography gutterBottom variant="h6" component="div">
-        {element.lastName}
-        </Typography>
-        <Typography gutterBottom variant="h6" component="div">
-        {element.firstName}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-        {element.email}
-          
-        </Typography>
+      <Grid container justifyContent="space-between" spacing={4}>
+          <Grid item xs={3}>
+            <Image
+              width={100}
+              height={100}
+              src={manasLogo} 
+              alt='manasLogo'
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <Typography gutterBottom variant="h6" component="div">
+              {element.lastName}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {element.firstName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {element.email}          
+            </Typography>
+          </Grid>
+        </Grid>
+        <Box>
+        <Button type='submit'           
+            variant='contained' 
+            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}>Кабыл алуу</Button>
+        <Button type='submit'           
+            variant='contained' 
+            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
+        </Box>
+        
       </CardContent>
     </Card>
   )

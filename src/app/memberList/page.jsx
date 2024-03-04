@@ -5,6 +5,7 @@ import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, Text
 import AppShell from '../../components/app-shell'
 import { fetchMembers } from '../../store/actions/fetchMembers'
 import { useDispatch, useSelector } from 'react-redux'
+import CardNoData from '../../components/card/CardNoData'
 
 
 const MemberList = () => {
@@ -15,17 +16,18 @@ const MemberList = () => {
     useEffect( () => {
     dispatch(fetchMembers())
     }, [])
-
+    const dataCount = Array.isArray(data) ? data.length : 0;
   return (
     <AppShell>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
       {
-          data.map((element) =>
+        dataCount > 0 ? 
+          data?.map((element) =>
             <Grid key={element.id} item>
               <CardMember element={element} />
             </Grid>
-          )
-          
+          ) :
+          <CardNoData></CardNoData>
         }
       </Grid>
     </AppShell>

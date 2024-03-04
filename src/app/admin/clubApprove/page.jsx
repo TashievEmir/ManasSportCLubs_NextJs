@@ -4,7 +4,8 @@ import AppShell from '../../../components/app-shell'
 import CardApprove from '../../../components/card/CardApprove'
 import { fetchCandidates } from '../../../store/actions/fetchCandidates'
 import { useDispatch, useSelector } from 'react-redux'
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
+import CardNoData from '../../../components/card/CardNoData'
 
 const ClubApprove = () => {
     const selectedClub = useSelector((state) => state.selectedClub.value.id)
@@ -14,16 +15,19 @@ const ClubApprove = () => {
     useEffect( () => {
     dispatch(fetchCandidates(selectedClub))
     }, [])
-
+    const dataCount = Array.isArray(data) ? data.length : 0;
   return (
     <AppShell >
         <Grid container justifyContent="start" alignItems="start" gap={2}>
         {
-          data.map((element) =>
+          
+          dataCount > 0 ?
+          data?.map((element) =>
             <Grid key={element.id} item>
               <CardApprove element={element} />
             </Grid>
-          )         
+          ) :
+          <CardNoData></CardNoData>        
         }
       </Grid>
     </AppShell>
