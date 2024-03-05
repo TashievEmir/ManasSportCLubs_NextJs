@@ -20,6 +20,12 @@ export default function Confirmation (props) {
         Club: selectedClub
       });
 
+      if(response.status = 200){
+        alert(`Сиз ${selectedClub} клубуна табыштамаңыз жеткирилди `)
+        router.push('/user');
+      }
+      
+      router.push('/user');
     }
     else {
 
@@ -30,15 +36,10 @@ export default function Confirmation (props) {
 
       response = await $api.delete('/Club/Abandon', { data: requestData });
 
-    }
-  
-    if(response.status==200) {
-
-      router.push('/user');
-    }
-    else {
-
-      alert("something went wrong")
+      if(response.status == 200){
+        alert(`Тыбаштамаңыз ${selectedClub} клубунан баш тартылды`);
+        router.push('/user');
+      }
     }
 
   }

@@ -17,18 +17,20 @@ import Image from 'next/image';
 import {setSelectedClub} from '../../store/slices/selectedClub';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
-import {setLoginStatus} from '../../store/slices/loginStatus';
+//import {setLoginStatus} from '../../store/slices/loginStatus';
 
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
   const {getItem} = useLocalStorage('account');
+  const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
   const account = getItem();
-
+  const loginStatus = getLoginStatus();
+  
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
   const selectedClub = useSelector((state) => state.selectedClub.value)
-  const loginStatus = useSelector((state) => state.loginStatus.value);
+  //const loginStatus = useSelector((state) => state.loginStatus.value);
   
   const [club, setClub] = React.useState('');
 

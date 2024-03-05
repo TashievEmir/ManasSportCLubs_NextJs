@@ -16,7 +16,7 @@ import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
-import {setLoginStatus} from '../../store/slices/loginStatus';
+//import {setLoginStatus} from '../../store/slices/loginStatus';
 import { useDispatch, useSelector } from 'react-redux'
 
 const defaultTheme = createTheme();
@@ -24,6 +24,7 @@ const defaultTheme = createTheme();
 const SignIn = () => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
 
   const [account, setAccount] = useState();
   const {getItem, setItem} = useLocalStorage('account');
@@ -40,7 +41,7 @@ const SignIn = () => {
         if(response.status == 200)
         {
           setItem(response.data)
-          dispatch(setLoginStatus(true))
+          setLoginStatus(true)
           router.push("/")
         }
         else{

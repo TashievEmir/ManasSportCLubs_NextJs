@@ -9,12 +9,31 @@ import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 import { Box, Grid } from '@mui/material';
+import $api from '../../utils/api'
 
 function CardApprove({element}) {
 
+  async function Approve(){
+    const response = await $api.put(`/Club/ApproveStudent`,{
+      Email : element.email
+    });
+
+    if(response.status == 200){
+      alert(`${element.lastName} ${element.firstName} клубга кабыл алынды`)
+    }
+  }
+
+  async function Reject(){
+    const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
+
+    if(response.status == 200){
+      alert(`${element.lastName} ${element.firstName} клубга кабыл алынган жок`)
+    }
+  }
+
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
-      <CardContent>
+      <CardContent sx={{gap:3}}>
       <Grid container justifyContent="space-between" spacing={4}>
           <Grid item xs={3}>
             <Image
@@ -36,13 +55,15 @@ function CardApprove({element}) {
             </Typography>
           </Grid>
         </Grid>
-        <Box>
+        <Box sx={{gap:3, justifyContent:"space-between"}}>
         <Button type='submit'           
-            variant='contained' 
-            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}>Кабыл алуу</Button>
+            variant='contained'
+            onClick={Approve} 
+            sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл алуу</Button>
         <Button type='submit'           
-            variant='contained' 
-            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
+            variant='contained'
+            onClick={Reject} 
+            sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
         </Box>
         
       </CardContent>

@@ -3,9 +3,9 @@ import $api from "../../utils/api";
 
 export const fetchMembers = createAsyncThunk(
     "club/getMembers",
-    async () =>{
+    async (clubId) =>{
         try{
-            const response = await $api.get("/club/GetMembers?clubId=3")
+            const response = await $api.get(`/club/GetMembers?clubId=${clubId}`)
             return response.data
         }
         catch(error){
