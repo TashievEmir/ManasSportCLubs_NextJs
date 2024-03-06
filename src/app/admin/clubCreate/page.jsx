@@ -9,11 +9,14 @@ import AppShell from '../../../components/app-shell'
 import { fetchTeachers } from '../../../store/actions/fetchTeacher';
 import { useDispatch, useSelector } from 'react-redux';
 import $api from '../../../utils/api'
+import { useRouter } from 'next/navigation'
 
 const defaultTheme = createTheme();
 
 function ClubCreate() {
     const dispatch = useDispatch()
+    const router = useRouter()
+
     const { data } = useSelector((state) => state.teacher)
     const [state, setState] = useState({
       teacher: 777
@@ -32,9 +35,10 @@ function ClubCreate() {
           Teacher: data.get('teacher'),
           Description: data.get('description')
         });
-        debugger
+        
         if(response.status==200){
-          alert("saved succesfully")
+          alert("Club has been created succesfully")
+          router.push("/admin")
         }
 
       };
