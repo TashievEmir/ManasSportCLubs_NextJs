@@ -21,10 +21,14 @@ export default function Confirmation (props) {
       });
 
       if(response.status = 200){
-        alert(`Сиз ${selectedClub} клубуна табыштамаңыз жеткирилди `)
+        <Alert variant="filled" severity="success">
+            Сиздин ${selectedClub} клубуна табыштамаңыз жеткирилди.
+        </Alert>
         router.push('/user');
       }
-      
+      <Alert variant="filled" severity="error">
+        Сиздин табыштамаңыз жеткирилген жок.
+      </Alert>
       router.push('/user');
     }
     else {

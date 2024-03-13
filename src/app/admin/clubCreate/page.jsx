@@ -37,10 +37,14 @@ function ClubCreate() {
         });
         
         if(response.status==200){
-          alert("Club has been created succesfully")
+          <Alert variant="filled" severity="success">
+            Club has been created succesfully!
+          </Alert>
           router.push("/admin")
         }
-
+        <Alert variant="filled" severity="error">
+          Club has not been created!
+        </Alert>
       };
 
   return (

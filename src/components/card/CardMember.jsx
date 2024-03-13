@@ -17,9 +17,13 @@ export default function CardMember( {element} ) {
     const response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
 
     if(response.status == 200){
-      alert(`${element.lastName} ${element.firstName} клубтан чыгарылды`)
+      <Alert variant="filled" severity="success">
+            ${element.lastName} ${element.firstName} клубтан чыгарылды.
+      </Alert>
     }
-
+    <Alert variant="filled" severity="error">
+      ${element.lastName} ${element.firstName} клубтан чыгарылган жок.
+    </Alert>
   }
 
 

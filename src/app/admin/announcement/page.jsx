@@ -41,10 +41,14 @@ function Announcement() {
 
 
     if (response.status == 200) {
-      alert("Announcement has been added succesfully")
+      <Alert variant="filled" severity="success">
+           Announcement has been added succesfully!
+      </Alert>
       router.push("/admin")
     }
-
+    <Alert variant="filled" severity="error">
+       Announcement has not been added !
+    </Alert>
   };
 
   const handleFileChange = (event) => {

@@ -19,7 +19,9 @@ function CardApprove({element}) {
     });
 
     if(response.status == 200){
-      alert(`${element.lastName} ${element.firstName} клубга кабыл алынды`)
+      <Alert variant="filled" severity="success">
+            ${element.lastName} ${element.firstName} клубга кабыл алынды
+      </Alert>
     }
   }
 
@@ -27,7 +29,9 @@ function CardApprove({element}) {
     const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
 
     if(response.status == 200){
-      alert(`${element.lastName} ${element.firstName} клубга кабыл алынган жок`)
+      <Alert variant="filled" severity="error">
+        ${element.lastName} ${element.firstName} клубга кабыл алынган жок
+      </Alert>
     }
   }
 
