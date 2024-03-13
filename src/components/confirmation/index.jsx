@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Alert, Button, Typography } from "@mui/material";
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -41,9 +41,14 @@ export default function Confirmation (props) {
       response = await $api.delete('/Club/Abandon', { data: requestData });
 
       if(response.status == 200){
-        alert(`Тыбаштамаңыз ${selectedClub} клубунан баш тартылды`);
+        <Alert variant="filled" severity="success">
+            Табыштамаңыз ${selectedClub} клубунан баш тартылды.
+        </Alert>
         router.push('/user');
       }
+      <Alert variant="filled" severity="error">
+        Сиздин табыштамаңыз жеткирилген жок.
+      </Alert>
     }
 
   }
