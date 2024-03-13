@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import AppShell from '../../components/app-shell'
-import Confirmation from "../../components/confirmation"
+import AppShell from '../../../components/app-shell'
+import Confirmation from "../../../components/confirmation"
 import { useSelector } from 'react-redux'
 
 const ClubRegistration = (props) => {

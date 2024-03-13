@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect } from 'react'
-import CardMember from '../../components/card/CardMember'
+import CardMember from '../../../components/card/CardMember'
 import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, TextField, ThemeProvider, Typography, createTheme } from '@mui/material'
-import AppShell from '../../components/app-shell'
-import { fetchMembers } from '../../store/actions/fetchMembers'
+import AppShell from '../../../components/app-shell'
+import { fetchMembers } from '../../../store/actions/fetchMembers'
 import { useDispatch, useSelector } from 'react-redux'
-import CardNoData from '../../components/card/CardNoData'
+import CardNoData from '../../../components/card/CardNoData'
 
 
 const MemberList = () => {

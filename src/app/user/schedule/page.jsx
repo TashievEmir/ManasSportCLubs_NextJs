@@ -1,10 +1,10 @@
 "use client"
 import React, { use, useEffect, useState } from 'react'
 import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, Table, TableBody, TableCell, TextField, ThemeProvider, Typography, createTheme } from '@mui/material'
-import AppShell from '../../components/app-shell'
+import AppShell from '../../../components/app-shell'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchSchedule } from '../../store/actions/fetchSchedule';
-import AppTable from '../../components/app-table';
+import { fetchSchedule } from '../../../store/actions/fetchSchedule';
+import AppTable from '../../../components/app-table';
 
 const columns = [
   { field: 'Monday', headerName: 'Monday', type: 'number', width: 90, },

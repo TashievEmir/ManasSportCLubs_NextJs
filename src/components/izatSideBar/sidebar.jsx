@@ -9,25 +9,25 @@ import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 const userSidebar = [
     {
         id: 1,
-        path: "/clubRegistration",
+        path: "/user/clubRegistration",
         icon: <PersonAdd/>,
         title: 'Клубга катталуу'
     },
     {
         id: 2,
-        path: "/schedule",
+        path: "/user/schedule",
         icon: <CalendarMonth/>,
         title: 'Расписание'
     },
     {
         id: 3,
-        path: "/clubCanceling",
+        path: "/user/clubCanceling",
         icon: <PersonRemove/>,
         title: 'Клубтан баш тартуу'
     },
     {
         id: 4,
-        path: "/memberList",
+        path: "/user/memberList",
         icon: <FormatListNumberedIcon/>,
         title: 'Клубтун тизмеси'
     },
