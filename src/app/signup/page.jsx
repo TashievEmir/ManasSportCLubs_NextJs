@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchDepartament } from '../../store/actions/fetchDepartament';
 import { fetchFaculties } from '../../store/actions/fetchFaculties';
 import manasLogo from '../../../public/manas_logo.png'
+import { Input } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -91,6 +92,11 @@ const SignUp = observer(() => {
         }
         
 
+      };
+
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
       };
 
   return (
@@ -222,13 +228,36 @@ const SignUp = observer(() => {
                   />
                 </Grid>
               </Grid>
+              <div>
+                      <Typography variant="h6">Оз суротунузду жуктонуз:</Typography>
+                      <Input
+                        type="file"
+                        inputProps={{ accept: 'image/*' }}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                        id="photoInput"
+                      />
+                      <label htmlFor="photoInput">
+                        <Button component="span" fullWidth variant="contained">
+                          Файл тандоо
+                        </Button>
+                      </label>
+                    </div>
+                    <div>
+                      {selectedFile && (
+                        <div>
+                          <Typography>Жуктолгон сурот:</Typography>
+                          <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
+                        </div>
+                      )}
+                    </div>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Катталуу
             </Button>
           </form>
           <Link href="/signin" >
