@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
-import { Box, Grid } from '@mui/material';
+import { Alert, Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 
 function CardApprove({element}) {

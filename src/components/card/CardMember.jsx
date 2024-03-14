@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import $api from '../../utils/api'
 
 export default function CardMember( {element} ) {

@@ -30,6 +30,7 @@ const SignUp = observer(() => {
     faculty: 777,
     departament: 777
   })
+  const [selectedFile, setSelectedFile] = useState();
 
   useEffect(() => {
     dispatch(fetchDepartament())
@@ -63,15 +64,24 @@ const SignUp = observer(() => {
 
           if( verifyEmailResponse.status == 200 ){
             
-            const response = await $api.post('/Account/Register',{
-              LastName: data.get('lastName'),
-              FirstName: data.get('firstName'),
-              Email: data.get('email'),
-              Password: data.get('password'),
-              RepeatedPassword: data.get('repeatPassword'),
-              Phone: data.get('telefon'),
-              Faculty: data.get('faculty'),
-              Department: data.get('department')
+            data.append('Photo', selectedFile)
+            const response = await $api({
+              method: 'post',
+              url: '/Account/Register',
+              data: {
+                LastName: data.get('lastName'),
+                FirstName: data.get('firstName'),
+                Email: data.get('email'),
+                Password: data.get('password'),
+                RepeatedPassword: data.get('repeatPassword'),
+                Phone: data.get('telefon'),
+                Faculty: data.get('faculty'),
+                Department: data.get('department'),
+                Photo: selectedFile
+              },
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
             });
     
             if(response.status==200){
