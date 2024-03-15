@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Container, CssBaseline, Grid, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, CssBaseline, Grid, Input, MenuItem, Select, TextField, Typography } from '@mui/material'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -16,6 +16,7 @@ const defaultTheme = createTheme();
 function ClubCreate() {
     const dispatch = useDispatch()
     const router = useRouter()
+    const [selectedFile, setSelectedFile] = useState();
 
     const { data } = useSelector((state) => state.teacher)
     const [state, setState] = useState({
@@ -30,10 +31,21 @@ function ClubCreate() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        const response = await $api.post('/club/Create',{
-          Name: data.get('clubName'),
-          Teacher: data.get('teacher'),
-          Description: data.get('description')
+        data.append('Photo', selectedFile)
+        const response = await $api({
+          method: 'post',
+          url: '/club/Create',
+          data: {
+            Name: data.get('clubName'),
+            Teacher: data.get('teacher'),
+            Description: data.get('description'),
+            Photo: selectedFile
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).post('/club/Create',{
+          
         });
         
         if(response.status==200){
@@ -45,6 +57,11 @@ function ClubCreate() {
         <Alert variant="filled" severity="error">
           Club has not been created!
         </Alert>
+      };
+
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
       };
 
   return (
@@ -113,6 +130,29 @@ function ClubCreate() {
                   />
                 </Grid>
               </Grid>
+              <div>
+                      <Typography variant="h6">Клубдун сүрөтүн жүктөңүз:</Typography>
+                      <Input
+                        type="file"
+                        inputProps={{ accept: 'image/*' }}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                        id="photoInput"
+                      />
+                      <label htmlFor="photoInput">
+                        <Button component="span" fullWidth variant="contained">
+                        Файл тандоо
+                        </Button>
+                      </label>
+                    </div>
+                    <div>
+                      {selectedFile && (
+                        <div>
+                          <Typography>Жүктөлгөн сүрөт:</Typography>
+                          <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
+                        </div>
+                      )}
+                    </div>
             <Button
               type="submit"
               fullWidth

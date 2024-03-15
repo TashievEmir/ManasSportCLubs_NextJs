@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Container, CssBaseline, Grid, Input, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, CssBaseline, Grid, Input, MenuItem, Select, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import manasLogo from '../../../../public/manas_logo.png'
@@ -83,31 +83,7 @@ function Announcement() {
               </Typography>
               <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sx={{ display: "flex", gap: 3 }}>
-                    <div>
-                      <Typography variant="h6">Upload Photo:</Typography>
-                      <Input
-                        type="file"
-                        inputProps={{ accept: 'image/*' }}
-                        onChange={handleFileChange}
-                        style={{ display: 'none' }}
-                        id="photoInput"
-                      />
-                      <label htmlFor="photoInput">
-                        <Button component="span" fullWidth variant="contained">
-                          Choose File
-                        </Button>
-                      </label>
-                    </div>
-                    <div>
-                      {selectedFile && (
-                        <div>
-                          <Typography>Selected Photo:</Typography>
-                          <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
-                        </div>
-                      )}
-                    </div>
-
+                  <Grid item xs={12} sx={{ display: "flex", gap: 3 }}> 
                   </Grid>
                   <Grid item xs={12} >
                     <TextField
@@ -141,6 +117,29 @@ function Announcement() {
                     </LocalizationProvider>
                   </Grid>
                 </Grid>
+                <div>
+                      <Typography variant="h6">Жарыянын сүрөтүн жүктөңүз:</Typography>
+                      <Input
+                        type="file"
+                        inputProps={{ accept: 'image/*' }}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                        id="photoInput"
+                      />
+                      <label htmlFor="photoInput">
+                        <Button component="span" fullWidth variant="contained">
+                         Файл тандоо
+                        </Button>
+                      </label>
+                    </div>
+                    <div>
+                      {selectedFile && (
+                        <div>
+                          <Typography>Жүктөлгөн сүрөт:</Typography>
+                          <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
+                        </div>
+                      )}
+                    </div>
                 <Button
                   type="submit"
                   fullWidth

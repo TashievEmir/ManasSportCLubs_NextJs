@@ -229,7 +229,7 @@ const SignUp = observer(() => {
                 </Grid>
               </Grid>
               <div>
-                      <Typography variant="h6">Оз суротунузду жуктонуз:</Typography>
+                      <Typography variant="h6">Өз сүрөтүңүздү жүктөңүз:</Typography>
                       <Input
                         type="file"
                         inputProps={{ accept: 'image/*' }}
@@ -246,7 +246,7 @@ const SignUp = observer(() => {
                     <div>
                       {selectedFile && (
                         <div>
-                          <Typography>Жуктолгон сурот:</Typography>
+                          <Typography>Жүктөлгөн сүрөт:</Typography>
                           <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
                         </div>
                       )}
