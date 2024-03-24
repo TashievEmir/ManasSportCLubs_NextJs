@@ -16,13 +16,14 @@ export default function MediaCard( {element} ) {
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent width="200px">
         <Grid container justifyContent="space-between" spacing={4}>
-          <Grid item xs={3} >
-              {/* {element?.photo?.length > 1000 ? (
+          <Grid item xs={5} >
+              {element?.photo?.length > 1000 ? (
               <Image
-                width='100px'
-                height='100px'
+                width='200'
+                height='200'
                 src={`data:image/png;base64,${element.photo}`} 
-                alt='manasLogo'
+                alt='Агай сүрөтү'
+                style={{width: "100%", height: "100%", minWidth: "80px"}}
               />
             ) : (
                 <Image
@@ -30,15 +31,11 @@ export default function MediaCard( {element} ) {
                 height='200px'
                 src={manasLogo} 
                 alt='manasLogo'
-              />
-            )} */}
-            <Image
-                src={manasLogo} 
-                alt='manasLogo'
                 style={{width: "100%", height: "100%", minWidth: "80px"}}
               />
+            )}
             </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <Typography lineHeight={1} fontSize={{xs: "16px", md: "18px"}} gutterBottom variant="h6" component="div">
               {element.lastName}
             </Typography>

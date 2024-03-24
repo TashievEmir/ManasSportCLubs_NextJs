@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Header from '../components/header/Header'
-import SideBar from '../components/sidebar/SideBar'
 import AppShell from '../components/app-shell';
 import { Box, Grid } from '@mui/material';
 import CardAnnouncement from '../components/card/CardAnnouncement';

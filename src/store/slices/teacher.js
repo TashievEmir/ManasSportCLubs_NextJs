@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {fetchTeachers} from '../actions/fetchTeacher'
+
 const teacherSlice = createSlice({
     name: "teacher",
     initialState: {

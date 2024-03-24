@@ -42,12 +42,12 @@ function Announcement() {
 
     if (response.status == 200) {
       <Alert variant="filled" severity="success">
-           Announcement has been added succesfully!
+           Жарыя ийгиликтүү жүктөлдү!
       </Alert>
       router.push("/admin")
     }
     <Alert variant="filled" severity="error">
-       Announcement has not been added !
+       Жарыя жүктөлбөй калды !
     </Alert>
   };
 
@@ -79,7 +79,7 @@ function Announcement() {
                 style={{ m: 1, bgcolor: 'secondary.main' }} />
 
               <Typography component="h1" variant="h5" sx={{ marginBottom: 2, marginTop: 2 }}>
-                Жаңылык жаратуу
+                Жарыя жаратуу
               </Typography>
               <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
@@ -92,7 +92,7 @@ function Announcement() {
                       required
                       fullWidth
                       id="announcementName"
-                      label="Жаңылык Башы"
+                      label="Жарыя Башы"
                       autoFocus
                     />
                   </Grid>
@@ -135,7 +135,7 @@ function Announcement() {
                     <div>
                       {selectedFile && (
                         <div>
-                          <Typography>Жүктөлгөн сүрөт:</Typography>
+                          <Typography>Тандалган сүрөт:</Typography>
                           <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
                         </div>
                       )}

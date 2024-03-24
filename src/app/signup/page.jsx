@@ -51,19 +51,19 @@ const SignUp = observer(() => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        const emailResponse = await $api.post('/Account/SendEmail',{
-          Email: data.get('email')
-        });
+        // const emailResponse = await $api.post('/Account/SendEmail',{
+        //   Email: data.get('email')
+        // });
 
-        if( emailResponse.status == 200 ){
-          let code =  prompt('Input code from email: ' );
+        // if( emailResponse.status == 200 ){
+        //   let code =  prompt('Input code from email: ' );
 
-          const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
-            Email: data.get('email'),
-            Code: code
-          });
+        //   const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
+        //     Email: data.get('email'),
+        //     Code: code
+        //   });
 
-          if( verifyEmailResponse.status == 200 ){
+        //   if( verifyEmailResponse.status == 200 ){
             
             data.append('Photo', selectedFile)
             const response = await $api({
@@ -88,8 +88,8 @@ const SignUp = observer(() => {
             if(response.status==200){
               router.push('/signin');
             }
-          }
-        }
+        //   }
+        // }
         
 
       };
@@ -246,7 +246,7 @@ const SignUp = observer(() => {
                     <div>
                       {selectedFile && (
                         <div>
-                          <Typography>Жүктөлгөн сүрөт:</Typography>
+                          <Typography>Тандалган сүрөт:</Typography>
                           <img src={URL.createObjectURL(selectedFile)} alt="Selected" style={{ maxWidth: '50%' }} />
                         </div>
                       )}

@@ -8,6 +8,7 @@ import schedule from './slices/schedule'
 import selectedClub from './slices/selectedClub'
 import candidate from './slices/candidate'
 import loginStatus from './slices/loginStatus'
+import studentStatusInClub from './slices/studentStatusInClub'
 
 const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
         schedule,
         selectedClub,
         candidate,
-        loginStatus 
+        loginStatus,
+        studentStatusInClub 
     }
 })
 

@@ -44,9 +44,7 @@ function ClubCreate() {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }).post('/club/Create',{
-          
-        });
+        })
         
         if(response.status==200){
           <Alert variant="filled" severity="success">

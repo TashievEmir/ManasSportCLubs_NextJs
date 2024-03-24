@@ -1,13 +1,18 @@
+"use client"
+import React, { useEffect } from 'react'
 import { Alert, Button, Typography } from "@mui/material";
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
+import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
 import $api from '../../utils/api'
 
 export default function Confirmation (props) {
   const router = useRouter()
   const {getItem, setItem} = useLocalStorage('account');
   const selectedClub = useSelector((state) => state.selectedClub.value.name)
+  const dispatch = useDispatch()
+  const {data} = useSelector((state)=> state.studentStatusInClub)
 
   async function Confirm(){
     const account = getItem()
@@ -53,11 +58,12 @@ export default function Confirmation (props) {
 
   }
 
-  function Reject(){
-    router.push("/user")
-  }
+  useEffect(() => {
+    dispatch(fetchStudentStatusInClub())
+  }, [])
 
 
+  console.log(data)  
   return (
     <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"white", borderRadius:"10px", padding:'50px' }}>
         <Typography sx={{ textAlign: "center", fontSize:"30px" }}>
@@ -73,13 +79,7 @@ export default function Confirmation (props) {
             onClick={Confirm}>
               Ооба
           </Button>
-          <Button
-            type='submit'           
-            variant='contained'
-            sx={{color:'white', backgroundColor:"#370E8A"}}
-            onClick={Reject}>
-              Жок
-          </Button>
+         
         </div>
     </div>
   )
