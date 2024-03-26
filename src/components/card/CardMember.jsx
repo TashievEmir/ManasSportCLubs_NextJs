@@ -38,7 +38,7 @@ export default function CardMember( {element} ) {
             <Image
               width={100}
               height={100}
-              src={manasLogo} 
+              src={`data:image/png;base64,${element.photo}`} 
               alt='manasLogo'
             />
           </Grid>

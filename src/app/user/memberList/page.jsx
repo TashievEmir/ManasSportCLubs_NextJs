@@ -12,11 +12,12 @@ const MemberList = () => {
 
     const dispatch = useDispatch()
     const {data} = useSelector((state)=> state.member)
-    const selectedClub = useSelector((state) => state.selectedClub.value.name)
+    const selectedClub = useSelector((state) => state.selectedClub.value.id)
     useEffect( () => {
-    dispatch(fetchMembers())
+    dispatch(fetchMembers(selectedClub))
     }, [])
     const dataCount = Array.isArray(data) ? data.length : 0;
+    
   return (
     <AppShell>
       <Grid container justifyContent="start" alignItems="start" gap={2}>

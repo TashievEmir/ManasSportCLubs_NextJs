@@ -3,10 +3,10 @@ import $api from "../../utils/api";
 
 export const fetchStudentStatusInClub = createAsyncThunk(
     "studentStatus",
-    async () =>{
+    async (params, dispatch) =>{
         try{
-            const response = await $api.get("/Club/GetStudentStatus",{params:{ userId: 1,
-                                                                                clubId: 2}})
+            const response = await $api.get("/Club/GetStudentStatus",{params:{ userId: params.userId,
+                                                                                clubId: params.clubId}})
             return response.data
         }
         catch(error){

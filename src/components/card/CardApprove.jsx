@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -8,31 +8,32 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
-import { Alert, Box, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
-
+import AlertComp from '../AlertComp/AlertComp'
 function CardApprove({element}) {
+  const [showAlert, setShowAlert] = useState(false);
 
   async function Approve(){
     const response = await $api.put(`/Club/ApproveStudent`,{
       Email : element.email
     });
 
-    if(response.status == 200){
-      <Alert variant="filled" severity="success">
-            ${element.lastName} ${element.firstName} клубга кабыл алынды
-      </Alert>
-    }
+    // if(response.status == 200){
+    //   <Alert variant="filled" severity="success">
+    //         ${element.lastName} ${element.firstName} клубга кабыл алынды
+    //   </Alert>
+    // }
   }
 
   async function Reject(){
     const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
 
-    if(response.status == 200){
-      <Alert variant="filled" severity="error">
-        ${element.lastName} ${element.firstName} клубга кабыл алынган жок
-      </Alert>
-    }
+    // if(response.status == 200){
+    //   <Alert variant="filled" severity="error">
+    //     ${element.lastName} ${element.firstName} клубга кабыл алынган жок
+    //   </Alert>
+    // }
   }
 
   return (
@@ -42,9 +43,10 @@ function CardApprove({element}) {
           <Grid item xs={3}>
             <Image
               width={100}
-              height={100}
-              src={manasLogo} 
+              height={120}
+              src={`data:image/png;base64,${element.photo}`} 
               alt='manasLogo'
+              style={{borderRadius:"10px"}}
             />
           </Grid>
           <Grid item xs={8}>
@@ -69,7 +71,8 @@ function CardApprove({element}) {
             onClick={Reject} 
             sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
         </Box>
-        
+        <button onClick={() => setShowAlert(prev => !prev)}>asdfasdfasdfasd</button>
+        {showAlert && <AlertComp isSuccess={true} message={`${element?.lastName} ${element?.firstName} клубга кабыл алынды`}/>}
       </CardContent>
     </Card>
   )

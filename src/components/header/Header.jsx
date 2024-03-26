@@ -112,7 +112,12 @@ function Header({toggleDrawer, state}) {
                                           </Link>
                                           : <></>
             }
-            
+            {
+              account.role == "teacher" ? <Link  href="/admin/announcement">
+                                            <Typography sx={{color: "white", fontWeight:"bold"}}>Жарыя жаратуу</Typography>
+                                          </Link>
+                                          : <></>
+            }
             
           </Box>
           <Box sx={{display: "flex", gap: 1}}>
