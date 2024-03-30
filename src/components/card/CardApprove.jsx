@@ -12,28 +12,31 @@ import { Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp'
 function CardApprove({element}) {
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(null);
 
   async function Approve(){
     const response = await $api.put(`/Club/ApproveStudent`,{
       Email : element.email
     });
 
-    // if(response.status == 200){
-    //   <Alert variant="filled" severity="success">
-    //         ${element.lastName} ${element.firstName} клубга кабыл алынды
-    //   </Alert>
-    // }
+    if(response.status == 200){
+      setShowAlert(true)
+    }
+    else{
+      setShowAlert(false)
+    }
   }
 
   async function Reject(){
     const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
 
-    // if(response.status == 200){
-    //   <Alert variant="filled" severity="error">
-    //     ${element.lastName} ${element.firstName} клубга кабыл алынган жок
-    //   </Alert>
-    // }
+
+    if(response.status == 200){
+      setShowAlert(true)
+    }
+    else{
+      setShowAlert(false)
+    }
   }
 
   return (
@@ -71,8 +74,8 @@ function CardApprove({element}) {
             onClick={Reject} 
             sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
         </Box>
-        <button onClick={() => setShowAlert(prev => !prev)}>asdfasdfasdfasd</button>
-        {showAlert && <AlertComp isSuccess={true} message={`${element?.lastName} ${element?.firstName} клубга кабыл алынды`}/>}
+        {/* <button onClick={() => setShowAlert(prev => !prev)}>asdfasdfasdfasd</button> */}
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}
       </CardContent>
     </Card>
   )

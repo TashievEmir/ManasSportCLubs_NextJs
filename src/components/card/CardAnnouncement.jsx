@@ -10,8 +10,24 @@ import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 import { Box } from '@mui/material';
+import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 
 export default function MediaCard( {element} ) {
+  const {getItem, setItem} = useLocalStorage('account');
+  const account = getItem()
+
+  async function Remove(){
+    const response = await $api.delete(`/Announcement/Remove/${element.id}`);
+
+    if(response.status == 200){
+      setShowAlert(true)
+    }
+    else{
+      setShowAlert(false)
+    }
+
+  }
+
 
   return (
     <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
@@ -42,8 +58,15 @@ export default function MediaCard( {element} ) {
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {element.description}
-          
         </Typography>
+        {
+          account.role === "admin" ??
+          <Button type='submit'           
+            variant='contained' 
+            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}
+            onClick={Remove}>Жарыя өчүрүү
+        </Button>
+        }
       </CardContent>
     </Card>
   );

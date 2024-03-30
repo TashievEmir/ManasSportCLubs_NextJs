@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -9,21 +9,25 @@ import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 import { Alert, Grid } from '@mui/material';
+import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import $api from '../../utils/api'
+import AlertComp from '../AlertComp/AlertComp';
 
 export default function CardMember( {element} ) {
+  const {getItem, setItem} = useLocalStorage('account');
+  const account = getItem()
+  const [showAlert, setShowAlert] = useState(null);
 
   async function Remove(){
     const response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
 
     if(response.status == 200){
-      <Alert variant="filled" severity="success">
-            ${element.lastName} ${element.firstName} клубтан чыгарылды.
-      </Alert>
+      setShowAlert(true)
     }
-    <Alert variant="filled" severity="error">
-      ${element.lastName} ${element.firstName} клубтан чыгарылган жок.
-    </Alert>
+    else{
+      setShowAlert(false)
+    }
+    
   }
 
 
@@ -34,13 +38,24 @@ export default function CardMember( {element} ) {
                     alignItems: 'center',
                     justifyContent: 'center'}} >
         <Grid container justifyContent="space-between" spacing={4}>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
+          { element?.photo?.length > 1000 ? (
             <Image
-              width={100}
-              height={100}
-              src={`data:image/png;base64,${element.photo}`} 
-              alt='manasLogo'
-            />
+            width={100}
+            height={100}
+            style={{width: "100%", height: "100%", borderRadius:"15px"}}
+            src={`data:image/png;base64,${element.photo}`} 
+            alt='manasLogo'
+          />
+          ):(
+            <Image
+                width='200px'
+                height='200px'
+                src={manasLogo} 
+                alt='manasLogo'
+                style={{width: "100%", height: "100%", minWidth: "80px"}}
+              />
+          )}            
           </Grid>
           <Grid item xs={8}>
             <Typography gutterBottom variant="h6" component="div">
@@ -54,10 +69,18 @@ export default function CardMember( {element} ) {
             </Typography>
           </Grid>
         </Grid>
-        <Button type='submit'           
+        {
+          account.role === "teacher" ?(
+            <Button type='submit'           
             variant='contained' 
             sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}
-            onClick={Remove}>Клубтан чыгаруу</Button>
+            onClick={Remove}>
+              Клубтан чыгаруу
+          </Button>
+          ):(<></>)
+          
+        }
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубдан чыгарылды`: "Клубдан чыгарылган жок"}/>}
       </CardContent>
     </Card>
   );
