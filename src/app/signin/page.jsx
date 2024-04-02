@@ -18,6 +18,7 @@ import Image from 'next/image';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import { useDispatch, useSelector } from 'react-redux'
+import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 
@@ -40,7 +41,14 @@ const SignIn = () => {
         
         if(response.status == 200)
         {
-          setItem(response.data)
+          //setItem(response.data)
+          const currentDate = new Date();
+          const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+          
+          Cookies.set('userId', response.data.id, { expires: expiryDate });
+          Cookies.set('accessToken', response.data.id, { expires: expiryDate });
+          Cookies.set('user', response.data.user, { expires: expiryDate });
+          Cookies.set('role', response.data.role, { expires: expiryDate });
           setLoginStatus(true)
           router.push("/")
         }

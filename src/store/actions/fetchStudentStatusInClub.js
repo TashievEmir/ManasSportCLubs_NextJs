@@ -7,6 +7,7 @@ export const fetchStudentStatusInClub = createAsyncThunk(
         try{
             const response = await $api.get("/Club/GetStudentStatus",{params:{ userId: params.userId,
                                                                                 clubId: params.clubId}})
+            console.log(response,"fetch")
             return response.data
         }
         catch(error){

@@ -38,7 +38,7 @@ const adminSidebar = [
         id: 1,
         path: "/admin/clubApprove",
         icon: <PersonAdd/>,
-        title: 'Клубга катталуу'
+        title: 'Клубга кабыл алуу'
     },
     {
         id: 2,
@@ -52,18 +52,8 @@ const adminSidebar = [
         icon: <FormatListNumberedIcon/>,
         title: 'Клубтун тизмеси'
     },
-    {
-        id: 4,
-        path: "/admin/clubCreate",
-        icon: <AddIcon/>,
-        title: 'Клуб жаратуу'
-    },
-    {
-        id: 5,
-        path: "/admin/announcement",
-        icon: <NoteAddIcon/>,
-        title: 'Жаңылык жаратуу'
-    },
+    
+    
 ]
 
 

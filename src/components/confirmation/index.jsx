@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {  useDispatch, useSelector } from "react-redux";
 import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
 import $api from '../../utils/api'
+import Cookies from 'js-cookie';
 
 export default function Confirmation (props) {
   const router = useRouter()
@@ -14,14 +15,14 @@ export default function Confirmation (props) {
   const selectedClubId = useSelector((state) => state.selectedClub.value.id)
   const dispatch = useDispatch()
   const {data} = useSelector((state)=> state.studentStatusInClub)
-  const account = getItem()
-
+  const userEmail = Cookies.get("user")
+  const userId = Cookies.get("userId")
   async function Confirm(){
     
     let response = undefined;
     
       response = await $api.post('/Club/Apply', {
-        User: account.user,
+        User: userEmail,
         Club: selectedClub
       });
 
@@ -40,18 +41,16 @@ export default function Confirmation (props) {
   }
 
   useEffect(() => {
-    dispatch(fetchStudentStatusInClub({userId: account.id, clubId: selectedClubId}))
+    dispatch(fetchStudentStatusInClub({userId: userId, clubId: selectedClubId}))
   }, [])
-
-
-   
-  if(data == null)
+  console.log(data,"index")
+  if(data === "")
   {
     return (
       <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"white", borderRadius:"10px", padding:'50px' }}>
           <Typography sx={{ textAlign: "center", fontSize:"30px" }}>
                 { 
-                  props.action ? `${props.club} клубуна каталууга макулсузбу?` : `${props.club} клубунан баш тартууга макулсузбу?`
+                  selectedClub === undefined ? "Биринчи клуб тандаңыз" : `${selectedClub} клубуна катталууга макулсузбу` 
                 } 
           </Typography>
           <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'20px', gap:'4%'}}>
@@ -71,7 +70,7 @@ export default function Confirmation (props) {
       <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"white", borderRadius:"10px", padding:'50px' }}>
           <Typography sx={{ textAlign: "center", fontSize:"30px" }}>
                 { 
-                  data.status == true ? `Сиз ${props.club} клубуна катталгансыз!` : `Сиз ${props.club} клубуна табыштама жөнөткөнсүз!`
+                  data.status === true ? `Сиз ${props.club} клубуна катталгансыз!` : `Сиз ${props.club} клубуна табыштама жөнөткөнсүз!`
                 } 
           </Typography>
           <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'20px', gap:'4%'}}>

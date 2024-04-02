@@ -9,6 +9,7 @@ import CardAnnouncement from '../components/card/CardAnnouncement';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAnnouncements } from '../store/actions/fetchAnnouncements';
+import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 
@@ -17,7 +18,7 @@ export default function Home() {
   const changeSidebar = () => {
     setOpened(prev => prev)
   }
-
+  const cookieValue = Cookies.get('name');
   const dispatch = useDispatch()
   const {data} = useSelector((state)=> state.announcement)
   useEffect( () =>{

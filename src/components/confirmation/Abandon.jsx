@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {  useDispatch, useSelector } from "react-redux";
 import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
 import $api from '../../utils/api'
+import Cookies from 'js-cookie';
 
 function Abandon() {
     const router = useRouter()
@@ -14,14 +15,18 @@ function Abandon() {
     const selectedClubId = useSelector((state) => state.selectedClub.value.id)
     const dispatch = useDispatch()
     const {data} = useSelector((state)=> state.studentStatusInClub)
-    const account = getItem()
-  
+    const userEmail = Cookies.get("user")
+    const userId = Cookies.get("userId")
+    useEffect(() => {
+      dispatch(fetchStudentStatusInClub({userId: userId, clubId: selectedClubId}))
+    }, [])
+
     async function Confirm(){
       
       let response = undefined;
   
         const requestData = {
-          User: account.user,
+          User: userEmail,
           Club: selectedClub
         };
   
@@ -39,8 +44,8 @@ function Abandon() {
       
   
     }
-
-    if(data == null)
+    console.log(data,"abandon")
+    if(data === "")
     {
         return (
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItmes:"center", backgroundColor:"white", borderRadius:"10px", padding:'50px' }}>
@@ -64,13 +69,18 @@ function Abandon() {
                     }
                   </Typography>
                   <div style={{display:"flex", justifyContent: "center", alignItmes:"center", marginTop:'20px', gap:'4%'}}>
-                    <Button
+                    {
+                      selectedClub !== undefined ?
+                      <Button
                       type='submit'           
                       variant='contained'
                       sx={{color:'white', backgroundColor:"#370E8A"}}
                       onClick={Confirm}>
                         Ооба
-                    </Button>        
+                    </Button>
+                    : <></>
+                    }
+                            
                   </div>
               </div>
           )

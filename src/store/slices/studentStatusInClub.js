@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {fetchStudentStatusInClub} from '../actions/fetchStudentStatusInClub'
 
-const studentStatusSlice = createSlice({
+const studentStatusInClubSlice = createSlice({
     name: "studentStatus",
     initialState: {
         data: []
@@ -13,4 +13,4 @@ const studentStatusSlice = createSlice({
         })
     }
 })
-export default studentStatusSlice.reducer
+export default studentStatusInClubSlice.reducer
