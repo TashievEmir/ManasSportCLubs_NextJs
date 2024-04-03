@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function AppTable({
@@ -68,16 +68,41 @@ export default function AppTable({
                 <Checkbox disabled={disabled} defaultChecked={row?.friday}/>
                     :
                     <Box  sx={{bgcolor: row?.friday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
-            }
-                </TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.place}</TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.auditorium}</TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.startTime}</TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>{row?.endTime}</TableCell>
+                }
+              </TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+                {
+                  !disabled ?
+                  <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                   : <>{row?.place}</>
+                }
+              </TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              {
+                !disabled ?
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                :<>{row?.auditorium}</>
+              }
+              </TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              {
+                !disabled ?
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                :<>{row?.startTime}</>
+              }
+              </TableCell>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              {
+                !disabled ?
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                :<>{row?.endTime}</>
+              }
+              </TableCell>
               {!disabled && 
-              <TableCell sx={{margin: "0 auto"}} width={90}>
-                    <Button sx={{backgroundColor: "red"}} >Жаңыртуу</Button>
-                </TableCell>}
+                <TableCell sx={{margin: "0 auto"}} width={90}>
+                    <Button sx={{backgroundColor: "red"}} > Жаңыртуу </Button>
+                </TableCell>
+              }
             </TableRow>
           ))}
         </TableBody>

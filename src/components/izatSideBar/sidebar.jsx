@@ -5,6 +5,7 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import AddIcon from '@mui/icons-material/Add';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
+import Cookies from 'js-cookie';
 
 const userSidebar = [
     {
@@ -59,9 +60,9 @@ const adminSidebar = [
 
 const Sidebar = ({ open, setOpened }) => {
     const { getItem } = useLocalStorage('account');
-    const account = getItem()
+    const account = Cookies.get("role")
 
-    const links = account.role == "student" ? userSidebar?.map((item) => (
+    const links = account == "student" ? userSidebar?.map((item) => (
             <Links 
                 onClick={setOpened} 
                 key={item.id}

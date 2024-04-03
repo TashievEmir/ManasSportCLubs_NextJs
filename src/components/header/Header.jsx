@@ -18,19 +18,18 @@ import {setSelectedClub} from '../../store/slices/selectedClub';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
+import Cookies from 'js-cookie';
 
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
-  const {getItem} = useLocalStorage('account');
   const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
-  const account = getItem();
+  const accountRole = Cookies.get("role");
   const loginStatus = getLoginStatus();
   
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
   const selectedClub = useSelector((state) => state.selectedClub.value)
-  //const loginStatus = useSelector((state) => state.loginStatus.value);
   
   const [club, setClub] = React.useState('');
 
@@ -55,7 +54,7 @@ function Header({toggleDrawer, state}) {
         name: selectedName
       }))
 
-      account.role == "teacher" ? router.push('/admin') : router.push('/user')
+      accountRole == "teacher" ? router.push('/admin') : router.push('/user')
     }
     else{
       alert("At first you need to login") 
@@ -107,13 +106,13 @@ function Header({toggleDrawer, state}) {
               <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
             </Link>
             {
-              account.role == "teacher" ? <Link  href="/admin/clubCreate">
+              accountRole == "teacher" ? <Link  href="/admin/clubCreate">
                                             <Typography sx={{color: "white", fontWeight:"bold"}}>Клуб жаратуу</Typography>
                                           </Link>
                                           : <></>
             }
             {
-              account.role == "teacher" ? <Link  href="/admin/announcement">
+              accountRole == "teacher" ? <Link  href="/admin/announcement">
                                             <Typography sx={{color: "white", fontWeight:"bold"}}>Жарыя жаратуу</Typography>
                                           </Link>
                                           : <></>
