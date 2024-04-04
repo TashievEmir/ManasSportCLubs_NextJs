@@ -43,7 +43,7 @@ export default function Confirmation (props) {
   useEffect(() => {
     dispatch(fetchStudentStatusInClub({userId: userId, clubId: selectedClubId}))
   }, [])
-  console.log(data,"index")
+  
   if(data === "")
   {
     return (

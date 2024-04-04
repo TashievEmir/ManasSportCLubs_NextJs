@@ -7,6 +7,7 @@ import {  useDispatch, useSelector } from "react-redux";
 import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
 import $api from '../../utils/api'
 import Cookies from 'js-cookie';
+import AlertComp from '../AlertComp/AlertComp';
 
 function Abandon() {
     const router = useRouter()
@@ -17,6 +18,8 @@ function Abandon() {
     const {data} = useSelector((state)=> state.studentStatusInClub)
     const userEmail = Cookies.get("user")
     const userId = Cookies.get("userId")
+    const [showAlert, setShowAlert] = useState(null);
+
     useEffect(() => {
       dispatch(fetchStudentStatusInClub({userId: userId, clubId: selectedClubId}))
     }, [])
@@ -31,20 +34,16 @@ function Abandon() {
         };
   
         response = await $api.delete('/Club/Abandon', { data: requestData });
-  
+        
         if(response.status == 200){
-          <Alert variant="filled" severity="success">
-              Табыштамаңыз ${selectedClub} клубунан баш тартылды.
-          </Alert>
+          setShowAlert(true)
           router.push('/user');
         }
-        <Alert variant="filled" severity="error">
-                Сиздин табыштамаңыз баш тартылган жок.
-        </Alert>
-      
-  
+        else{
+          setShowAlert(false)
+        }
     }
-    console.log(data,"abandon")
+
     if(data === "")
     {
         return (
@@ -80,7 +79,7 @@ function Abandon() {
                     </Button>
                     : <></>
                     }
-                            
+                   {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}         
                   </div>
               </div>
           )

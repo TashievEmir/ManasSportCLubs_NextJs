@@ -8,12 +8,32 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import $api from '../../utils/api'
+import AlertComp from '../AlertComp/AlertComp';
 
 export default function AppTable({
     cols,
     rows,
     disabled
 }) {
+
+  const [showAlert, setShowAlert] = useState(null);
+
+  async function Upgrade(){
+
+    let response = await $api.post('/Club/Apply', {
+      User: userEmail,
+      Club: selectedClub
+    });
+
+    if(response.status == 200){
+      setShowAlert(true)
+    }
+    else{
+      setShowAlert(false)
+    }
+
+  }
 
   return (
     <TableContainer component={Paper} sx={{borderRadius: "15px"}}>
@@ -73,40 +93,41 @@ export default function AppTable({
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
                 {
                   !disabled ?
-                  <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                  <TextField id="outlined-basic" label={row?.place} variant="outlined" />
                    : <>{row?.place}</>
                 }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
               {
                 !disabled ?
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <TextField id="outlined-basic" label={row?.auditorium} variant="outlined" />
                 :<>{row?.auditorium}</>
               }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
               {
                 !disabled ?
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <TextField id="outlined-basic" label={row?.startTime} variant="outlined" />
                 :<>{row?.startTime}</>
               }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
               {
                 !disabled ?
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <TextField id="outlined-basic" label={row?.endTime} variant="outlined" />
                 :<>{row?.endTime}</>
               }
               </TableCell>
               {!disabled && 
                 <TableCell sx={{margin: "0 auto"}} width={90}>
-                    <Button sx={{backgroundColor: "red"}} > Жаңыртуу </Button>
+                    <Button sx={{backgroundColor: "red"}} onClick={Upgrade} > Жаңыртуу </Button>
                 </TableCell>
               }
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}
     </TableContainer>
   );
 }
