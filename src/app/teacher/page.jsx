@@ -15,7 +15,7 @@ const dispatch = useDispatch()
   }, [])
   const dataCount = Array.isArray(data) ? data.length : 0;
   return(
-    <AppShell>
+    <AppShell showSidebar={false}>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
         {
           dataCount > 0 ?

@@ -63,7 +63,7 @@ function ClubCreate() {
       };
 
   return (
-    <AppShell>
+    <AppShell showSidebar={false}>
         <Grid container justifyContent="center" alignItems="center" gap={2}>
         <ThemeProvider theme={defaultTheme} >
         <Container component="main" maxWidth="xs" >
@@ -138,7 +138,11 @@ function ClubCreate() {
                         id="photoInput"
                       />
                       <label htmlFor="photoInput">
-                        <Button component="span" fullWidth variant="contained">
+                        <Button type="submit"  fullWidth variant="contained" style={{backgroundColor: '#370E8A', color: "white", '&:hover': {
+                                                                                                                                                backgroundColor: '#8855ED', 
+                                                                                                                                                cursor: 'pointer',}
+                                                                                    }}
+                        >
                         Файл тандоо
                         </Button>
                       </label>
@@ -155,7 +159,10 @@ function ClubCreate() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: '#370E8A', color: "white",'&:hover': {
+                                                                                    backgroundColor: '#8855ED', 
+                                                                                    cursor: 'pointer',}
+             }}
             >
               Жаратуу
             </Button>

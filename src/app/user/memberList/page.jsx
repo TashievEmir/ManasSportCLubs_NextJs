@@ -19,7 +19,7 @@ const MemberList = () => {
     const dataCount = Array.isArray(data) ? data.length : 0;
     
   return (
-    <AppShell>
+    <AppShell showSidebar={true}>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
       {
         dataCount > 0 ? 

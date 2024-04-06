@@ -6,7 +6,7 @@ import Abandon from '../../../components/confirmation/Abandon'
 const ClubRegistration = (props) => {
   
   return (
-    <AppShell >
+    <AppShell showSidebar={true}>
         <Abandon />
     </AppShell>
   )

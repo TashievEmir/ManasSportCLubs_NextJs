@@ -8,7 +8,7 @@ const ClubRegistration = (props) => {
   const selectedClub = useSelector((state) => state.selectedClub.value.name)
 
   return (
-    <AppShell >
+    <AppShell showSidebar={true}>
         <Confirmation club={selectedClub} action={true} />
     </AppShell>
   )

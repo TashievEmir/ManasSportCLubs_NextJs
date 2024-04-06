@@ -5,7 +5,7 @@ import Sidebar from '../izatSideBar/sidebar';
 import { Box, MenuItem, Select } from '@mui/material';
 
 
-export default function AppShell ({children}) {
+export default function AppShell ({children, showSidebar}) {
     const [opened, setOpened] = useState(true)
 
       const changeSidebar = () => {
@@ -20,15 +20,20 @@ export default function AppShell ({children}) {
           display: 'flex',
            justifyContent: 'flex-start',
             alignItems: 'start'}}>
-          <Box
-            sx={{
-              width: opened ? "700px" : "80px",
-              transition: "300ms",
-              height: "90vh",
-              maxWidth: "15%"
-            }}>
-            <Sidebar open={opened} setOpened={changeSidebar}/>
-          </Box>
+              {
+                showSidebar && (
+                  <Box
+                    sx={{
+                      width: opened ? "700px" : "80px",
+                      transition: "300ms",
+                      height: "90vh",
+                      maxWidth: "15%"
+                    }}>
+                    <Sidebar open={opened} setOpened={changeSidebar}/>
+                  </Box>
+                )
+              }
+          
           <Box sx={{
                   padding: "15px",
                   height: "90vh",

@@ -5,6 +5,8 @@ import AppShell from '../../../components/app-shell'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSchedule } from '../../../store/actions/fetchSchedule';
 import AppTable from '../../../components/app-table';
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const columns = [
   { field: 'Monday', headerName: 'Monday', type: 'number', width: 90, },
@@ -29,13 +31,16 @@ const Schedule = () => {
     }, [])
 
   return (
-    <AppShell>
+    <AppShell showSidebar={true}>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
-          <AppTable
-            disabled={false}
-            cols={columns}
-            rows={[data]}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <AppTable
+              disabled={false}
+              cols={columns}
+              rows={[data]}
+            />
+          </LocalizationProvider>
+          
       </Grid>
     </AppShell>
   )

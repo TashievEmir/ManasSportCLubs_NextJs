@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,21 +10,34 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import {  useDispatch, useSelector } from "react-redux";
 
 export default function AppTable({
     cols,
     rows,
     disabled
 }) {
+  const dispatch = useDispatch()
+  const selectedClubId = useSelector((state) => state.selectedClub.value.id)
 
   const [showAlert, setShowAlert] = useState(null);
+  const scheduleData ={
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Place: "",
+    Auditorium: "",
+    StartTime: "00:00:00",
+    EndTime: "00:00:00",
+    ClubId: selectedClubId
+  };
 
   async function Upgrade(){
 
-    let response = await $api.post('/Club/Apply', {
-      User: userEmail,
-      Club: selectedClub
-    });
+    let response = await $api.post('/Club/UpdateSchedule', scheduleData);
 
     if(response.status == 200){
       setShowAlert(true)
@@ -34,6 +47,64 @@ export default function AppTable({
     }
 
   }
+
+  const handleCheckboxChange = (index, day, checked) => {
+
+    switch (day) {
+      case 'Monday':
+        scheduleData.Monday = true; break;
+      case 'Tuesday':
+        scheduleData.Tuesday = true; break;
+      case 'Wednesday':
+        scheduleData.Wednesday = true; break;
+      case 'Thursday':
+        scheduleData.Thursday = true; break;
+      case 'Friday':
+        scheduleData.Friday = true; break;
+      default:
+        break;
+    }    
+    // const updatedScheduleData = [...scheduleData];
+    // updatedScheduleData[index][day] = checked;
+    // setScheduleData(updatedScheduleData);
+  };
+
+  const handleTextFieldChange = (index, field, value) => {
+
+    switch (field) {
+      case 'Place':
+        scheduleData.Place = value; break;
+      case 'Auditorium':
+        scheduleData.Auditorium = value; break;
+      default:
+        break;
+    }
+    // const updatedScheduleData = [...scheduleData];
+    // updatedScheduleData[index][field] = value;
+    // setScheduleData(updatedScheduleData);
+  };
+
+  const handleTimeChange = (index, field, value) => {
+    const selectedTime = new Date(value);
+    const hours = selectedTime.getHours().toString().padStart(2, '0');
+  const minutes = selectedTime.getMinutes().toString().padStart(2, '0');
+  const seconds = selectedTime.getSeconds().toString().padStart(2, '0');
+
+  // Construct the formatted time string in 'HH:mm:ss' format
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    switch (field) {
+      case 'StartTime':
+        scheduleData.StartTime = formattedTime; break;
+      case 'EndTime':
+        scheduleData.EndTime = formattedTime; break;
+      default:
+        break;
+    }
+    // const updatedScheduleData = [...scheduleData];
+    // updatedScheduleData[index][field] = value;
+    // setScheduleData(updatedScheduleData);
+  };
 
   return (
     <TableContainer component={Paper} sx={{borderRadius: "15px"}}>
@@ -57,35 +128,35 @@ export default function AppTable({
             >
               <TableCell width={90}>
                 {!disabled ? 
-                <Checkbox disabled={disabled}  defaultChecked={row?.monday}/>
+                <Checkbox disabled={disabled}  defaultChecked={row?.monday} onChange={(e) => handleCheckboxChange(idx, 'Monday', e.target.checked)}/>
                     :
                     <Box sx={{bgcolor: row?.monday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
-            }
+                }
               </TableCell>
               <TableCell  width={90}>
                 {!disabled ? 
-                <Checkbox disabled={disabled} defaultChecked={row?.tuesday}/>
+                <Checkbox disabled={disabled} defaultChecked={row?.tuesday} onChange={(e) => handleCheckboxChange(idx, 'Tuesday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.tuesday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
-            }
-                </TableCell>
+                }
+              </TableCell>
               <TableCell  width={90}>
                 {!disabled ? 
-                <Checkbox disabled={disabled} defaultChecked={row?.wednesday}/>
+                <Checkbox disabled={disabled} defaultChecked={row?.wednesday} onChange={(e) => handleCheckboxChange(idx, 'Wednesday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.wednesday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
-            }
-                </TableCell>
+                }
+              </TableCell>
               <TableCell  width={90}>
                 {!disabled ? 
-                <Checkbox disabled={disabled} defaultChecked={row?.thursday}/>
+                <Checkbox disabled={disabled} defaultChecked={row?.thursday} onChange={(e) => handleCheckboxChange(idx, 'Thursday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.thursday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
-            }
-                </TableCell>
+                }
+              </TableCell>
               <TableCell  width={90}>
                 {!disabled ? 
-                <Checkbox disabled={disabled} defaultChecked={row?.friday}/>
+                <Checkbox disabled={disabled} defaultChecked={row?.friday} onChange={(e) => handleCheckboxChange(idx, 'Friday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.friday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
@@ -93,41 +164,51 @@ export default function AppTable({
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
                 {
                   !disabled ?
-                  <TextField id="outlined-basic" label={row?.place} variant="outlined" />
+                  <TextField id="outlined-basic" label={row?.place} variant="outlined" onChange={(e) => handleTextFieldChange(idx, 'Place', e.target.value)} />
                    : <>{row?.place}</>
                 }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
-              {
+                {
                 !disabled ?
-                <TextField id="outlined-basic" label={row?.auditorium} variant="outlined" />
+                <TextField id="outlined-basic" label={row?.auditorium} variant="outlined" onChange={(e) => handleTextFieldChange(idx, 'Auditorium', e.target.value)} />
                 :<>{row?.auditorium}</>
-              }
+                }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
-              {
+                {
                 !disabled ?
-                <TextField id="outlined-basic" label={row?.startTime} variant="outlined" />
+                <TimePicker
+                    label="Start Time"
+                    value={row?.StartTime}
+                    onChange={(newValue) => handleTimeChange(idx, 'StartTime', newValue)}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
                 :<>{row?.startTime}</>
-              }
+                }
               </TableCell>
               <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
-              {
+                {
                 !disabled ?
-                <TextField id="outlined-basic" label={row?.endTime} variant="outlined" />
+                <TimePicker
+                    label="End Time"
+                    value={row?.EndTime}
+                    onChange={(newValue) => handleTimeChange(idx, 'EndTime', newValue)}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
                 :<>{row?.endTime}</>
-              }
+                }
               </TableCell>
               {!disabled && 
                 <TableCell sx={{margin: "0 auto"}} width={90}>
-                    <Button sx={{backgroundColor: "red"}} onClick={Upgrade} > Жаңыртуу </Button>
+                    <Button sx={{backgroundColor: "#370E8A", color:"white"}} onClick={Upgrade} > Жаңыртуу </Button>
                 </TableCell>
               }
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}
+      {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Расписание жаңыланды`: "Расписание жаңыланды"}/>}
     </TableContainer>
   );
 }

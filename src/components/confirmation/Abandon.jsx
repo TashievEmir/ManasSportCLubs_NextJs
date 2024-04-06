@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
 import { Alert, Button, Typography } from "@mui/material";
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import { useRouter } from "next/navigation";
 import {  useDispatch, useSelector } from "react-redux";
 import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
@@ -11,7 +10,6 @@ import AlertComp from '../AlertComp/AlertComp';
 
 function Abandon() {
     const router = useRouter()
-    const {getItem, setItem} = useLocalStorage('account');
     const selectedClub = useSelector((state) => state.selectedClub.value.name)
     const selectedClubId = useSelector((state) => state.selectedClub.value.id)
     const dispatch = useDispatch()

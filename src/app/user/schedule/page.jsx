@@ -28,7 +28,7 @@ const Schedule = () => {
       dispatch(fetchSchedule(selectedClub))
     }, [])
   return (
-    <AppShell>
+    <AppShell showSidebar={true}>
       <Grid container justifyContent="start" alignItems="start" gap={2}>
           <AppTable
             disabled={true}
