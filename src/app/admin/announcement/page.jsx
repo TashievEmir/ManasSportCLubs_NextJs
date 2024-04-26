@@ -19,7 +19,6 @@ function Announcement() {
   const router = useRouter()
   const [selectedFile, setSelectedFile] = useState();
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -117,7 +116,7 @@ function Announcement() {
                     </LocalizationProvider>
                   </Grid>
                 </Grid>
-                <div>
+                  <div>
                       <Typography variant="h6">Жарыянын сүрөтүн жүктөңүз:</Typography>
                       <Input
                         type="file"

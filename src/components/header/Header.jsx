@@ -81,7 +81,8 @@ function Header({toggleDrawer, state}) {
           <Box sx={{display: "flex", alignItems: "center", gap: {xs: 2, md: 5}}}>
             <Box>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" sx={{color: "white"}}>Клуб</InputLabel>
+                <InputLabel
+                id="demo-simple-select-label" sx={{color: "white"}}>Клуб</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"

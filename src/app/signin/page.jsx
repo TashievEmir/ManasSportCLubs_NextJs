@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -19,6 +19,7 @@ import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
+import AlertComp from '../../components/AlertComp/AlertComp';
 
 const defaultTheme = createTheme();
 
@@ -30,31 +31,39 @@ const SignIn = () => {
   const [account, setAccount] = useState();
   const {getItem, setItem} = useLocalStorage('account');
 
+  const [showAlert, setShowAlert] = useState({isSuccess: null});
+
    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        const response = await $api.post('/Account/LogIn',{
-          Login: data.get('email'),
-          Password: data.get('password')
-        });
-        
-        if(response.status == 200)
-        {
-          //setItem(response.data)
-          const currentDate = new Date();
-          const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+        setShowAlert({isSuccess: null})
+        try {
+          const response = await $api.post('/Account/LogIn',{
+            Login: data.get('email'),
+            Password: data.get('password')
+          });
           
-          Cookies.set('userId', response.data.id, { expires: expiryDate });
-          Cookies.set('accessToken', response.data.id, { expires: expiryDate });
-          Cookies.set('user', response.data.user, { expires: expiryDate });
-          Cookies.set('role', response.data.role, { expires: expiryDate });
-          setLoginStatus(true)
-          router.push("/")
-        }
-        else{
-          alert("Something went wrong")
-        }               
+          if(response.status == 200)
+          {
+            //setItem(response.data)
+            const currentDate = new Date();
+            const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+            
+            Cookies.set('userId', response.data.id, { expires: expiryDate });
+            Cookies.set('accessToken', response.data.id, { expires: expiryDate });
+            Cookies.set('user', response.data.user, { expires: expiryDate });
+            Cookies.set('role', response.data.role, { expires: expiryDate });
+            setLoginStatus(true)
+            setShowAlert({isSuccess: true})
+            router.push("/")
+          }
+          else{
+            setShowAlert({isSuccess: false})
+          }     
+        } catch (error) {
+          setShowAlert({isSuccess: false})
+          console.error("error sign in")
+        }          
       };
 
   return (
@@ -113,9 +122,9 @@ const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/forgotPassword" variant="body2">
+                {/* <Link href="/forgotPassword" variant="body2">
                   Парольду унутуңузбу?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
@@ -125,6 +134,9 @@ const SignIn = () => {
             </Grid>
           </Box>
         </Box>
+        {(showAlert.isSuccess !== null) && 
+        <AlertComp isSuccess={showAlert.isSuccess} 
+          message={ showAlert.isSuccess ===true ? `Кирүү ийгиликтүү`: "Логин же пароль туура эмес"}/>}         
       </Container>
     </ThemeProvider>
   )

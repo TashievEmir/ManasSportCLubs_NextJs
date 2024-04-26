@@ -20,6 +20,7 @@ import { fetchDepartament } from '../../store/actions/fetchDepartament';
 import { fetchFaculties } from '../../store/actions/fetchFaculties';
 import manasLogo from '../../../public/manas_logo.png'
 import { Input } from '@mui/material';
+import AlertComp from '../../components/AlertComp/AlertComp';
 
 const defaultTheme = createTheme();
 
@@ -32,6 +33,7 @@ const SignUp = observer(() => {
     departament: 777
   })
   const [selectedFile, setSelectedFile] = useState();
+  const [showAlert, setShowAlert] = useState(null);
 
   useEffect(() => {
     dispatch(fetchDepartament())
@@ -86,7 +88,11 @@ const SignUp = observer(() => {
             });
     
             if(response.status==200){
+              setShowAlert(true)
               router.push('/signin');
+            }
+            else{
+              setShowAlert(false)
             }
         //   }
         // }
@@ -264,6 +270,7 @@ const SignUp = observer(() => {
             Аккаунт бар
           </Link>
         </Box>
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Каттоо ийгиликтүү аяктады`: "Каттоо учурунда ката чыгып калды"}/>}         
       </Container>
     </ThemeProvider>
   )

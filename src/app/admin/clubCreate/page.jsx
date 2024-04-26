@@ -51,6 +51,7 @@ function ClubCreate() {
             Club has been created succesfully!
           </Alert>
           router.push("/admin")
+          return;
         }
         <Alert variant="filled" severity="error">
           Club has not been created!
@@ -138,13 +139,20 @@ function ClubCreate() {
                         id="photoInput"
                       />
                       <label htmlFor="photoInput">
-                        <Button type="submit"  fullWidth variant="contained" style={{backgroundColor: '#370E8A', color: "white", '&:hover': {
-                                                                                                                                                backgroundColor: '#8855ED', 
-                                                                                                                                                cursor: 'pointer',}
-                                                                                    }}
-                        >
-                        Файл тандоо
+                      <div>
+                      <Input
+                        type="file"
+                        inputProps={{ accept: 'image/*' }}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                        id="photoInput"
+                      />
+                      <label htmlFor="photoInput">
+                        <Button component="span" fullWidth variant="contained" style={{backgroundColor: '#370E8A', color: "white"}}>
+                         Файл тандоо
                         </Button>
+                      </label>
+                    </div>
                       </label>
                     </div>
                     <div>

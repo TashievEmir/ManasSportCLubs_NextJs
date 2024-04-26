@@ -7,9 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
-import Image from 'next/image'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 
 export default function MediaCard( {element} ) {
@@ -30,30 +29,33 @@ export default function MediaCard( {element} ) {
 
 
   return (
-    <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
+    <Card sx={{ minWidth: 200, borderRadius: "20px" }}>
       <CardContent>
-        <Box src={manasLogo} sx={{ width:'300px', height:'200px'}}>
+        <Grid container spacing={2} >
+          <Grid item xs={12} sm={4} >
+          <Box src={manasLogo} sx={{ width:'100%', height:'100%'}}>
            {element.photo.length > 1000 ? (
-          <Image
-            width={300}
-            height={200}
-            src={`data:image/png;base64,${element.photo}`} 
-            alt='manasLogo'
-          />
-        ) : (
+            <img
+              width="100%"
+              height="100%"
+              style={{objectFit: "contain"}}
+              src={`data:image/png;base64,${element.photo}`} 
+              alt='manasLogo'
+            />
+          ) : (
           <Box sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-            <Image
-            width={200}
-            height={200}
-            src={manasLogo} 
-            alt='manasLogo'
+            <img
+              width="100%"
+              height="100%"
+              src={manasLogo} 
+              alt='manasLogo'
           />
           </Box>
         )}
         </Box>
-       
-      
-        <Typography gutterBottom variant="h5" component="div">
+          </Grid>
+          <Grid item xs={7}>
+          <Typography gutterBottom variant="h5" component="div">
           {element.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -67,6 +69,8 @@ export default function MediaCard( {element} ) {
             onClick={Remove}>Жарыя өчүрүү
         </Button>
         }
+          </Grid>
+        </Grid> 
       </CardContent>
     </Card>
   );
