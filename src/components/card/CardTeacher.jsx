@@ -28,25 +28,25 @@ export default function MediaCard( {element} ) {
   }
 
   return (
-    <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
-      <CardContent width="200px">
-        <Grid container justifyContent="space-between" spacing={4}>
+    <Card sx={{ minWidth: 100, maxWidth:500, minHeight: 100, maxHeight:208, borderRadius: "20px" }}>
+      <CardContent >
+        <Grid container spacing={2}>
           <Grid item xs={4} >
               {element?.photo?.length > 1000 ? (
-              <Image
-                width={100}
-                height={100}
+              <img
+                width="100%"
+                height="100%"
                 src={`data:image/png;base64,${element.photo}`} 
                 alt='Агай сүрөтү'
-                style={{width: "100%", height: "100%", borderRadius: "10px"}}
+                style={{ borderRadius: "10px"}}
               />
             ) : (
-                <Image
-                width='200px'
-                height='200px'
+                <img
+                width="100%"
+                height="100%"
                 src={manasLogo} 
                 alt='manasLogo'
-                style={{width: "100%", height: "100%", minWidth: "80px"}}
+                style={{ minWidth: "80px"}}
               />
             )}
             </Grid>

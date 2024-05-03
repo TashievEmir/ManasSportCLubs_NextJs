@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import {  useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,6 @@ function Abandon() {
         
         if(response.status == 200){
           setShowAlert(true)
-          router.push('/user');
         }
         else{
           setShowAlert(false)

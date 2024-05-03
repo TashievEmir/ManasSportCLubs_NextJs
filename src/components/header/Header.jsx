@@ -100,7 +100,7 @@ function Header({toggleDrawer, state}) {
                 </Select>
               </FormControl>
             </Box>
-            <Link  href="/user">
+            <Link  href="/">
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
             <Link  href="/teacher">

@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation'
+import AlertComp from '../../../components/AlertComp/AlertComp'
 
 const defaultTheme = createTheme();
 
@@ -19,6 +20,8 @@ function Announcement() {
   const router = useRouter()
   const [selectedFile, setSelectedFile] = useState();
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
+  const [showAlert, setShowAlert] = useState(null);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -40,14 +43,10 @@ function Announcement() {
 
 
     if (response.status == 200) {
-      <Alert variant="filled" severity="success">
-           Жарыя ийгиликтүү жүктөлдү!
-      </Alert>
-      router.push("/admin")
+      setShowAlert(true)
+      router.push("/")
     }
-    <Alert variant="filled" severity="error">
-       Жарыя жүктөлбөй калды !
-    </Alert>
+    setShowAlert(false)
   };
 
   const handleFileChange = (event) => {
@@ -154,6 +153,7 @@ function Announcement() {
             </Box>
           </Container>
         </ThemeProvider>
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Расписание жаңыланды`: "Расписание жаңыланды"}/>}
       </Grid>
     </AppShell>
   )

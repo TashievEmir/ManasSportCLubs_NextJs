@@ -1,24 +1,21 @@
 "use client"
-import React from 'react'
+import React  from 'react'
 import AppShell from '../../components/app-shell'
-import Image from 'next/image';
-import football from '../../../public/fotball.webp'
-import basketball from '../../../public/basketball.jpg'
-import volleyball from '../../../public/volleyball.jpg'
 import { useSelector } from 'react-redux'
+import Image from 'next/image';
+import manasLogo from '../../../public/manas_logo.png'
 
 const Admin = () => {
-  const selectedClub = useSelector((state) => state.selectedClub.value.id)
+  const selectedClubId = useSelector((state) => state.selectedClub.value.id)
+  const clubs = useSelector((state) => state?.club?.data)
+  const selectedClubImage = clubs?.find(el => el.id === selectedClubId)?.photo
+  
+  const currentImage = selectedClubImage ? `data:image/png;base64,${selectedClubImage}` : manasLogo
 
   return (
-    <AppShell>
+    <AppShell showSidebar={true}>
           <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            {
-              selectedClub == 1 ? <Image src={football} alt='footbal picture' width={500} height={400} />
-                                : selectedClub == 2 ? <Image src={basketball} alt='footbal picture' width={500} height={400} />
-                                                    : <Image src={volleyball} alt='footbal picture' width={500} height={400} />
-            }
-            
+            <Image src={currentImage} alt='footbal picture' width={500} height={400} />
           </div>
     </AppShell>
   )

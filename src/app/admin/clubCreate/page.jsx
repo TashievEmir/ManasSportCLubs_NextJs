@@ -10,6 +10,7 @@ import { fetchTeachers } from '../../../store/actions/fetchTeacher';
 import { useDispatch, useSelector } from 'react-redux';
 import $api from '../../../utils/api'
 import { useRouter } from 'next/navigation'
+import AlertComp from '../../../components/AlertComp/AlertComp'
 
 const defaultTheme = createTheme();
 
@@ -17,7 +18,7 @@ function ClubCreate() {
     const dispatch = useDispatch()
     const router = useRouter()
     const [selectedFile, setSelectedFile] = useState();
-
+    const [showAlert, setShowAlert] = useState(null);
     const { data } = useSelector((state) => state.teacher)
     const [state, setState] = useState({
       teacher: 777
@@ -47,15 +48,11 @@ function ClubCreate() {
         })
         
         if(response.status==200){
-          <Alert variant="filled" severity="success">
-            Club has been created succesfully!
-          </Alert>
+          setShowAlert(true)
           router.push("/admin")
           return;
         }
-        <Alert variant="filled" severity="error">
-          Club has not been created!
-        </Alert>
+        setShowAlert(false)
       };
 
       const handleFileChange = (event) => {
@@ -178,6 +175,7 @@ function ClubCreate() {
         </Box>
       </Container>
     </ThemeProvider>
+    {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Расписание жаңыланды`: "Расписание жаңыланды"}/>}
         </Grid>
     </AppShell>
   )

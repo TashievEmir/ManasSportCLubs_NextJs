@@ -52,15 +52,15 @@ export default function AppTable({
 
     switch (day) {
       case 'Monday':
-        scheduleData.Monday = true; break;
+        scheduleData.Monday = checked; break;
       case 'Tuesday':
-        scheduleData.Tuesday = true; break;
+        scheduleData.Tuesday = checked; break;
       case 'Wednesday':
-        scheduleData.Wednesday = true; break;
+        scheduleData.Wednesday = checked; break;
       case 'Thursday':
-        scheduleData.Thursday = true; break;
+        scheduleData.Thursday = checked; break;
       case 'Friday':
-        scheduleData.Friday = true; break;
+        scheduleData.Friday = checked; break;
       default:
         break;
     }    

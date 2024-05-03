@@ -37,10 +37,10 @@ export default function CardMember( {element} ) {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center'}} >
-        <Grid container justifyContent="space-between" spacing={4}>
+        <Grid container spacing={2}>
           <Grid item xs={4}>
           { element?.photo?.length > 1000 ? (
-            <Image
+            <img
             width={100}
             height={100}
             style={{width: "100%", height: "100%", borderRadius:"15px"}}
