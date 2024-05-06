@@ -12,21 +12,30 @@ import { Alert, Grid } from '@mui/material';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp';
+import Cookies from 'js-cookie';
 
 export default function CardMember( {element} ) {
   const {getItem, setItem} = useLocalStorage('account');
   const account = getItem()
   const [showAlert, setShowAlert] = useState(null);
+  const accountRole = Cookies.get('role');
 
   async function Remove(){
-    const response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
 
+    let response;
+    try
+    {
+      response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
+    }
+    catch
+    {
+      setShowAlert(false)
+    }
+    
     if(response.status == 200){
       setShowAlert(true)
     }
-    else{
-      setShowAlert(false)
-    }
+
     
   }
 
@@ -70,10 +79,17 @@ export default function CardMember( {element} ) {
           </Grid>
         </Grid>
         {
-          account.role === "teacher" ?(
+          accountRole === "teacher" ?(
             <Button type='submit'           
             variant='contained' 
-            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}
+            sx={{
+                  marginTop:2, 
+                  backgroundColor: '#370E8A', 
+                  color: "white", 
+                  ':hover':{
+                      backgroundColor: '#8855ED'
+                  }
+                }}
             onClick={Remove}>
               Клубтан чыгаруу
           </Button>

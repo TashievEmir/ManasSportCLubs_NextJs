@@ -42,7 +42,7 @@ export default function Home() {
                   <Box  display="flex" justifyContent="space-around" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
                   {
                     data.map((element) =>
-                      <Grid key={element.id} item>
+                      <Grid  sx={{width:"100%"}} key={element.id} item>
                         <CardAnnouncement element={element} />
                       </Grid>
                     )

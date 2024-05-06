@@ -201,7 +201,14 @@ export default function AppTable({
               </TableCell>
               {!disabled && 
                 <TableCell sx={{margin: "0 auto"}} width={90}>
-                    <Button sx={{backgroundColor: "#370E8A", color:"white"}} onClick={Upgrade} > Жаңыртуу </Button>
+                    <Button sx={{ backgroundColor: "#370E8A", 
+                                  color:"white",
+                                  ':hover':{
+                                    backgroundColor: '#8855ED'
+                                }
+                                }} 
+                            onClick={Upgrade} 
+                    > Жаңыртуу </Button>
                 </TableCell>
               }
             </TableRow>

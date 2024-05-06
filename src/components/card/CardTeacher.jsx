@@ -28,8 +28,14 @@ export default function MediaCard( {element} ) {
   }
 
   return (
-    <Card sx={{ minWidth: 100, maxWidth:500, minHeight: 100, maxHeight:208, borderRadius: "20px" }}>
-      <CardContent >
+    <Card sx={{ 
+        minWidth: 100,
+        maxWidth:500, 
+        minHeight: 100, 
+        maxHeight:208, 
+        borderRadius: "20px" 
+      }}>
+      <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={4} >
               {element?.photo?.length > 1000 ? (
@@ -57,9 +63,8 @@ export default function MediaCard( {element} ) {
             <Typography lineHeight={1}  fontSize={{xs: "16px", md: "18px"}} gutterBottom variant="h6" component="div">
               {element.firstName}
             </Typography>
-            <Typography fontSize={{xs: "12px", md: "14px"}} variant="body2" color="text.secondary">
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word"}} variant="body2" color="text.secondary">
               {element.email}
-          
            </Typography>
           </Grid>
         </Grid>

@@ -16,7 +16,6 @@ import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
-//import {setLoginStatus} from '../../store/slices/loginStatus';
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import AlertComp from '../../components/AlertComp/AlertComp';
@@ -37,33 +36,48 @@ const SignIn = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         setShowAlert({isSuccess: null})
-        try {
-          const response = await $api.post('/Account/LogIn',{
+        let response;
+        try 
+        {
+          response = await $api.post('/Account/LogIn',{
             Login: data.get('email'),
             Password: data.get('password')
           });
           
-          if(response.status == 200)
-          {
-            //setItem(response.data)
-            const currentDate = new Date();
-            const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-            
-            Cookies.set('userId', response.data.id, { expires: expiryDate });
-            Cookies.set('accessToken', response.data.id, { expires: expiryDate });
-            Cookies.set('user', response.data.user, { expires: expiryDate });
-            Cookies.set('role', response.data.role, { expires: expiryDate });
-            setLoginStatus(true)
-            setShowAlert({isSuccess: true})
-            router.push("/")
-          }
-          else{
-            setShowAlert({isSuccess: false})
-          }     
-        } catch (error) {
+          //setItem(response.data)
+          const currentDate = new Date();
+          const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+          
+          Cookies.set('userId', response.data.id, { expires: expiryDate });
+          Cookies.set('accessToken', response.data.id, { expires: expiryDate });
+          Cookies.set('user', response.data.user, { expires: expiryDate });
+          Cookies.set('role', response.data.role, { expires: expiryDate });
+          setLoginStatus(true)
+          setShowAlert({isSuccess: true})
+          router.push("/")  
+
+        } 
+        catch (error) 
+        {
           setShowAlert({isSuccess: false})
-          console.error("error sign in")
-        }          
+          console.error(`${error}`)
+        }
+        
+        // if(response.status == 200)
+        //   {
+        //     //setItem(response.data)
+        //     const currentDate = new Date();
+        //     const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+            
+        //     Cookies.set('userId', response.data.id, { expires: expiryDate });
+        //     Cookies.set('accessToken', response.data.id, { expires: expiryDate });
+        //     Cookies.set('user', response.data.user, { expires: expiryDate });
+        //     Cookies.set('role', response.data.role, { expires: expiryDate });
+        //     setLoginStatus(true)
+        //     setShowAlert({isSuccess: true})
+        //     router.push("/")
+        //   }
+
       };
 
   return (
@@ -84,7 +98,9 @@ const SignIn = () => {
             alt='manas logo' 
             style={{ m: 1, bgcolor: 'secondary.main' }} />
 
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" 
+                      variant="h5"
+                      >
             Кирүү
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -116,7 +132,13 @@ const SignIn = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, 
+                    mb: 2,
+                    backgroundColor: '#370E8A',
+                    ':hover':{
+                      backgroundColor: '#8855ED'
+                    }
+                  }}
             >
               Кирүү
             </Button>

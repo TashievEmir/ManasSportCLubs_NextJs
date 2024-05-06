@@ -2,8 +2,8 @@
 import React  from 'react'
 import AppShell from '../../components/app-shell'
 import { useSelector } from 'react-redux'
-import Image from 'next/image';
 import manasLogo from '../../../public/manas_logo.png'
+import { Typography } from '@mui/material';
 
 const Users = () => {
   const selectedClubId = useSelector((state) => state.selectedClub.value.id)
@@ -13,9 +13,11 @@ const Users = () => {
   const currentImage = selectedClubImage ? `data:image/png;base64,${selectedClubImage}` : manasLogo
   return (
     <AppShell showSidebar={true}>
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-        <h1>{clubDescription}</h1>
-        <Image src={currentImage} alt='footbal picture' width={500} height={400} />
+      <div style={{display:"flex",flexDirection: "column", justifyContent:"center", alignItems:"center"}}>
+        <Typography sx={{marginBottom: "30px", fontSize: "1.4rem", textAlign: "justify", padding: "0 4rem"}}>
+          {clubDescription}
+        </Typography>
+        <img style={{maxWidth: "60vw", maxHeight: "50vh"}} src={currentImage} alt='footbal picture' />
       </div>
     </AppShell>
   )

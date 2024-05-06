@@ -11,7 +11,7 @@ import manasLogo from '../../../public/manas_logo.png'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchClubs } from '../../store/actions/fetchClubs'
-import { FormControl, InputLabel, Select } from '@mui/material';
+import { FormControl, Grid, InputLabel, Popover, Select } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import {setSelectedClub} from '../../store/slices/selectedClub';
@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import Cookies from 'js-cookie';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
@@ -30,7 +30,19 @@ function Header({toggleDrawer, state}) {
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
   const selectedClub = useSelector((state) => state.selectedClub.value)
-  
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   const [club, setClub] = React.useState('');
 
   useEffect( () =>{
@@ -103,27 +115,54 @@ function Header({toggleDrawer, state}) {
             <Link  href="/">
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
+            {accountRole !== "admin" && 
             <Link  href="/teacher">
-              <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
-            </Link>
+            <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
+          </Link>}
             {
-              accountRole == "teacher" ? <Link  href="/admin/clubCreate">
-                                            <Typography sx={{color: "white", fontWeight:"bold"}}>Клуб жаратуу</Typography>
-                                          </Link>
-                                          : <></>
-            }
-            {
-              accountRole == "teacher" ? <Link  href="/admin/announcement">
-                                            <Typography sx={{color: "white", fontWeight:"bold"}}>Жарыя жаратуу</Typography>
-                                          </Link>
-                                          : <></>
+              accountRole == "admin" && 
+              <>
+              <Button aria-describedby={id} sx={{background: "#272727"}} variant="contained" onClick={handleClick}>
+                Menu
+              </Button>
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                  <Box sx={{display: "flex", flexDirection: "column", gap: "10px", padding: "12px"}}>
+                    <Link  href="/teacher">
+                      <Typography sx={{color: "black", fontWeight:"bold"}}>Агайлар</Typography>
+                    </Link>
+                    <Link  href="/admin/clubCreate">
+                        <Typography sx={{color: "black", fontWeight:"bold"}}>Клуб жаратуу</Typography>
+                    </Link>
+                    <Link  href="/admin/announcement">
+                      <Typography sx={{color: "black", fontWeight:"bold"}}>Жарыя жаратуу</Typography>
+                    </Link>
+                  </Box>
+              </Popover>
+              </>
             }
             
           </Box>
           <Box sx={{display: "flex", gap: 1}}>
           {
             loginStatus ? (
-              <Button sx={{fontSize: {xs: "12px", md: "14px"}}} color="inherit" onClick={Login}>LogOut</Button>
+              <>
+              <Button sx={{':hover':{ 
+                    backgroundColor: '#8855ED',
+                    display: {sm: "none", md: "block"} 
+                  }}}
+                      color="inherit" 
+                      onClick={Login}
+              >LogOut</Button>
+            </>
             ) : (
               <Button  sx={{fontSize: {xs: "12px", md: "14px"}}} color="inherit" onClick={Login}>Login</Button>
             )
