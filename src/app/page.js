@@ -21,6 +21,7 @@ export default function Home() {
   const cookieValue = Cookies.get('name');
   const dispatch = useDispatch()
   const {data} = useSelector((state)=> state.announcement)
+  
   useEffect( () =>{
     dispatch(fetchAnnouncements())
   }, [])

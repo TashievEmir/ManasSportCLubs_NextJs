@@ -1,19 +1,15 @@
 "use client"
 import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import { Box, Grid } from '@mui/material';
-import Image from 'next/image';
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
+import Cookies from 'js-cookie';
 
 export default function MediaCard( {element} ) {
-  const {getItem, setItem} = useLocalStorage('account');
-  const account = getItem()
+  const accountRole = Cookies.get("role");
 
   async function Remove(){
     const response = await $api.delete(`/Teacher/Remove/${element.id}`);
@@ -69,7 +65,7 @@ export default function MediaCard( {element} ) {
           </Grid>
         </Grid>
         {
-          account.role === "admin" ??
+          accountRole === "admin" &&
           <Button type='submit'           
             variant='contained' 
             sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}

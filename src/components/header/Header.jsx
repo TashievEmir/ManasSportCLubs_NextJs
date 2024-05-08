@@ -16,16 +16,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {setSelectedClub} from '../../store/slices/selectedClub';
 import { useRouter } from 'next/navigation';
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import Cookies from 'js-cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
-  const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
+  //const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
   const accountRole = Cookies.get("role");
-  const loginStatus = getLoginStatus();
+  const loginStatus = Cookies.get("login");
   
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
@@ -77,7 +76,7 @@ function Header({toggleDrawer, state}) {
   {
     if(loginStatus)
     {
-      setLoginStatus(false)
+      Cookies.set('login', false);
       router.push("/signin")
     }
 
@@ -115,14 +114,23 @@ function Header({toggleDrawer, state}) {
             <Link  href="/">
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
-            {accountRole !== "admin" && 
-            <Link  href="/teacher">
+            
+            <Link style={{display: accountRole !== "admin"  ? "block" : "none"}}  href="/teacher">
             <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
-          </Link>}
-            {
-              accountRole == "admin" && 
-              <>
-              <Button aria-describedby={id} sx={{background: "#272727"}} variant="contained" onClick={handleClick}>
+          </Link>
+        
+              <div style={{display: accountRole === "admin" ? "block" : "none" }}>
+              <Button aria-describedby={id} 
+                  sx={{ background: "#370E8A",
+                                                  ':hover':{
+                                                    backgroundColor: '#8855ED'
+                                                  },
+                                                  fontWeight:"bold",
+                                                  color:"white",
+                                                  padding:"5px"
+                                              }} 
+                       
+                      onClick={handleClick}>
                 Menu
               </Button>
               <Popover
@@ -135,40 +143,43 @@ function Header({toggleDrawer, state}) {
                   horizontal: 'left',
                 }}
               >
-                  <Box sx={{display: "flex", flexDirection: "column", gap: "10px", padding: "12px"}}>
-                    <Link  href="/teacher">
-                      <Typography sx={{color: "black", fontWeight:"bold"}}>Агайлар</Typography>
+                  <Box sx={{display: "flex", flexDirection: "column", gap: "10px", padding: "12px",
+                   backgroundColor:"#8855ED", textAlign:"center", borderRadius:"10px"}}>
+                    <Link  href="/teacher"
+                           sx={{}}>
+                      <Typography sx={{color: "white", fontWeight:"bold", ':hover':{
+                        backgroundColor: "#370E8A", borderRadius:"7px"}, padding:"5px"}}>
+                          Агайлар
+                          </Typography>
                     </Link>
                     <Link  href="/admin/clubCreate">
-                        <Typography sx={{color: "black", fontWeight:"bold"}}>Клуб жаратуу</Typography>
+                        <Typography sx={{color: "white", fontWeight:"bold", ':hover':
+                        {backgroundColor: "#370E8A", borderRadius:"7px"}, padding:"5px"}}>
+                          Клуб жаратуу
+                          </Typography>
                     </Link>
                     <Link  href="/admin/announcement">
-                      <Typography sx={{color: "black", fontWeight:"bold"}}>Жарыя жаратуу</Typography>
+                      <Typography sx={{color: "white", fontWeight:"bold", ':hover':{backgroundColor: "#370E8A",
+                       borderRadius:"7px"}, padding:"6px"}}>
+                        Жарыя жаратуу
+                        </Typography>
                     </Link>
                   </Box>
               </Popover>
-              </>
-            }
-            
+              </div>
           </Box>
           <Box sx={{display: "flex", gap: 1}}>
-          {
-            loginStatus ? (
-              <>
               <Button sx={{':hover':{ 
                     backgroundColor: '#8855ED',
-                    display: {sm: "none", md: "block"} 
+                    display: {sm: "none", md: "block"},
+                    fontWeight:"bold" 
                   }}}
                       color="inherit" 
                       onClick={Login}
-              >LogOut</Button>
-            </>
-            ) : (
-              <Button  sx={{fontSize: {xs: "12px", md: "14px"}}} color="inherit" onClick={Login}>Login</Button>
-            )
-          }
+              >
+                {loginStatus === "admin" ? "LogOut" : "Login"}
+              </Button>
           </Box>
-          
         </Toolbar>
       </Container>
     </AppBar>

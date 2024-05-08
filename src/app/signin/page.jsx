@@ -15,7 +15,6 @@ import manasLogo from '../../../public/manas_logo.png'
 import $api from '../../utils/api'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import AlertComp from '../../components/AlertComp/AlertComp';
@@ -25,10 +24,8 @@ const defaultTheme = createTheme();
 const SignIn = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
 
   const [account, setAccount] = useState();
-  const {getItem, setItem} = useLocalStorage('account');
 
   const [showAlert, setShowAlert] = useState({isSuccess: null});
 
@@ -52,7 +49,8 @@ const SignIn = () => {
           Cookies.set('accessToken', response.data.id, { expires: expiryDate });
           Cookies.set('user', response.data.user, { expires: expiryDate });
           Cookies.set('role', response.data.role, { expires: expiryDate });
-          setLoginStatus(true)
+          Cookies.set('login', true, { expires: expiryDate });
+          
           setShowAlert({isSuccess: true})
           router.push("/")  
 

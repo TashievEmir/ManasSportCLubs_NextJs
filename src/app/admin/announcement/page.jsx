@@ -23,30 +23,33 @@ function Announcement() {
   const [showAlert, setShowAlert] = useState(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    try 
+    {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        data.append('Photo', selectedFile)
 
-    data.append('Photo', selectedFile)
-    const response = await $api({
-      method: 'post',
-      url: '/announcement/Create',
-      data: {
-        Title: data.get("announcementName"),
-        Description: data.get("description"),
-        CreationDate: selectedDate,
-        Photo: selectedFile
-      },
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+        await $api({
+          method: 'post',
+          url: '/announcement/Create',
+          data: {
+            Title: data.get("announcementName"),
+            Description: data.get("description"),
+            CreationDate: selectedDate,
+            Photo: selectedFile
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
 
-
-    if (response.status == 200) {
-      setShowAlert(true)
-      router.push("/")
+        setShowAlert(true)
+        router.push("/")
+    } 
+    catch (error) 
+    {
+      setShowAlert(false)
     }
-    setShowAlert(false)
   };
 
   const handleFileChange = (event) => {
@@ -153,7 +156,7 @@ function Announcement() {
             </Box>
           </Container>
         </ThemeProvider>
-        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Расписание жаңыланды`: "Расписание жаңыланды"}/>}
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Жарыя жарыланды`: "Жарыя жарыланбай калды"}/>}
       </Grid>
     </AppShell>
   )

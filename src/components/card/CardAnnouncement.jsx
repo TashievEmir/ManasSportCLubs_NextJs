@@ -1,28 +1,30 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
-import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 import { Box, Grid } from '@mui/material';
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import Cookies from 'js-cookie';
-
+import AlertComp from '../AlertComp/AlertComp';
+import $api from "../../utils/api"
 export default function MediaCard( {element} ) {
-  const {getItem, setItem} = useLocalStorage('account');
+
   const accountRole = Cookies.get("role");
+  const [showAlert, setShowAlert] = useState(null);
 
   async function Remove(){
-    const response = await $api.delete(`/Announcement/Remove/${element.id}`);
 
-    if(response.status == 200){
-      setShowAlert(true)
+    try
+    {
+      const announcementId = element.id;
+      console.log($api.delete)
+      let response = await $api.delete(`/Announcement/Delete/${announcementId}`);
+      setShowAlert(true);
     }
-    else{
+    catch
+    {
       setShowAlert(false)
     }
 
@@ -80,7 +82,8 @@ export default function MediaCard( {element} ) {
               </Typography>
               
           </Grid>
-        </Grid> 
+        </Grid>
+        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Жарыя өчүрүлдү`: "Жарыя өчүрүлбөй калды"}/>} 
       </CardContent>
     </Card>
   );

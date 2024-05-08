@@ -9,14 +9,12 @@ import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
 import { Alert, Grid } from '@mui/material';
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp';
 import Cookies from 'js-cookie';
 
 export default function CardMember( {element} ) {
-  const {getItem, setItem} = useLocalStorage('account');
-  const account = getItem()
+
   const [showAlert, setShowAlert] = useState(null);
   const accountRole = Cookies.get('role');
 

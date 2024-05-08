@@ -29,30 +29,41 @@ function ClubCreate() {
     }, [])
 
     const handleSubmit = async (event) => {
+
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
         data.append('Photo', selectedFile)
-        const response = await $api({
-          method: 'post',
-          url: '/club/Create',
-          data: {
-            Name: data.get('clubName'),
-            Teacher: data.get('teacher'),
-            Description: data.get('description'),
-            Photo: selectedFile
-          },
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        let response= undefined;
+        try
+        {
+          response = await $api({
+            method: 'post',
+            url: '/club/Create',
+            data: {
+              Name: data.get('clubName'),
+              Teacher: data.get('teacher'),
+              Description: data.get('description'),
+              Photo: selectedFile
+            },
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+
+          if(response.status==200){
+            setShowAlert(true)
+            router.push("/admin")
+            return;
           }
-        })
-        
-        if(response.status==200){
-          setShowAlert(true)
-          router.push("/admin")
-          return;
         }
-        setShowAlert(false)
+        catch
+        {
+          setShowAlert(false)
+        }
+
+        
+        
       };
 
       const handleFileChange = (event) => {

@@ -74,7 +74,6 @@ function CardApprove({element}) {
             onClick={Reject} 
             sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
         </Box>
-        {/* <button onClick={() => setShowAlert(prev => !prev)}>asdfasdfasdfasd</button> */}
         {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}
       </CardContent>
     </Card>
