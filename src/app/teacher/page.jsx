@@ -19,7 +19,7 @@ const dispatch = useDispatch()
       <Grid container justifyContent="start" alignItems="start" gap={2}>
         {
           dataCount > 0 ?
-          data.map((element) =>
+          data?.map((element) =>
             <Grid key={element.id} item>
               <Card element={element} />
             </Grid>

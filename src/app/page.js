@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAnnouncements } from '../store/actions/fetchAnnouncements';
 import Cookies from 'js-cookie';
+import CardNoData from '../components/card/CardNoData'
 
 const defaultTheme = createTheme();
 
@@ -25,6 +26,8 @@ export default function Home() {
   useEffect( () =>{
     dispatch(fetchAnnouncements())
   }, [])
+
+  const dataCount = Array.isArray(data) ? data.length : 0;
 
   return (
     <div>
@@ -42,11 +45,13 @@ export default function Home() {
                     
                   <Box  display="flex" justifyContent="space-around" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
                   {
+                    dataCount > 0 ?
                     data?.map((element) =>
                       <Grid  sx={{width:"100%"}} key={element.id} item>
                         <CardAnnouncement element={element} />
                       </Grid>
-                    )
+                    ):
+                    <CardNoData></CardNoData>
                     
                   }
                 </Box>

@@ -60,22 +60,6 @@ const SignIn = () => {
           setShowAlert({isSuccess: false})
           console.error(`${error}`)
         }
-        
-        // if(response.status == 200)
-        //   {
-        //     //setItem(response.data)
-        //     const currentDate = new Date();
-        //     const expiryDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-            
-        //     Cookies.set('userId', response.data.id, { expires: expiryDate });
-        //     Cookies.set('accessToken', response.data.id, { expires: expiryDate });
-        //     Cookies.set('user', response.data.user, { expires: expiryDate });
-        //     Cookies.set('role', response.data.role, { expires: expiryDate });
-        //     setLoginStatus(true)
-        //     setShowAlert({isSuccess: true})
-        //     router.push("/")
-        //   }
-
       };
 
   return (
@@ -122,10 +106,6 @@ const SignIn = () => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Мени жатта"
-            />
             <Button
               type="submit"
               fullWidth
@@ -147,7 +127,10 @@ const SignIn = () => {
                 </Link> */}
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link href="/signup" variant="body2" sx={{ color: '#370E8A',
+                                                        ':hover':{
+                                                          color: '#8855ED'
+                                                        }}}>
                   {"Катталуу"}
                 </Link>
               </Grid>

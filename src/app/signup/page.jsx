@@ -21,6 +21,7 @@ import { fetchFaculties } from '../../store/actions/fetchFaculties';
 import manasLogo from '../../../public/manas_logo.png'
 import { Input } from '@mui/material';
 import AlertComp from '../../components/AlertComp/AlertComp';
+import Prompt from '../../components/prompt/Prompt';
 
 const defaultTheme = createTheme();
 
@@ -34,6 +35,7 @@ const SignUp = observer(() => {
   })
   const [selectedFile, setSelectedFile] = useState();
   const [showAlert, setShowAlert] = useState(null);
+  const [showPrompt, setShowPrompt] = useState(null);
 
   useEffect(() => {
     dispatch(fetchDepartament())
@@ -53,19 +55,21 @@ const SignUp = observer(() => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        // const emailResponse = await $api.post('/Account/SendEmail',{
-        //   Email: data.get('email')
-        // });
+        const emailResponse = await $api.post('/Account/SendEmail',{
+          Email: data.get('email')
+        });
 
-        // if( emailResponse.status == 200 ){
-        //   let code =  prompt('Input code from email: ' );
+        if( emailResponse.status == 200 )
+          {
+          setShowPrompt(true);
+          let code =  prompt('Input code from email: ' );
 
-        //   const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
-        //     Email: data.get('email'),
-        //     Code: code
-        //   });
+          const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
+            Email: data.get('email'),
+            Code: code
+          });
 
-        //   if( verifyEmailResponse.status == 200 ){
+          if( verifyEmailResponse.status == 200 ){
             
             data.append('Photo', selectedFile)
             const response = await $api({
@@ -94,8 +98,8 @@ const SignUp = observer(() => {
             else{
               setShowAlert(false)
             }
-        //   }
-        // }
+          }
+        }
         
 
       };
@@ -117,6 +121,7 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
+          {showPrompt !== null && <Prompt />}         
           <Image
             width={80}
             src={manasLogo} 
@@ -244,7 +249,7 @@ const SignUp = observer(() => {
                         id="photoInput"
                       />
                       <label htmlFor="photoInput">
-                        <Button component="span" fullWidth variant="contained">
+                        <Button component="span" fullWidth variant="contained" sx={{backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"}}}>
                           Файл тандоо
                         </Button>
                       </label>
@@ -261,7 +266,7 @@ const SignUp = observer(() => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"} }}
             >
               Катталуу
             </Button>

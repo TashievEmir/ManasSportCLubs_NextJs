@@ -177,7 +177,7 @@ function Header({toggleDrawer, state}) {
                       color="inherit" 
                       onClick={Login}
               >
-                {loginStatus === "admin" ? "LogOut" : "Login"}
+                {loginStatus === 'true' ? "LogOut" : "Login"}
               </Button>
           </Box>
         </Toolbar>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -7,17 +7,23 @@ import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import { Box, Grid } from '@mui/material';
 import Cookies from 'js-cookie';
+import $api from "../../utils/api"
+import AlertComp from '../AlertComp/AlertComp';
 
 export default function MediaCard( {element} ) {
+
   const accountRole = Cookies.get("role");
+  const [showAlert, setShowAlert] = useState(null);
 
   async function Remove(){
-    const response = await $api.delete(`/Teacher/Remove/${element.id}`);
 
-    if(response.status == 200){
+    try
+    {
+      const response = await $api.delete(`/Teacher/Delete/${element.id}`);
       setShowAlert(true)
     }
-    else{
+    catch
+    {
       setShowAlert(false)
     }
 
@@ -28,7 +34,7 @@ export default function MediaCard( {element} ) {
         minWidth: 100,
         maxWidth:500, 
         minHeight: 100, 
-        maxHeight:208, 
+        maxHeight:300, 
         borderRadius: "20px" 
       }}>
       <CardContent>
@@ -68,11 +74,12 @@ export default function MediaCard( {element} ) {
           accountRole === "admin" &&
           <Button type='submit'           
             variant='contained' 
-            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white"}}
+            sx={{marginTop:2, backgroundColor: '#370E8A', color: "white", ':hover':{backgroundColor:"#8855ED"}}}
             onClick={Remove}>Агайды өчүрүү
         </Button>
         }
       </CardContent>
+      {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Агай өүрүлдү`: "Агай өчүрүлгөн жок"}/>}
     </Card>
   );
 }
