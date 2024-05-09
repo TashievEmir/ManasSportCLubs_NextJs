@@ -61,7 +61,6 @@ const SignUp = observer(() => {
 
         if( emailResponse.status == 200 )
           {
-          setShowPrompt(true);
           let code =  prompt('Input code from email: ' );
 
           const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{

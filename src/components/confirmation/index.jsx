@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Typography } from "@mui/material";
-import { useLocalStorage } from '../../store/localStorage/useLocalStorage';
 import { useRouter } from "next/navigation";
 import {  useDispatch, useSelector } from "react-redux";
 import { fetchStudentStatusInClub } from '../../store/actions/fetchStudentStatusInClub'
@@ -12,7 +11,6 @@ import AlertComp from '../AlertComp/AlertComp';
 export default function Confirmation (props) {
 
   const router = useRouter()
-  const {getItem, setItem} = useLocalStorage('account');
   const selectedClub = useSelector((state) => state.selectedClub.value.name)
   const selectedClubId = useSelector((state) => state.selectedClub.value.id)
   const dispatch = useDispatch()
@@ -31,15 +29,15 @@ export default function Confirmation (props) {
         User: userEmail,
         Club: selectedClub
       });
+      
+      setShowAlert(true)
+        router.push('/user');
     }
     catch
     {
       setShowAlert(false)
     }
-      if(response.status = 200){
-        setShowAlert(true)
-        router.push('/user');
-      }
+
   }
 
   useEffect(() => {
