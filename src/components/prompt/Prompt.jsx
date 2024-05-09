@@ -4,32 +4,10 @@ import React from 'react'
 import AlertComp from '../AlertComp/AlertComp';
 import Image from 'next/image';
 
-function Prompt() {
+function Prompt({handleVerify}) {
 
     const [showAlert, setShowAlert] = useState({isSuccess: null});
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        setShowAlert({isSuccess: null})
-        let response;
-
-        try 
-        {
-          response = await $api.post('/Account/LogIn',{
-            Login: data.get('email'),
-            Password: data.get('password')
-          });
-
-          setShowAlert({isSuccess: true})
-          router.push("/")  
-
-        } 
-        catch (error) 
-        {
-          setShowAlert({isSuccess: false})
-        }
-      };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -43,7 +21,7 @@ function Prompt() {
             alignItems: 'center',
           }}
         >
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleVerify} noValidate sx={{ mt: 1 }}>
             <Typography>Почтаңызга жөнөтүлгөн кодду жазыңыз: </Typography>
             <TextField
               margin="normal"

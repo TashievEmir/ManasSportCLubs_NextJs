@@ -35,8 +35,8 @@ const SignUp = observer(() => {
   })
   const [selectedFile, setSelectedFile] = useState();
   const [showAlert, setShowAlert] = useState(null);
-  const [showPrompt, setShowPrompt] = useState(null);
-
+  const [isVerify, setIsVerify] = useState(false)
+  const [code, setCode] = useState("")
   useEffect(() => {
     dispatch(fetchDepartament())
     dispatch(fetchFaculties())
@@ -51,6 +51,20 @@ const SignUp = observer(() => {
     return departaments.filter((dep) => dep.facultyId === facultyId);
   };
 
+  const handleVerify = async () => {
+    try {
+      const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
+        Email: data.get('email'),
+        Code: code
+      });
+      setIsVerify(false)
+      showAlert(true, "Verified")
+    } catch (error) {
+      showAlert(true, "is couldn't verified")
+      console.log(error)
+    }
+  }
+
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -61,12 +75,7 @@ const SignUp = observer(() => {
 
         if( emailResponse.status == 200 )
           {
-          let code =  prompt('Input code from email: ' );
-
-          const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
-            Email: data.get('email'),
-            Code: code
-          });
+            setIsVerify(true)
 
           if( verifyEmailResponse.status == 200 ){
             
@@ -120,7 +129,7 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
-          {showPrompt !== null && <Prompt />}         
+          {isVerify && <Prompt handleVerify={handleVerify}/>}         
           <Image
             width={80}
             src={manasLogo} 
