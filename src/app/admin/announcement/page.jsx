@@ -35,7 +35,7 @@ function Announcement() {
           data: {
             Title: data.get("announcementName"),
             Description: data.get("description"),
-            CreationDate: selectedDate,
+            CreationDate: Date.now(),
             Photo: selectedFile
           },
           headers: {
@@ -110,15 +110,9 @@ function Announcement() {
                       rows={5}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['DatePicker']}>
-                        <DatePicker label="Дата тандаңыз" value={selectedDate} onChange={(newDate) => setSelectedDate(newDate)} />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Grid>
+                  
                 </Grid>
-                  <div>
+                  <div >
                       <Typography variant="h6">Жарыянын сүрөтүн жүктөңүз:</Typography>
                       <Input
                         type="file"

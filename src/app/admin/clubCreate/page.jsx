@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import manasLogo from '../../../../public/manas_logo.png'
 import AppShell from '../../../components/app-shell'
-import { fetchTeachers } from '../../../store/actions/fetchTeacher';
+import { fetchFreeTeachers } from '../../../store/actions/fetchFreeTeachers';
 import { useDispatch, useSelector } from 'react-redux';
 import $api from '../../../utils/api'
 import { useRouter } from 'next/navigation'
@@ -25,7 +25,7 @@ function ClubCreate() {
     })
   
     useEffect(() => {
-      dispatch(fetchTeachers())
+      dispatch(fetchFreeTeachers())
     }, [])
 
     const handleSubmit = async (event) => {
@@ -50,19 +50,15 @@ function ClubCreate() {
               'Content-Type': 'multipart/form-data'
             }
           })
-
-          if(response.status==200){
+            
             setShowAlert(true)
             router.push("/admin")
-            return;
-          }
         }
         catch
         {
+          
           setShowAlert(false)
         }
-
-        
         
       };
 
@@ -186,7 +182,7 @@ function ClubCreate() {
         </Box>
       </Container>
     </ThemeProvider>
-    {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Расписание жаңыланды`: "Расписание жаңыланды"}/>}
+    {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клуб жаралды`: "Клуб жаралган жок"}/>}
         </Grid>
     </AppShell>
   )

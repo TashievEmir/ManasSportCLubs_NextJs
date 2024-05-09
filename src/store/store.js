@@ -9,6 +9,7 @@ import selectedClub from './slices/selectedClub'
 import candidate from './slices/candidate'
 import loginStatus from './slices/loginStatus'
 import studentStatusInClub from './slices/studentStatusInClub'
+import freeTeachers from "./slices/freeTeachers"
 
 const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ const store = configureStore({
         selectedClub,
         candidate,
         loginStatus,
-        studentStatusInClub 
+        studentStatusInClub,
+        freeTeachers 
     }
 })
 

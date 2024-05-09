@@ -9,18 +9,21 @@ import { Box, Grid } from '@mui/material';
 import Cookies from 'js-cookie';
 import AlertComp from '../AlertComp/AlertComp';
 import $api from "../../utils/api"
+import { useRouter } from 'next/navigation'
+
 export default function MediaCard( {element} ) {
 
   const accountRole = Cookies.get("role");
   const [showAlert, setShowAlert] = useState(null);
+  const router = useRouter();
 
   async function Remove(){
 
     try
     {
       const announcementId = element.id;
-      console.log($api.delete)
       let response = await $api.delete(`/Announcement/Delete/${announcementId}`);
+      debugger
       setShowAlert(true);
     }
     catch
@@ -72,7 +75,7 @@ export default function MediaCard( {element} ) {
                     accountRole === "admin" &&
                     <Button type='submit'           
                       variant='contained' 
-                      sx={{backgroundColor: '#370E8A', color: "white"}}
+                      sx={{backgroundColor: '#370E8A', color: "white", ':hover':{backgroundColor:"#8855ED"}}}
                       onClick={Remove}>Жарыя өчүрүү
                   </Button>
                   }
