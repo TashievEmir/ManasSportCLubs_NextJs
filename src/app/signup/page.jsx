@@ -25,6 +25,7 @@ import Prompt from '../../components/prompt/Prompt';
 
 const defaultTheme = createTheme();
 
+
 const SignUp = observer(() => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -35,8 +36,8 @@ const SignUp = observer(() => {
   })
   const [selectedFile, setSelectedFile] = useState();
   const [showAlert, setShowAlert] = useState(null);
+  const [passIsNotSame, setPassIsNotSame] = useState(false)
   const [isVerify, setIsVerify] = useState(false)
-  const [code, setCode] = useState("")
   useEffect(() => {
     dispatch(fetchDepartament())
     dispatch(fetchFaculties())
@@ -51,34 +52,36 @@ const SignUp = observer(() => {
     return departaments.filter((dep) => dep.facultyId === facultyId);
   };
 
-  const handleVerify = async () => {
-    try {
+  const handleVerify = async (code) => {
+    try 
+    {
+      debugger
       const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
         Email: data.get('email'),
         Code: code
       });
+      
       setIsVerify(false)
-      showAlert(true, "Verified")
-    } catch (error) {
-      showAlert(true, "is couldn't verified")
-      console.log(error)
+      showAlert(true)
+      router.push("/signin")
+    } 
+    catch (error) 
+    {
+      showAlert(false)
     }
   }
 
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        const emailResponse = await $api.post('/Account/SendEmail',{
-          Email: data.get('email')
-        });
+        const pass = data.get("password")
+        const pass2 = data.get("repeatPassword")
+        data.append('Photo', selectedFile)
 
-        if( emailResponse.status == 200 )
+        if(pass !== "" && pass === pass2  )
+        {
+          try
           {
-            setIsVerify(true)
-
-          if( verifyEmailResponse.status == 200 ){
-            
             data.append('Photo', selectedFile)
             const response = await $api({
               method: 'post',
@@ -98,18 +101,19 @@ const SignUp = observer(() => {
                 'Content-Type': 'multipart/form-data'
               }
             });
-    
-            if(response.status==200){
-              setShowAlert(true)
-              router.push('/signin');
-            }
-            else{
-              setShowAlert(false)
-            }
+            setIsVerify(true)
           }
-        }
-        
+          catch
+          {
+            setShowAlert(false)
+          }
+          
 
+        }
+        else
+        {
+          setPassIsNotSame(true)
+        }
       };
 
       const handleFileChange = (event) => {
@@ -129,7 +133,11 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
-          {isVerify && <Prompt handleVerify={handleVerify}/>}         
+          <Prompt 
+            opened={isVerify} 
+            handleClose={() => setIsVerify(false)} 
+            handleVerify={handleVerify()}
+            />
           <Image
             width={80}
             src={manasLogo} 
@@ -150,6 +158,8 @@ const SignUp = observer(() => {
                     id="firstName"
                     label="Атыныз"
                     autoFocus
+                    helperText={"Сөзсүз толтурулуучу талаа"}
+                    error
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -160,6 +170,9 @@ const SignUp = observer(() => {
                     label="Фамилияныз"
                     name="lastName"
                     autoComplete="family-name"
+                    error
+            
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -179,6 +192,9 @@ const SignUp = observer(() => {
                     id="faculty"
                     name="faculty"
                     autoComplete="faculty-name"
+                    error
+                    helperText={"Сөзсүз толтурулуучу талаа"}
+                    
                   >
                     {[{id: 777, name: "Факультет тандаңыз"}, ...faculties].map(option => (
                       <MenuItem key={option.id} value={option.id}>
@@ -196,6 +212,9 @@ const SignUp = observer(() => {
                     id="department"
                     name="department"
                     autoComplete="department-name"
+                    error
+                    
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   >
                     {filterDepartments(state.faculty).map(option => (
                       <MenuItem key={option.id} value={option.id}>
@@ -212,6 +231,9 @@ const SignUp = observer(() => {
                     label="Телефон"
                     name="telefon"
                     autoComplete="telefon-name"
+                    error
+                    
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
                 <Grid item xs={12} >
@@ -222,8 +244,15 @@ const SignUp = observer(() => {
                     label="Манас почта"
                     name="email"
                     autoComplete="email"
+                    error
+                    
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
+                {passIsNotSame && 
+                  <p style={{color: "red", marginLeft: "20px", marginTop: "20px"}}>
+                    Сыр сөздөр окшош болуш керек
+                  </p>}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -233,6 +262,9 @@ const SignUp = observer(() => {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    error
+                    
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -244,6 +276,9 @@ const SignUp = observer(() => {
                     type="password"
                     id="repeatPassword"
                     autoComplete="repeatPassword"
+                    error
+                    
+                    helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
               </Grid>
@@ -255,6 +290,9 @@ const SignUp = observer(() => {
                         onChange={handleFileChange}
                         style={{ display: 'none' }}
                         id="photoInput"
+                        name='photoInput'
+                        error
+                        helperText={"Сөзсүз толтурулуучу талаа"}
                       />
                       <label htmlFor="photoInput">
                         <Button component="span" fullWidth variant="contained" sx={{backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"}}}>

@@ -1,59 +1,61 @@
 "use client"
-import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, TextField, ThemeProvider, Typography } from '@mui/material'
-import React from 'react'
-import AlertComp from '../AlertComp/AlertComp';
-import Image from 'next/image';
+import React, {useState} from 'react'
+import {Box, Grid, Modal } from '@mui/material'
 
-function Prompt({handleVerify}) {
-
-    const [showAlert, setShowAlert] = useState({isSuccess: null});
-
-
+function Prompt({handleVerify, opened, onClose}) {
+  const [value, setValue] = useState("")
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+        <Modal
+          open={opened}
+          onClose={onClose}
+          sx={{top: "40%", left: "40%", }}
         >
-          <Box component="form" onSubmit={handleVerify} noValidate sx={{ mt: 1 }}>
-            <Typography>Почтаңызга жөнөтүлгөн кодду жазыңыз: </Typography>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="emailCode"
-              label="Почтадан код"
-              name="emailCode"
-              autoComplete="emailCode"
-              autoFocus
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, 
-                    mb: 2,
-                    backgroundColor: '#370E8A',
-                    ':hover':{
-                      backgroundColor: '#8855ED'
-                    }
+          <Box sx={{
+              padding: "32px", 
+              background: "white",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "300px"
+            }}>
+          <form onSubmit={(value) => handleVerify(value)}>
+            <Grid sx={{
+               display: "flex",
+                flexDirection: "none",
+                justifyContent: "center",
+                 alignItems: "start"}}>
+              <Grid item sx={12}>
+                <input
+                  style={{
+                    width: "300",
+                    padding: "8px 16px",
+                    boxShadow: "0 0 10px 5px rgba(0,0,0,0.2)",
+                    border: "none",
+                    outline: "none"
                   }}
-            >
-              Кирүү
-            </Button>
+                  placeholder='Code from email'
+                  value={value}
+                  onChange={(event) => setValue(event.target.value)}
+                />
+              </Grid>
+              <Grid item sx={12}>
+              <button
+                style={{
+                  padding: "8px 10px",
+                  background: "black",
+                  boxShadow: "0 0 10px 5px rgba(0,0,0,0.2)",
+                  color: "white",
+                  border: "none",
+                  cursor: "pointer"
+                }}
+                type="submit">
+                submit
+              </button>
+              </Grid>
+            </Grid>
+          </form>
           </Box>
-        </Box>
-        {(showAlert.isSuccess !== null) && 
-        <AlertComp isSuccess={showAlert.isSuccess} 
-          message={ showAlert.isSuccess ===true ? `Кирүү ийгиликтүү`: "Логин же пароль туура эмес"}/>}         
-      </Container>
-    </ThemeProvider>
+        </Modal>
   )
 }
 
