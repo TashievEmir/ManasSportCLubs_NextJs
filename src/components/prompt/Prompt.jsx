@@ -33,12 +33,12 @@ function Prompt({handleVerify, opened, onClose}) {
                     border: "none",
                     outline: "none"
                   }}
-                  placeholder='Code from email'
+                  placeholder='Почтаңызга жөнөтүлгөн кодду жазыңыз'
                   value={value}
                   onChange={(event) => setValue(event.target.value)}
                 />
               </Grid>
-              <Grid item sx={12}>
+              <Grid item sx={12} style={{marginLeft:"20px"}}>
               <button
                 style={{
                   padding: "8px 10px",

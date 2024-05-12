@@ -67,7 +67,7 @@ const SignUp = observer(() => {
     } 
     catch (error) 
     {
-      showAlert(false)
+      setShowAlert(false)
     }
   }
 
