@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp'
-function CardApprove({element}) {
+function CardApprove({setRenderState, element}) {
   const [showAlert, setShowAlert] = useState(null);
 
   async function Approve(){
@@ -20,6 +20,7 @@ function CardApprove({element}) {
     });
 
     if(response.status == 200){
+      setRenderState(prev => !prev)
       setShowAlert(true)
     }
     else{
@@ -29,9 +30,8 @@ function CardApprove({element}) {
 
   async function Reject(){
     const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
-
-
     if(response.status == 200){
+      setRenderState(prev => !prev)
       setShowAlert(true)
     }
     else{

@@ -22,7 +22,7 @@ import manasLogo from '../../../public/manas_logo.png'
 import { Input } from '@mui/material';
 import AlertComp from '../../components/AlertComp/AlertComp';
 import Prompt from '../../components/prompt/Prompt';
-
+import {convertToBase64} from "../../utils/convertToBase64"
 const defaultTheme = createTheme();
 
 
@@ -35,9 +35,20 @@ const SignUp = observer(() => {
     departament: 777
   })
   const [selectedFile, setSelectedFile] = useState();
-  const [showAlert, setShowAlert] = useState(null);
-  const [passIsNotSame, setPassIsNotSame] = useState(false)
-  const [isVerify, setIsVerify] = useState(false)
+  const [showAlert, setShowAlert] = useState({isSuccess: null});
+  const [currentEmail, setCurrentEmail] = useState("")
+  const [isVerify, setIsVerify] = useState(false);
+  const [errors, setErrors] = useState({
+    LastName: false,
+    FirstName: false,
+    Email: false,
+    Password: false,
+    RepeatedPassword: false,
+    Phone: false,
+    Faculty: false,
+    Department: false,
+    Photo: false,
+  })
   useEffect(() => {
     dispatch(fetchDepartament())
     dispatch(fetchFaculties())
@@ -52,33 +63,15 @@ const SignUp = observer(() => {
     return departaments.filter((dep) => dep.facultyId === facultyId);
   };
 
-  const handleVerify = async (code) => {
-    try 
-    {
-      debugger
-      const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
-        Email: data.get('email'),
-        Code: code
-      });
-      
-      setIsVerify(false)
-      showAlert(true)
-      router.push("/signin")
-    } 
-    catch (error) 
-    {
-      setShowAlert(false)
-    }
-  }
-
   const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const pass = data.get("password")
         const pass2 = data.get("repeatPassword")
-        data.append('Photo', selectedFile)
-
-        if(pass !== "" && pass === pass2  )
+        const converted = await convertToBase64(selectedFile)
+        const email = data.get('email')
+        setCurrentEmail(email)
+        if(pass !== "" && pass === pass2 )
         {
           try
           {
@@ -89,13 +82,13 @@ const SignUp = observer(() => {
               data: {
                 LastName: data.get('lastName'),
                 FirstName: data.get('firstName'),
-                Email: data.get('email'),
+                Email: email,
                 Password: data.get('password'),
                 RepeatedPassword: data.get('repeatPassword'),
                 Phone: data.get('telefon'),
                 Faculty: data.get('faculty'),
                 Department: data.get('department'),
-                Photo: selectedFile
+                Photo: converted
               },
               headers: {
                 'Content-Type': 'multipart/form-data'
@@ -105,14 +98,12 @@ const SignUp = observer(() => {
           }
           catch
           {
-            setShowAlert(false)
+            setShowAlert({isSuccess: false})
           }
-          
-
         }
         else
         {
-          setPassIsNotSame(true)
+          setErrors(prev => ({...prev, RepeatedPassword: true}))
         }
       };
 
@@ -133,21 +124,17 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
-          <Prompt 
-            opened={isVerify} 
-            handleClose={() => setIsVerify(false)} 
-            handleVerify={handleVerify()}
-            />
+          {isVerify && <Prompt email={currentEmail}/>}
           <Image
             width={80}
             src={manasLogo} 
             alt='manas logo' 
-            style={{ m: 1, bgcolor: 'secondary.main' }} />
+            style={{ margin: 1, background: 'secondary.main' }} />
 
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <form noValidate onSubmit={handleSubmit} style={{ marginTop: 3 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -159,7 +146,7 @@ const SignUp = observer(() => {
                     label="Атыныз"
                     autoFocus
                     helperText={"Сөзсүз толтурулуучу талаа"}
-                    error
+                    error={errors.FirstName}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -170,7 +157,7 @@ const SignUp = observer(() => {
                     label="Фамилияныз"
                     name="lastName"
                     autoComplete="family-name"
-                    error
+                    error={errors.LastName}
             
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   />
@@ -192,7 +179,7 @@ const SignUp = observer(() => {
                     id="faculty"
                     name="faculty"
                     autoComplete="faculty-name"
-                    error
+                    error={errors.Faculty}
                     helperText={"Сөзсүз толтурулуучу талаа"}
                     
                   >
@@ -212,7 +199,7 @@ const SignUp = observer(() => {
                     id="department"
                     name="department"
                     autoComplete="department-name"
-                    error
+                    error={errors.Department}
                     
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   >
@@ -231,7 +218,7 @@ const SignUp = observer(() => {
                     label="Телефон"
                     name="telefon"
                     autoComplete="telefon-name"
-                    error
+                    error={errors.Phone}
                     
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   />
@@ -244,12 +231,12 @@ const SignUp = observer(() => {
                     label="Манас почта"
                     name="email"
                     autoComplete="email"
-                    error
+                    error={errors.Email}
                     
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   />
                 </Grid>
-                {passIsNotSame && 
+                {errors.RepeatedPassword && 
                   <p style={{color: "red", marginLeft: "20px", marginTop: "20px"}}>
                     Сыр сөздөр окшош болуш керек
                   </p>}
@@ -262,7 +249,7 @@ const SignUp = observer(() => {
                     type="password"
                     id="password"
                     autoComplete="new-password"
-                    error
+                    error={errors.Password}
                     
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   />
@@ -276,7 +263,7 @@ const SignUp = observer(() => {
                     type="password"
                     id="repeatPassword"
                     autoComplete="repeatPassword"
-                    error
+                    error={errors.RepeatedPassword}
                     
                     helperText={"Сөзсүз толтурулуучу талаа"}
                   />
@@ -291,7 +278,7 @@ const SignUp = observer(() => {
                         style={{ display: 'none' }}
                         id="photoInput"
                         name='photoInput'
-                        error
+                        error={errors.Photo}
                         helperText={"Сөзсүз толтурулуучу талаа"}
                       />
                       <label htmlFor="photoInput">
@@ -321,7 +308,11 @@ const SignUp = observer(() => {
             Аккаунт бар
           </Link>
         </Box>
-        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Каттоо ийгиликтүү аяктады`: "Каттоо учурунда ката чыгып калды"}/>}         
+        {showAlert.isSuccess !== null 
+        && <AlertComp 
+            isSuccess={showAlert.isSuccess}
+            message={ showAlert.isSuccess === true ?
+         `Каттоо ийгиликтүү аяктады`: "Каттоо учурунда ката чыгып калды"}/>}         
       </Container>
     </ThemeProvider>
   )

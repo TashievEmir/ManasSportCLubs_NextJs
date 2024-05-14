@@ -16,6 +16,7 @@ const defaultTheme = createTheme();
 
 export default function Home() {
   const [opened, setOpened] = useState(false)
+  const [render, setRender] = useState(false)
   const changeSidebar = () => {
     setOpened(prev => prev)
   }
@@ -25,7 +26,7 @@ export default function Home() {
   
   useEffect( () =>{
     dispatch(fetchAnnouncements())
-  }, [])
+  }, [render])
 
   const dataCount = Array.isArray(data) ? data.length : 0;
 
@@ -43,15 +44,23 @@ export default function Home() {
                   width: "98%"
                 }} >
                     
-                  <Box  display="flex" justifyContent="space-around" alignItems="start" flexWrap="wrap" sx={{ padding: '15px', borderRadius: "20px", bgcolor: 'rgba(217, 217, 217, 0.5)', gap:5}}>
+                  <Box 
+                   display="flex" 
+                   justifyContent="space-around" alignItems="start" 
+                  flexWrap="wrap" 
+                  sx={{ 
+                    padding: '15px',
+                   borderRadius: "20px", 
+                  bgcolor: 'rgba(217, 217, 217, 0.5)',
+                   gap:5}}>
                   {
                     dataCount > 0 ?
                     data?.map((element) =>
                       <Grid  sx={{width:"100%"}} key={element.id} item>
-                        <CardAnnouncement element={element} />
+                        <CardAnnouncement setRender={setRender} element={element} />
                       </Grid>
                     ):
-                    <CardNoData></CardNoData>
+                    <CardNoData/>
                     
                   }
                 </Box>

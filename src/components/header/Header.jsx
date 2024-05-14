@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import Cookies from 'js-cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { setLoginStatus } from '../../store/slices/loginStatus';
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
@@ -77,9 +78,9 @@ function Header({toggleDrawer, state}) {
     if(loginStatus)
     {
       Cookies.set('login', false);
-      router.push("/signin")
+      dispatch(setLoginStatus({payload: false}))
+      dispatch(setSelectedClub({payload: {}}))
     }
-
     router.push("/signin")
   }
   return (
@@ -115,20 +116,24 @@ function Header({toggleDrawer, state}) {
               <Image width={60} src={manasLogo} priority alt="manas logo" sx={{my:5}}/>
             </Link>
             
-            <Link style={{display: accountRole !== "admin"  ? "block" : "none"}}  href="/teacher">
-            <Typography sx={{color: "white", fontWeight:"bold"}}>Агайлар</Typography>
+            <Link style={{display: (accountRole !== "admin" && accountRole !== "teacher") 
+             ? "block" : "none"}}  href="/teacher">
+            <Typography sx={{color: "white", fontWeight:"bold"}}>
+              Агайлар
+            </Typography>
           </Link>
         
-              <div style={{display: accountRole === "admin" ? "block" : "none" }}>
+              <div style={{display: (accountRole === "admin" || accountRole === "teacher")
+               ? "block" : "none" }}>
               <Button aria-describedby={id} 
                   sx={{ background: "#370E8A",
-                                                  ':hover':{
-                                                    backgroundColor: '#8855ED'
-                                                  },
-                                                  fontWeight:"bold",
-                                                  color:"white",
-                                                  padding:"5px"
-                                              }} 
+                        ':hover':{
+                          backgroundColor: '#8855ED'
+                        },
+                        fontWeight:"bold",
+                        color:"white",
+                        padding:"5px"
+                    }} 
                        
                       onClick={handleClick}>
                 Menu
@@ -174,10 +179,10 @@ function Header({toggleDrawer, state}) {
                     display: {sm: "none", md: "block"},
                     fontWeight:"bold" 
                   }}}
-                      color="inherit" 
-                      onClick={Login}
+                color="inherit" 
+                onClick={Login}
               >
-                {loginStatus === 'true' ? "LogOut" : "Login"}
+                {loginStatus ? "Чыгуу" : "Кирүү"}
               </Button>
           </Box>
         </Toolbar>

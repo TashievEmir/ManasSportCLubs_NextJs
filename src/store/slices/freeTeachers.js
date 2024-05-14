@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {fetchFreeTeachers} from '../actions/fetchFreeTeachers'
 
 const freeTeacherSlice = createSlice({
-    name: "teacher",
+    name: "freeTeacher",
     initialState: {
         data: []
     },

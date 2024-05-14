@@ -13,6 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation'
 import AlertComp from '../../../components/AlertComp/AlertComp'
+import { convertToBase64 } from '../../../utils/convertToBase64'
 
 const defaultTheme = createTheme();
 
@@ -27,7 +28,7 @@ function Announcement() {
     {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        data.append('Photo', selectedFile)
+        const photo = await convertToBase64(selectedFile)
 
         await $api({
           method: 'post',
@@ -35,8 +36,8 @@ function Announcement() {
           data: {
             Title: data.get("announcementName"),
             Description: data.get("description"),
-            CreationDate: Date.now(),
-            Photo: selectedFile
+            CreationDate: new Date(),
+            Photo: photo
           },
           headers: {
             'Content-Type': 'multipart/form-data'

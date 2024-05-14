@@ -13,7 +13,7 @@ import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp';
 import Cookies from 'js-cookie';
 
-export default function CardMember( {element} ) {
+export default function CardMember( {setRenderState, element} ) {
 
   const [showAlert, setShowAlert] = useState(null);
   const accountRole = Cookies.get('role');
@@ -24,6 +24,7 @@ export default function CardMember( {element} ) {
     try
     {
       response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
+      setRenderState(prev => !prev)
     }
     catch
     {
@@ -32,6 +33,7 @@ export default function CardMember( {element} ) {
     
     if(response.status == 200){
       setShowAlert(true)
+      setRenderState(prev => !prev)
     }
 
     

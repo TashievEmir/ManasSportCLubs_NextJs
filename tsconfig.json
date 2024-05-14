@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/app-table/index.jsx"  ],
+, "src/components/app-table/index.jsx", "src/components/prompt/Prompt.jsx", "src/app/signup/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

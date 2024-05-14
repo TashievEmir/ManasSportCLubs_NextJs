@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import $api from '../../../utils/api'
 import { useRouter } from 'next/navigation'
 import AlertComp from '../../../components/AlertComp/AlertComp'
+import { convertToBase64 } from '../../../utils/convertToBase64'
 
 const defaultTheme = createTheme();
 
@@ -19,11 +20,10 @@ function ClubCreate() {
     const router = useRouter()
     const [selectedFile, setSelectedFile] = useState();
     const [showAlert, setShowAlert] = useState(null);
-    const { data } = useSelector((state) => state.teacher)
+    const {data} = useSelector((state) => state.freeTeachers)
     const [state, setState] = useState({
       teacher: 777
     })
-  
     useEffect(() => {
       dispatch(fetchFreeTeachers())
     }, [])
@@ -32,8 +32,7 @@ function ClubCreate() {
 
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        data.append('Photo', selectedFile)
+        const photo = await convertToBase64(selectedFile)
         let response= undefined;
         try
         {
@@ -44,7 +43,7 @@ function ClubCreate() {
               Name: data.get('clubName'),
               Teacher: data.get('teacher'),
               Description: data.get('description'),
-              Photo: selectedFile
+              Photo: photo
             },
             headers: {
               'Content-Type': 'multipart/form-data'

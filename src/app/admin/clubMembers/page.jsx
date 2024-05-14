@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardMember from '../../../components/card/CardMember'
 import { Box, Button, Container, CssBaseline, Grid, Link, MenuItem, Select, TextField, ThemeProvider, Typography, createTheme } from '@mui/material'
 import AppShell from '../../../components/app-shell'
@@ -11,12 +11,13 @@ import CardNoData from '../../../components/card/CardNoData'
 const MemberList = () => {
 
     const dispatch = useDispatch()
+    const [renderState, setRenderState] = useState(false)
     const {data} = useSelector((state)=> state.member)
     const selectedClub = useSelector((state) => state.selectedClub.value.id)
     
     useEffect( () => {
     dispatch(fetchMembers(selectedClub))
-    }, [])
+    }, [renderState])
     const dataCount = Array.isArray(data) ? data.length : 0;
 
   return (
@@ -26,7 +27,7 @@ const MemberList = () => {
         dataCount > 0 ?
           data.map((element) =>
             <Grid key={element.id} item>
-              <CardMember element={element} />
+              <CardMember setRenderState={setRenderState} element={element} />
             </Grid>
           ) :
           <CardNoData></CardNoData>          

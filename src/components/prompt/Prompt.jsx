@@ -1,34 +1,54 @@
 "use client"
 import React, {useState} from 'react'
-import {Box, Grid, Modal } from '@mui/material'
+import {Box, Button, Grid, Modal } from '@mui/material'
+import AlertComp from '../AlertComp/AlertComp'
+import $api from '../../utils/api'
+import { useRouter } from 'next/navigation'
 
-function Prompt({handleVerify, opened, onClose}) {
+function Prompt({email}) {
+  console.log(email)
   const [value, setValue] = useState("")
+  const [showAlert, setShowAlert] = useState({isSuccess: null})
+  const router = useRouter()
+  const handleVerify = (code) => async () => {
+    try 
+    {
+      const verifyEmailResponse = await $api.post('/Account/VerifyEmail',{
+        Email:  email,
+        Code: code
+      });
+      setShowAlert({isSuccess: true})
+      router.push("/signin")
+    } 
+    catch (error) 
+    {
+      console.log(error)
+      setShowAlert({isSuccess: false})
+    }
+  }
   return (
-        <Modal
-          open={opened}
-          onClose={onClose}
-          sx={{top: "40%", left: "40%", }}
-        >
+       <>
+        <Modal open={true} sx={{top: "40%", left: "40%", }}>
           <Box sx={{
-              padding: "32px", 
+              padding: "40px 16px", 
               background: "white",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "300px"
+              width: "370px"
             }}>
-          <form onSubmit={(value) => handleVerify(value)}>
             <Grid sx={{
+                width: "100%",
                display: "flex",
-                flexDirection: "none",
+                flexDirection: "column",
+                gap: "10px",
                 justifyContent: "center",
-                 alignItems: "start"}}>
-              <Grid item sx={12}>
+                alignItems: "end"}}>
+              <Grid sx={{width: "100%"}} item xs={12}>
                 <input
                   style={{
-                    width: "300",
-                    padding: "8px 16px",
+                    width: "100%",
+                    padding: "16px 16px",
                     boxShadow: "0 0 10px 5px rgba(0,0,0,0.2)",
                     border: "none",
                     outline: "none"
@@ -39,23 +59,24 @@ function Prompt({handleVerify, opened, onClose}) {
                 />
               </Grid>
               <Grid item sx={12} style={{marginLeft:"20px"}}>
-              <button
-                style={{
-                  padding: "8px 10px",
-                  background: "black",
-                  boxShadow: "0 0 10px 5px rgba(0,0,0,0.2)",
-                  color: "white",
-                  border: "none",
-                  cursor: "pointer"
-                }}
-                type="submit">
-                submit
-              </button>
+              <Button 
+                onClick={handleVerify(value)}
+                component="span" 
+                variant="contained"
+                sx={{backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"}}}>
+                Жөнөтүү
+                        </Button>
               </Grid>
             </Grid>
-          </form>
           </Box>
+          
         </Modal>
+        {showAlert.isSuccess !== null 
+          && <AlertComp
+              isSuccess={showAlert.isSuccess}
+              message={ showAlert.isSuccess === true ?
+           `Каттоо ийгиликтүү аяктады`: "Каттоо учурунда ката чыгып калды"}/>}
+       </>
   )
 }
 

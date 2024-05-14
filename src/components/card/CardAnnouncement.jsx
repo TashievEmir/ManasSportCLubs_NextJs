@@ -11,26 +11,24 @@ import AlertComp from '../AlertComp/AlertComp';
 import $api from "../../utils/api"
 import { useRouter } from 'next/navigation'
 
-export default function MediaCard( {element} ) {
+export default function MediaCard( {element, setRender} ) {
 
   const accountRole = Cookies.get("role");
   const [showAlert, setShowAlert] = useState(null);
   const router = useRouter();
 
   async function Remove(){
-
     try
     {
       const announcementId = element.id;
       let response = await $api.delete(`/Announcement/Delete/${announcementId}`);
-      debugger
       setShowAlert(true);
+      setRender(prev => !prev)
     }
     catch
     {
       setShowAlert(false)
     }
-
   }
 
 
@@ -86,7 +84,10 @@ export default function MediaCard( {element} ) {
               
           </Grid>
         </Grid>
-        {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Жарыя өчүрүлдү`: "Жарыя өчүрүлбөй калды"}/>} 
+        {showAlert !== null && 
+        <AlertComp 
+        isSuccess={showAlert}
+         message={ showAlert ===true ? `Жарыя өчүрүлдү`: "Жарыя өчүрүлбөй калды"}/>} 
       </CardContent>
     </Card>
   );
