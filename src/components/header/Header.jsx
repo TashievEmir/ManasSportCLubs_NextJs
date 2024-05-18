@@ -119,7 +119,7 @@ function Header({toggleDrawer, state}) {
             <Link style={{display: (accountRole !== "admin" && accountRole !== "teacher") 
              ? "block" : "none"}}  href="/teacher">
             <Typography sx={{color: "white", fontWeight:"bold"}}>
-              Агайлар
+              Машыктыруучулар
             </Typography>
           </Link>
         
@@ -154,7 +154,7 @@ function Header({toggleDrawer, state}) {
                            sx={{}}>
                       <Typography sx={{color: "white", fontWeight:"bold", ':hover':{
                         backgroundColor: "#370E8A", borderRadius:"7px"}, padding:"5px"}}>
-                          Агайлар
+                          Машыктыруучулар
                           </Typography>
                     </Link>
                     <Link  href="/admin/clubCreate">
