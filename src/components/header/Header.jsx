@@ -157,12 +157,18 @@ function Header({toggleDrawer, state}) {
                           Машыктыруучулар
                           </Typography>
                     </Link>
-                    <Link  href="/admin/clubCreate">
-                        <Typography sx={{color: "white", fontWeight:"bold", ':hover':
-                        {backgroundColor: "#370E8A", borderRadius:"7px"}, padding:"5px"}}>
-                          Клуб жаратуу
-                          </Typography>
-                    </Link>
+                    {
+                      <div style={{display: (accountRole === "admin")
+                      ? "block" : "none" }}>
+                            <Link  href="/admin/clubCreate">
+                                <Typography sx={{color: "white", fontWeight:"bold", ':hover':
+                                {backgroundColor: "#370E8A", borderRadius:"7px"}, padding:"5px"}}>
+                                  Клуб жаратуу
+                                  </Typography>
+                            </Link>
+                        </div>
+                    }
+                    
                     <Link  href="/admin/announcement">
                       <Typography sx={{color: "white", fontWeight:"bold", ':hover':{backgroundColor: "#370E8A",
                        borderRadius:"7px"}, padding:"6px"}}>

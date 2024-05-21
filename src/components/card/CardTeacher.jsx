@@ -68,6 +68,18 @@ export default function MediaCard( {element} ) {
             <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word"}} variant="body2" color="text.secondary">
               {element.email}
            </Typography>
+           <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.club}
+           </Typography>
+           <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.faculty} факультет
+           </Typography>
+           <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.department} бөлүмү
+           </Typography>
+           <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.phone}
+           </Typography>
           </Grid>
         </Grid>
         {
