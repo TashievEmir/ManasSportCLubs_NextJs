@@ -23,6 +23,7 @@ import { Input } from '@mui/material';
 import AlertComp from '../../components/AlertComp/AlertComp';
 import Prompt from '../../components/prompt/Prompt';
 import {convertToBase64} from "../../utils/convertToBase64"
+import { validateEmail, validatePhoneNumber } from '../../utils/validations';
 const defaultTheme = createTheme();
 
 
@@ -70,6 +71,10 @@ const SignUp = observer(() => {
         const pass2 = data.get("repeatPassword")
         const converted = await convertToBase64(selectedFile)
         const email = data.get('email')
+        const phone = data.get('telefon')
+        const isValidEmail = validateEmail(email)
+        const isValid = validatePhoneNumber(phone)
+        setErrors(prev => ({...prev, Phone: isValid, Email: isValidEmail}))
         setCurrentEmail(email)
         if(pass !== "" && pass === pass2 )
         {
@@ -220,7 +225,7 @@ const SignUp = observer(() => {
                     autoComplete="telefon-name"
                     error={errors.Phone}
                     
-                    helperText={"Сөзсүз толтурулуучу талаа"}
+                    helperText={errors.Phone}
                   />
                 </Grid>
                 <Grid item xs={12} >
@@ -232,8 +237,7 @@ const SignUp = observer(() => {
                     name="email"
                     autoComplete="email"
                     error={errors.Email}
-                    
-                    helperText={"Сөзсүз толтурулуучу талаа"}
+                    helperText={errors.Email}
                   />
                 </Grid>
                 {errors.RepeatedPassword && 

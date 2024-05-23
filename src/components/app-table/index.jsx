@@ -108,14 +108,16 @@ export default function AppTable({
   };
 
   return (
-    <TableContainer component={Paper} sx={{borderRadius: "15px"}}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{borderRadius: "14px"}}>
+      <Table sx={{ minWidth: 650 }}>
         <TableHead sx={{backgroundColor: "#8855ED" }}>
-          <TableRow >           
+          <TableRow>           
             {
                 cols.map((item, idx) => (
-                    <TableCell  align="center" key={item.headerName + idx}>
-                      <Typography sx={{color: "white", fontWeight:"bold"}} >{item?.headerName} </Typography>
+                    <TableCell align="center" key={item.headerName + idx}>
+                      <Typography sx={{color: "white", fontWeight:"bold"}} >
+                        {item?.headerName} 
+                        </Typography>
                     </TableCell>
                 ))
             }
@@ -127,56 +129,61 @@ export default function AppTable({
             <TableRow sx={{borderSpacing: "20px"}}
               key={row.id + idx}
             >
-              <TableCell width={90}>
+              <TableCell width={30}>
                 {!disabled ? 
                 <Checkbox disabled={disabled}  defaultChecked={row?.monday} onChange={(e) => handleCheckboxChange(idx, 'Monday', e.target.checked)}/>
                     :
                     <Box sx={{bgcolor: row?.monday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
               </TableCell>
-              <TableCell  width={90}>
+              <TableCell  width={30}>
                 {!disabled ? 
                 <Checkbox disabled={disabled} defaultChecked={row?.tuesday} onChange={(e) => handleCheckboxChange(idx, 'Tuesday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.tuesday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
               </TableCell>
-              <TableCell  width={90}>
+              <TableCell  width={30}>
                 {!disabled ? 
                 <Checkbox disabled={disabled} defaultChecked={row?.wednesday} onChange={(e) => handleCheckboxChange(idx, 'Wednesday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.wednesday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
               </TableCell>
-              <TableCell  width={90}>
+              <TableCell  width={30}>
                 {!disabled ? 
                 <Checkbox disabled={disabled} defaultChecked={row?.thursday} onChange={(e) => handleCheckboxChange(idx, 'Thursday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.thursday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
               </TableCell>
-              <TableCell  width={90}>
+              <TableCell  width={30}>
                 {!disabled ? 
                 <Checkbox disabled={disabled} defaultChecked={row?.friday} onChange={(e) => handleCheckboxChange(idx, 'Friday', e.target.checked)}/>
                     :
                     <Box  sx={{bgcolor: row?.friday ? "green" : "red", width: "50px", height: "50px", margin: "0 auto", borderRadius: "10px"}}></Box>
                 }
               </TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={200}>
                 {
                   !disabled ?
-                  <TextField id="outlined-basic" label={row?.place} variant="outlined" onChange={(e) => handleTextFieldChange(idx, 'Place', e.target.value)} />
+                  <TextField
+                    width="100%"
+                   id="outlined-basic" 
+                   label={row?.place} 
+                   variant="outlined" 
+                   onChange={(e) => handleTextFieldChange(idx, 'Place', e.target.value)} />
                    : <>{row?.place}</>
                 }
               </TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={200}>
                 {
                 !disabled ?
                 <TextField id="outlined-basic" label={row?.auditorium} variant="outlined" onChange={(e) => handleTextFieldChange(idx, 'Auditorium', e.target.value)} />
                 :<>{row?.auditorium}</>
                 }
               </TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={130}>
                 {
                 !disabled ?
                 <TimePicker
@@ -188,7 +195,7 @@ export default function AppTable({
                 :<>{row?.startTime}</>
                 }
               </TableCell>
-              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={90}>
+              <TableCell sx={{textAlign: "center", fontWeight: "bold"}} width={125}>
                 {
                 !disabled ?
                 <TimePicker

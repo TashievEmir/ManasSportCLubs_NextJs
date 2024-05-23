@@ -11,6 +11,7 @@ import manasLogo from '../../../public/manas_logo.png'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchClubs } from '../../store/actions/fetchClubs'
+import { fetchTeacherClub } from '../../store/actions/fetchTeacherClub'
 import { FormControl, Grid, InputLabel, Popover, Select } from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -18,28 +19,26 @@ import {setSelectedClub} from '../../store/slices/selectedClub';
 import { useRouter } from 'next/navigation';
 //import {setLoginStatus} from '../../store/slices/loginStatus';
 import Cookies from 'js-cookie';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { setLoginStatus } from '../../store/slices/loginStatus';
+
 function Header({toggleDrawer, state}) {
   const router = useRouter()
 
-  //const {getItem: getLoginStatus, setItem: setLoginStatus} = useLocalStorage('login');
   const accountRole = Cookies.get("role");
-  const loginStatus = Cookies.get("login");
+  const userId = Cookies.get("userId");
   
   const dispatch = useDispatch()
   const {data} = useSelector((state) => state.club)
+  const {teacherClub} = useSelector((state)=> state.teacherClub)
   const selectedClub = useSelector((state) => state.selectedClub.value)
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -47,6 +46,7 @@ function Header({toggleDrawer, state}) {
 
   useEffect( () =>{
     dispatch(fetchClubs())
+    dispatch(fetchTeacherClub(userId))
     setClub(selectedClub.id)
   }, [])
 
@@ -55,7 +55,6 @@ function Header({toggleDrawer, state}) {
 
   const handleChange = (event) => 
   {
-    if(loginStatus){
       const selectedId = event.target.value;
       const selectedName = [...data].find(option => option.id === selectedId)?.name || '';
 
@@ -67,21 +66,13 @@ function Header({toggleDrawer, state}) {
       }))
 
       accountRole == "teacher" ? router.push('/admin') : router.push('/user')
-    }
-    else{
-      alert("At first you need to login") 
-    }
   };
 
-  function Login()
-  {
-    if(loginStatus)
-    {
+  function Login(){
       Cookies.set('login', false);
       dispatch(setLoginStatus({payload: false}))
       dispatch(setSelectedClub({payload: {}}))
-    }
-    router.push("/signin")
+      router.push("/signin")
   }
   return (
     <AppBar  open={state} position="sticky" sx={{mb: 2, bgcolor: '#370E8A'}}>
@@ -103,7 +94,14 @@ function Header({toggleDrawer, state}) {
                   onChange={handleChange}
                   sx={{ width: '140px', border: "1px outset white", color:"white"}}>
                   {
-                  [...data].map((el) => (
+                    accountRole==="teacher" ?
+                    teacherClub.map((el) => (
+                      <MenuItem  key={el.id} value={el.id}>
+                        {el.name}
+                      </MenuItem>
+                    )) 
+                    :
+                    [...data].map((el) => (
                     <MenuItem  key={el.id} value={el.id}>
                       {el.name}
                     </MenuItem>
@@ -179,7 +177,8 @@ function Header({toggleDrawer, state}) {
               </Popover>
               </div>
           </Box>
-          <Box sx={{display: "flex", gap: 1}}>
+          <Box sx={{
+            display: "flex", gap: 1}}>
               <Button sx={{':hover':{ 
                     backgroundColor: '#8855ED',
                     display: {sm: "none", md: "block"},
@@ -188,7 +187,7 @@ function Header({toggleDrawer, state}) {
                 color="inherit" 
                 onClick={Login}
               >
-                {loginStatus ? "Чыгуу" : "Кирүү"}
+                Чыгуу
               </Button>
           </Box>
         </Toolbar>
