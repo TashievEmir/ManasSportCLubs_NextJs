@@ -76,7 +76,7 @@ function Abandon() {
                     </Button>
                     : <></>
                     }
-                   {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}         
+                   {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубдан баш тартылды`: "Клубдан баш тартылган жок"}/>}         
                   </div>
               </div>
           )
