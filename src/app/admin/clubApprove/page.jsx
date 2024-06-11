@@ -24,7 +24,7 @@ const ClubApprove = () => {
           dataCount > 0 ?
           data?.map((element) =>
             <Grid key={element.id} item>
-              <CardApprove setRenderState={setRenderState} element={element} />
+              <CardApprove setRenderState={setRenderState} element={element} selectedClub={selectedClub} />
             </Grid>
           ) :
           <CardNoData></CardNoData>        

@@ -23,13 +23,13 @@ const userSidebar = [
         id: 3,
         path: "/user/clubCanceling",
         icon: <PersonRemove/>,
-        title: 'Клубтан баш тартуу'
+        title: 'Клубдан баш тартуу'
     },
     {
         id: 4,
         path: "/user/memberList",
         icon: <FormatListNumberedIcon/>,
-        title: 'Клубтун тизмеси'
+        title: 'Клубдун тизмеси'
     },
 ]
 
@@ -50,7 +50,7 @@ const adminSidebar = [
         id: 3,
         path: "/admin/clubMembers",
         icon: <FormatListNumberedIcon/>,
-        title: 'Клубтун тизмеси'
+        title: 'Клубдун тизмеси'
     },
     
     

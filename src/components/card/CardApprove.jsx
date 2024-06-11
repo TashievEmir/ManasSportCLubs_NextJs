@@ -11,12 +11,13 @@ import Image from 'next/image'
 import { Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp'
-function CardApprove({setRenderState, element}) {
+function CardApprove({setRenderState, element, selectedClub}) {
   const [showAlert, setShowAlert] = useState(null);
 
   async function Approve(){
     const response = await $api.put(`/Club/ApproveStudent`,{
-      Email : element.email
+      Email : element.email,
+      ClubId: selectedClub
     });
 
     if(response.status == 200){
@@ -29,7 +30,7 @@ function CardApprove({setRenderState, element}) {
   }
 
   async function Reject(){
-    const response = await $api.delete(`/Club/RejectStudent/${element.email}`);
+    const response = await $api.delete(`/Club/RejectStudent/${element.email}?clubId=${selectedClub}`);
     if(response.status == 200){
       setRenderState(prev => !prev)
       setShowAlert(true)
@@ -68,11 +69,25 @@ function CardApprove({setRenderState, element}) {
         <Button type='submit'           
             variant='contained'
             onClick={Approve} 
-            sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл алуу</Button>
+            sx={{marginTop:2, 
+                marginLeft: 2, 
+                backgroundColor: '#370E8A', 
+                color: "white", 
+                ':hover':{ 
+                    backgroundColor: '#8855ED'
+                  }
+                }}>Кабыл алуу</Button>
         <Button type='submit'           
             variant='contained'
             onClick={Reject} 
-            sx={{marginTop:2, marginLeft: 2, backgroundColor: '#370E8A', color: "white"}}>Кабыл албоо</Button>
+            sx={{marginTop:2, 
+                marginLeft: 2, 
+                backgroundColor: '#370E8A', 
+                color: "white",
+                ':hover':{ 
+                    backgroundColor: '#8855ED'
+                  }
+                }}>Кабыл албоо</Button>
         </Box>
         {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубга кабыл алынды`: "Клубга кабыл алынган жок"}/>}
       </CardContent>

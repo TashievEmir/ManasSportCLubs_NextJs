@@ -76,6 +76,15 @@ export default function CardMember( {setRenderState, element} ) {
             <Typography variant="body2" color="text.secondary">
               {element.email}          
             </Typography>
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.phone}          
+            </Typography>
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.facultyName} факультети         
+            </Typography>
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.departmentName} бөлүмү         
+            </Typography>
           </Grid>
         </Grid>
         {
