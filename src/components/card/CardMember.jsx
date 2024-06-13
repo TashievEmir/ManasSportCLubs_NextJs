@@ -83,19 +83,24 @@ export default function CardMember( {setRenderState, element} ) {
             
           </Grid>
         </Grid>
-            <Button type='submit'           
-            variant='contained' 
-            sx={{
-                  marginTop:2, 
-                  backgroundColor: '#370E8A', 
-                  color: "white", 
-                  ':hover':{
-                      backgroundColor: '#8855ED'
-                  }
-                }}
+        {
+          accountRole === "teacher" || accountRole === "admin" ?
+          <Button type='submit'           
+          variant='contained' 
+          sx={{
+                marginTop:2, 
+                backgroundColor: '#370E8A', 
+                color: "white", 
+                ':hover':{
+                    backgroundColor: '#8855ED'
+                }
+              }}
             onClick={Remove}>
-              Клубтан чыгаруу
+            Клубтан чыгаруу
           </Button>
+          : <></>
+        }
+            
 
         {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубдан чыгарылды`: "Клубдан чыгарылган жок"}/>}
       </CardContent>

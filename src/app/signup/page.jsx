@@ -38,7 +38,7 @@ const SignUp = observer(() => {
   const [selectedFile, setSelectedFile] = useState();
   const [showAlert, setShowAlert] = useState({isSuccess: null});
   const [currentEmail, setCurrentEmail] = useState("")
-  const [isVerify, setIsVerify] = useState(true);
+  const [isVerify, setIsVerify] = useState(false);
   const [phone, setPhone] = useState("+996")
   const [errors, setErrors] = useState({
     LastName: false,

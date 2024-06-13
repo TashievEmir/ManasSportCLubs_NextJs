@@ -59,13 +59,19 @@ function CardApprove({setRenderState, element, selectedClub}) {
           </Grid>
           <Grid item xs={8}>
             <Typography gutterBottom variant="h6" component="div">
-              {element.lastName}
+              {element.lastName} {element.firstName}
             </Typography>
-            <Typography gutterBottom variant="h6" component="div">
-              {element.firstName}
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.facultyName} факультет         
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.departmentName} бөлүм         
+            </Typography>
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
               {element.email}          
+            </Typography>
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+              {element.phone}          
             </Typography>
           </Grid>
         </Grid>

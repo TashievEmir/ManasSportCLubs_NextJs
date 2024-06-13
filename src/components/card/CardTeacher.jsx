@@ -60,10 +60,7 @@ export default function MediaCard( {element} ) {
             </Grid>
           <Grid item xs={8}>
             <Typography lineHeight={1} fontSize={{xs: "16px", md: "18px"}} gutterBottom variant="h6" component="div">
-              {element.lastName}
-            </Typography>
-            <Typography lineHeight={1}  fontSize={{xs: "16px", md: "18px"}} gutterBottom variant="h6" component="div">
-              {element.firstName}
+              {element.lastName} {element.firstName}
             </Typography>
             <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word"}} variant="body2" color="text.secondary">
               {element.email}
@@ -77,9 +74,13 @@ export default function MediaCard( {element} ) {
            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
               {element.department} бөлүмү
            </Typography>
-           <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+           {
+            accountRole === "admin" || accountRole === "teacher" ?
+            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
               {element.phone}
-           </Typography>
+            </Typography>
+            :<></>
+           }          
           </Grid>
         </Grid>
         {
