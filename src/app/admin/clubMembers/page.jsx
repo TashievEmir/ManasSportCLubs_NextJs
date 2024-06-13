@@ -16,7 +16,7 @@ const MemberList = () => {
     const selectedClub = useSelector((state) => state.selectedClub.value.id)
     
     useEffect( () => {
-    dispatch(fetchMembers(selectedClub))
+      dispatch(fetchMembers(selectedClub))
     }, [renderState])
     const dataCount = Array.isArray(data) ? data.length : 0;
 

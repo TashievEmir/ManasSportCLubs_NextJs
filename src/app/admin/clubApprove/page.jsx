@@ -11,11 +11,13 @@ const ClubApprove = () => {
     const selectedClub = useSelector((state) => state.selectedClub.value.id)
     const {data} = useSelector((state)=> state.candidate)
     const [renderState, setRenderState] = useState(false)
+
     const dispatch = useDispatch()
     useEffect( () => {
     dispatch(fetchCandidates(selectedClub))
     }, [renderState])
     const dataCount = Array.isArray(data) ? data.length : 0;
+    
   return (
     <AppShell showSidebar={true}>
         <Grid container justifyContent="start" alignItems="start" gap={2}>

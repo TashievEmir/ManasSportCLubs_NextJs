@@ -38,7 +38,8 @@ const SignUp = observer(() => {
   const [selectedFile, setSelectedFile] = useState();
   const [showAlert, setShowAlert] = useState({isSuccess: null});
   const [currentEmail, setCurrentEmail] = useState("")
-  const [isVerify, setIsVerify] = useState(false);
+  const [isVerify, setIsVerify] = useState(true);
+  const [phone, setPhone] = useState("+996")
   const [errors, setErrors] = useState({
     LastName: false,
     FirstName: false,
@@ -71,12 +72,10 @@ const SignUp = observer(() => {
         const pass2 = data.get("repeatPassword")
         const converted = await convertToBase64(selectedFile)
         const email = data.get('email')
-        const phone = data.get('telefon')
         const isValidEmail = validateEmail(email)
-        const isValid = validatePhoneNumber(phone)
-        setErrors(prev => ({...prev, Phone: isValid, Email: isValidEmail}))
+        setErrors(prev => ({...prev, Email: isValidEmail}))
         setCurrentEmail(email)
-        if(pass !== "" && pass === pass2 )
+        if(pass !== "" && pass === pass2 && phone.length === 16)
         {
           try
           {
@@ -106,9 +105,12 @@ const SignUp = observer(() => {
             setShowAlert({isSuccess: false})
           }
         }
-        else
+        if(phone.length !== 16){
+          setErrors({ Phone: "Туура эмес телефон номери" });
+        }
+        else if(pass !== pass2)
         {
-          setErrors(prev => ({...prev, RepeatedPassword: true}))
+          setErrors(prev => ({...prev, RepeatedPassword: true, }))
         }
       };
 
@@ -116,7 +118,26 @@ const SignUp = observer(() => {
         const file = event.target.files[0];
         setSelectedFile(file);
       };
-
+      const handleChangePhone = (event) => {
+        let value = event.target.value.replace(/\D/g, '');
+        if (!value.startsWith('996')) {
+            value = '996' + value;
+        }
+    
+        value = '+' + value;
+        let formattedValue = value.slice(0, 4);
+    
+        for (let i = 4; i < value.length; i += 3) {
+            formattedValue += ' ' + value.slice(i, i + 3);
+        }
+        if (formattedValue.length <= 16) { 
+            setPhone(formattedValue);
+        } else if(phone.length !== 16) {
+            setErrors({ Phone: "Туура эмес телефон номери" });
+        }else{
+          setErrors({ Phone: null });
+        }
+    };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -129,7 +150,7 @@ const SignUp = observer(() => {
             alignItems: 'center',
           }}
         >
-          {isVerify && <Prompt email={currentEmail}/>}
+          {isVerify && <Prompt setIsVerify={setIsVerify} email={currentEmail}/>}
           <Image
             width={80}
             src={manasLogo} 
@@ -224,7 +245,8 @@ const SignUp = observer(() => {
                     name="telefon"
                     autoComplete="telefon-name"
                     error={errors.Phone}
-                    
+                    value={phone}
+                    onChange={handleChangePhone}
                     helperText={errors.Phone}
                   />
                 </Grid>

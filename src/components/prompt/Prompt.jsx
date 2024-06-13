@@ -5,7 +5,7 @@ import AlertComp from '../AlertComp/AlertComp'
 import $api from '../../utils/api'
 import { useRouter } from 'next/navigation'
 
-function Prompt({email}) {
+function Prompt({email,setIsVerify}) {
   console.log(email)
   const [value, setValue] = useState("")
   const [showAlert, setShowAlert] = useState({isSuccess: null})
@@ -28,7 +28,7 @@ function Prompt({email}) {
   }
   return (
        <>
-        <Modal open={true} sx={{top: "40%", left: "40%", }}>
+        <Modal  open={true} sx={{top: "40%", left: "40%", }}>
           <Box sx={{
               padding: "40px 16px", 
               background: "white",
@@ -58,14 +58,25 @@ function Prompt({email}) {
                   onChange={(event) => setValue(event.target.value)}
                 />
               </Grid>
-              <Grid item sx={12} style={{marginLeft:"20px"}}>
-              <Button 
-                onClick={handleVerify(value)}
-                component="span" 
-                variant="contained"
-                sx={{backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"}}}>
-                Жөнөтүү
-                        </Button>
+              <Grid item xs={12}
+              style={{marginLeft:"20px"}}>
+                <Box display="flex" gap={3}>
+                  <Button 
+                    onClick={() => setIsVerify(false)}
+                    component="span" 
+                    variant="contained"
+                    sx={{backgroundColor:"orange"}}>
+                    Артка кайтуу
+                  </Button>
+                  <Button 
+                    onClick={handleVerify(value)}
+                    component="span" 
+                    variant="contained"
+                    sx={{backgroundColor:"#370E8A", ':hover':{backgroundColor:"#8855ED"}}}>
+                    Жөнөтүү
+                  </Button>
+                </Box>
+                
               </Grid>
             </Grid>
           </Box>

@@ -11,8 +11,12 @@ import Image from 'next/image'
 import { Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp'
+import Cookies from 'js-cookie';
+
 function CardApprove({setRenderState, element, selectedClub}) {
+
   const [showAlert, setShowAlert] = useState(null);
+  const accountRole = Cookies.get('role');
 
   async function Approve(){
     const response = await $api.put(`/Club/ApproveStudent`,{
@@ -41,16 +45,16 @@ function CardApprove({setRenderState, element, selectedClub}) {
   }
 
   return (
-    <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
+    <Card sx={{ minWidth: 200, maxWidth:600, maxHeight: 400,minHeight: 210, borderRadius: "20px" }}>
       <CardContent sx={{gap:3}}>
-      <Grid container justifyContent="space-between" spacing={4}>
-          <Grid item xs={3}>
-            <Image
-              width={100}
-              height={120}
+      <Grid container justifyContent="start" spacing={1}>
+          <Grid justifyContent="start" item xs={4}>
+            <img
+              width="100%"
+              height="100%" 
               src={`data:image/png;base64,${element.photo}`} 
-              alt='manasLogo'
-              style={{borderRadius:"10px"}}
+              alt=''
+              style={{borderRadius:"10px", objectFit: "contain"}}
             />
           </Grid>
           <Grid item xs={8}>

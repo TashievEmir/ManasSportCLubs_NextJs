@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import manasLogo from '../../../public/manas_logo.png'
 import Image from 'next/image'
-import { Alert, Grid } from '@mui/material';
+import { Alert, Box, Grid } from '@mui/material';
 import $api from '../../utils/api'
 import AlertComp from '../AlertComp/AlertComp';
 import Cookies from 'js-cookie';
@@ -24,7 +24,6 @@ export default function CardMember( {setRenderState, element} ) {
     try
     {
       response = await $api.delete(`/Club/RemoveStudent/${element.email}`);
-      setRenderState(prev => !prev)
     }
     catch
     {
@@ -35,27 +34,23 @@ export default function CardMember( {setRenderState, element} ) {
       setShowAlert(true)
       setRenderState(prev => !prev)
     }
-
-    
   }
 
-
   return (
-    <Card sx={{ minWidth: 200, maxWidth:400, maxHeight: 300, borderRadius: "20px" }}>
+    <Card sx={{ minWidth: 200, maxWidth:600, maxHeight: 300, borderRadius: "20px" }}>
       <CardContent sx={{display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center'}} >
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
+        <Grid justifyContent="start" alignItems="center" container spacing={1}>
+          <Grid justifyContent="start"  item xs={4}>
           { element?.photo?.length > 1000 ? (
-            <img
-            width={100}
-            height={100}
-            style={{width: "100%", height: "100%", borderRadius:"15px"}}
-            src={`data:image/png;base64,${element.photo}`} 
-            alt='manasLogo'
-          />
+              <img
+                width="100%" height="100%"
+                style={{borderRadius:"15px", objectFit: "contain"}}
+                src={`data:image/png;base64,${element.photo}`} 
+                alt='manasLogo'
+            />
           ):(
             <Image
                 width='200px'
@@ -67,17 +62,11 @@ export default function CardMember( {setRenderState, element} ) {
           )}            
           </Grid>
           <Grid item xs={8}>
-            <Typography gutterBottom variant="h6" component="div">
-              {element.lastName}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="div">
-              {element.firstName}
-            </Typography>
+              <Typography variant="h6">
+                {element.lastName} {element.firstName}
+              </Typography>
             <Typography variant="body2" color="text.secondary">
               {element.email}          
-            </Typography>
-            <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
-              {element.phone}          
             </Typography>
             <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
               {element.facultyName} факультети         
@@ -85,10 +74,15 @@ export default function CardMember( {setRenderState, element} ) {
             <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
               {element.departmentName} бөлүмү         
             </Typography>
+            {
+              accountRole === "admin" || accountRole === "teacher" ? 
+              <Typography fontSize={{xs: "12px", md: "14px"}} sx={{wordWrap: "break-word", mt:"5px"}} variant="body2" color="text.secondary">
+                {element.phone}          
+              </Typography> : <></>
+            }
+            
           </Grid>
         </Grid>
-        {
-          accountRole === "teacher" ?(
             <Button type='submit'           
             variant='contained' 
             sx={{
@@ -102,9 +96,7 @@ export default function CardMember( {setRenderState, element} ) {
             onClick={Remove}>
               Клубтан чыгаруу
           </Button>
-          ):(<></>)
-          
-        }
+
         {showAlert !== null && <AlertComp isSuccess={showAlert} message={ showAlert ===true ? `Клубдан чыгарылды`: "Клубдан чыгарылган жок"}/>}
       </CardContent>
     </Card>
