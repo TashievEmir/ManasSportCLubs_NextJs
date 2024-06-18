@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 import $api from "../../utils/api"
 import AlertComp from '../AlertComp/AlertComp';
 
-export default function MediaCard( {element} ) {
+export default function MediaCard( {element,setRender} ) {
 
   const accountRole = Cookies.get("role");
   const [showAlert, setShowAlert] = useState(null);
@@ -21,6 +21,7 @@ export default function MediaCard( {element} ) {
     {
       const response = await $api.delete(`/Teacher/Delete/${element.id}`);
       setShowAlert(true)
+      setRender(prev => !prev)
     }
     catch
     {
