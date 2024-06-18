@@ -24,8 +24,7 @@ export const validatePhoneNumber = (value?: string): string | void => {
 export const validateEmail = (value?: string): string | void => {
     if (value) {
         const emailPattern = [
-            /^[^\s@]+@manas\.edu\.kg$/,
-            /^[^\s@]+@gmail\.com$/
+            /^[^\s@]+@manas\.edu\.kg$/
         ]
         const status =  emailPattern.some((pattern) => pattern.test(value));
         if(!status){
