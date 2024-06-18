@@ -75,7 +75,7 @@ const SignUp = observer(() => {
         const isValidEmail = validateEmail(email)
         setErrors(prev => ({...prev, Email: isValidEmail}))
         setCurrentEmail(email)
-        if(pass !== "" && pass === pass2 && phone.length === 16)
+        if(pass !== "" && pass === pass2 && phone.length === 16 && !isValidEmail && converted)
         {
           try
           {
@@ -108,6 +108,9 @@ const SignUp = observer(() => {
         if(phone.length !== 16){
           setErrors({ Phone: "Туура эмес телефон номери" });
         }
+        if(!converted){
+          setErrors(prev => ({...prev, Photo: true}))
+        }
         else if(pass !== pass2)
         {
           setErrors(prev => ({...prev, RepeatedPassword: true, }))
@@ -117,6 +120,7 @@ const SignUp = observer(() => {
       const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
+        setErrors(prev => ({...prev, Photo: false}))
       };
       const handleChangePhone = (event) => {
         let value = event.target.value.replace(/\D/g, '');
@@ -312,6 +316,8 @@ const SignUp = observer(() => {
                           Файл тандоо
                         </Button>
                       </label>
+                      {errors.Photo ? 
+                      <p style={{color: "red"}}>Сүрөттү тандаңыз!</p>: null}
                     </div>
                     <div>
                       {selectedFile && (
